@@ -1,0 +1,12 @@
+{
+    "PREFIX": "~",
+    "BotOwnerID": "575844183546265609",
+    "logchannelid": "",
+    "welcomechannelid":"",
+
+    "messageDeleteTimeout": 5000,
+    "TESTING_GUILD": {
+        "Name": "Bot Testing",
+        "ID": "762827810581774387"
+    }
+}
