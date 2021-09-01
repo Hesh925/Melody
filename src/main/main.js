@@ -7,7 +7,7 @@ const DJSVoice = require("@discordjs/voice");
 const voicePlayer = DJSVoice.createAudioPlayer();
 const opusEncoder = new OpusEncoder(48000, 2);
 
-var TOKEN = process.env.DISCORD_TOKEN_MELODY || (process.argv[3]).slice(1) || new TypeError("No Token");
+var TOKEN = process.env.DISCORD_TOKEN_MELODY || (process.argv[3]).slice(1);
 
 client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
