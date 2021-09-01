@@ -1,5 +1,6 @@
-module.exports = (Discord, client, message) => {
-	client.once("voiceStateUpdate", function(oldMember, newMember) {
-		console.log(`a user changes voice state`);
-	});
-}
+module.exports = {
+	name: "messageCreate",
+	async execute(_Discord, _client, _opusEncoder, voicePlayer, DJSVoice, oldMember, newMember) {
+		console.log("123");
+	}
+};

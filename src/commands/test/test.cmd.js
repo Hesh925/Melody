@@ -1,9 +1,9 @@
 module.exports = {
-	name: "",
+	name: "test",
 	description: "",
 	usage: "<> is strict & [] is optional",
 	args: {},
-	category: "",
+	category: "owner",
 	aliases: [], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
@@ -12,7 +12,9 @@ module.exports = {
 	disabled: false, // type: Boolean
 	disabledReason: "",
 	// eslint-disable-next-line no-unused-vars
-	async execute(_client, message, args, Discord, config, ezcolor, utils) {
-		message.reply("Not Used Yet");
+	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice) {
+		if(message.author.id === message.guild.ownerId) console.log("owner");
+		if(message.member.voice.channel !== null) console.log("in channel");
+		else console.log("not in channel");
 	}
 };
