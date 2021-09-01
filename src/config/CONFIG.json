@@ -2,7 +2,6 @@
     "PREFIX": "~",
     "BotOwnerID": "575844183546265609",
     "inviteLink": "https://discord.com/oauth2/authorize?client_id=882121214213111879&scope=bot&permissions=8",
-    "youTubeAPIKey": "AIzaSyAETeUdeTBMIMsElWR1MuyQLzIDqr5y7o0",
     "messageDeleteTimeout": 5000,
     "TESTING_GUILD": {
         "Name": "Bot Testing",
