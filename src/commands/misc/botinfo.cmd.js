@@ -19,7 +19,6 @@ module.exports = {
 	disabledReason: "",
 	async execute(client, message, args, Discord, config, ezcolor, utils) {
 		const core = os.cpus()[0];
-		var name = `Docker: ${  process.env.HOSTNAME }` || "Not Defined";
 
 		if (!args[0]) {
 			var embed = new MessageEmbed()

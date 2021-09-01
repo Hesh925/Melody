@@ -73,29 +73,3 @@ module.exports = {
 		}
 	}
 };
-
-
-// embed.setAuthor(`${utils.capitalize(cmd.name)} Command Help`, client.user.displayAvatarURL());
-//                embed.addField("About", [
-//                    `**❯ Name:** ${cmd.name}`,
-//                    `**❯ Aliases:** ${cmd.aliases.length ? cmd.aliases.map(alias => `\`${alias}\``).join(' ') : 'No Aliases'}`,
-//                    `**❯ Description:** ${cmd.description}`,
-//                    `**❯ Category:** ${utils.capitalize(cmd.category)}`,
-//                    `**❯ Usage:** ${config.PREFIX}${cmd.name}${cmd.usage}`
-//                ])
-//                if (cmd.args !== ''){
-//                    var elements = []
-//                    Object.keys(cmd.args).forEach(element => {
-//                        elements.push(`\u3000${element}: ${cmd.args[element]}\n`)
-//                    }, console.log(elements), embed.addField('Arguments', elements));
-//                }
-//
-//                embed.addField("Permissions", [
-//                    `**❯ Required perms:** [${cmd.userPerms}]`,
-//                    `**❯ OwnerOnly:** ${utils.capitalize(cmd.ownerOnly)}`,
-//                    `**❯ NSFW:** ${utils.capitalize(cmd.nsfw)}`,
-//                    `**❯ Is Disabled:** ${utils.capitalize(cmd.disabled)}`
-//                ]);
-//
-//                message.channel.send(embed);
-//            }

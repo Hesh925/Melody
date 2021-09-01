@@ -11,9 +11,8 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	// eslint-disable-next-line no-unused-vars
-	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice) {
-		const connection = DJSVoice.getVoiceConnection(message.guild.id); // Get connection  message.guild.me.voice.channel
+	async execute(_client, message, _args, _Discord, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, DJSVoice) {
+		const connection = DJSVoice.getVoiceConnection(message.guild.id); // Get connection
 		if(connection) {
 			if (message.member.voice.channel) {
 				if(message.member.voice.channel.id === connection.joinConfig.channelId) {
