@@ -1,4 +1,7 @@
-const { join } = require("path");
+const path = require("path");
+const fs = require("fs");
+const ytdl = require("ytdl-core");
+const ytSearch = require("../../utils/ytSearch");
 module.exports = {
 	name: "play",
 	description: "play a track in the current voice",
@@ -12,21 +15,20 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice) {
+	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap) {
+		//const resource = DJSVoice.createAudioResource(path.join(__dirname, "video.mp4"));
+		
 		const cmdJoin = client.commands.get("join"); // Get join command
 		cmdJoin.execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice); // Call join command 
-		const connection = DJSVoice.getVoiceConnection(message.guild.id); // Get connection
-
+		const connection = await DJSVoice.getVoiceConnection(message.guild.id); // Get connection
 		connection.subscribe(voicePlayer); // Create subscription
 
-		const resource = DJSVoice.createAudioResource(join(__dirname, "audio.mp3")); // Replace with fun to get data from YT
-		
-		voicePlayer.play(resource);
+		voicePlayer.play(ytdl("http://www.youtube.com/watch?v=aqz-KE-bpKQ"));
 		try {
 			await DJSVoice.entersState(voicePlayer, DJSVoice.AudioPlayerStatus.Playing, 5000);
 
-			const cmdNP = client.commands.get("nowplaying"); // Get join command
-			cmdNP.execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice); // Call nowPlaying command
+			// Const cmdNP = client.commands.get("nowplaying"); // Get join command
+			// CmdNP.execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice); // Call nowPlaying command
 
 			console.log("Playback has started!");
 		} catch (error) {

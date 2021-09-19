@@ -5,7 +5,8 @@
   "main": "./src/main/main.js",
   "scripts": {
     "test": "eslint .",
-    "nodemon": "nodemon -e .js"
+    "nodemon": "nodemon -e .js",
+    "build": "python3 ./docker/build/docker_build.py"
   },
   "repository": {
     "type": "git",
@@ -29,6 +30,7 @@
     "os": "^0.1.1",
     "pretty-ms": "^7.0.1",
     "sleep": "^6.3.0",
+    "ytdl": "^1.4.1",
     "ytdl-core": "^4.9.1",
     "ytpl": "^2.2.3",
     "ytsr": "^3.5.3"

@@ -12,7 +12,7 @@ module.exports = {
 	disabled: false, // type: Boolean
 	disabledReason: "",
 	// eslint-disable-next-line no-unused-vars
-	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice) {
+	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap) {
 		
 	}
 };

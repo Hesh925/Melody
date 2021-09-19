@@ -11,7 +11,7 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(_client, message, _args, _Discord, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, DJSVoice) {
+	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap) {
 		const connection = DJSVoice.getVoiceConnection(message.guild.id); // Get connection
 		if(connection) {
 			if (message.member.voice.channel) {

@@ -6,7 +6,7 @@ const utils = require("djs-utils");
 
 module.exports = {
 	name: "messageCreate",
-	async execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, message) {
+	async execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueMap, message) {
 		if (!message.content.startsWith(config["PREFIX"]) || message.author.bot) return;
 		const args = message.content.slice(config["PREFIX"].length).split(/ +/);
 		const cmd = args.shift().toLowerCase();
@@ -15,7 +15,7 @@ module.exports = {
 
 
 		function executeCommand() {
-			command.execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice);
+			command.execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap);
 		}
 
 		function checkBotOwnerOnly() { // Checks if the user is bot owner if command is bot owner only

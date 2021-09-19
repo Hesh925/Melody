@@ -10,27 +10,31 @@ module.exports = {
 	category: "utilities",
 	usage: "",
 	args: {},
-	aliases: [], // type: Array
+	aliases: [ "bi" ], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(client, message, args, Discord, config, ezcolor, utils) {
+	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap) {
 		const core = os.cpus()[0];
-
 		if (!args[0]) {
 			var embed = new MessageEmbed()
 				.setThumbnail(client.user.displayAvatarURL())
 				.setColor(ezcolor.getColor("HEX", "blue"))
 				.addField("General", `
-					**❯ Client:** ${ client.user.tag } (${ client.user.id })
+					**❯ Client:** ${ client.user.tag } )
 					**❯ Uptime:** ${ prettyMilliseconds(client.uptime, {compact: true}) }
 					**❯ Version:** v${ packagefile["version"] }
 					**❯ Node.js:** ${ process.version }
 					**❯ Discord.js:** v${ djsversion }
 					**❯ Dependencies:** ${ Object.keys(packagefile.dependencies).length }\u200b`)
+
+				.addField("Music", `
+				**❯ Songs in queue:** ${ queueMap.length ? queueMap.length : "No queue" }
+				**❯ Player State:** ${ voicePlayer.state.status } `)
+
 				.addField("System", `
 					**❯ Platform:** ${ process.platform }
 					**❯ Uptime:** ${ ms(os.uptime() * 1000, { long: true }) }
@@ -41,8 +45,7 @@ module.exports = {
 					\u3000 Speed: ${ core.speed }MHz
 					**❯ Memory:**
 					\u3000 Total: ${ utils.formatBytes(process.memoryUsage().heapTotal) }
-					\u3000 Used: ${ utils.formatBytes(process.memoryUsage().heapUsed) }`
-				)
+					\u3000 Used: ${ utils.formatBytes(process.memoryUsage().heapUsed) } `)
 				.setTimestamp();
 			message.channel.send( {embeds: [ embed ] } );
 		} else {

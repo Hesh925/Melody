@@ -1,0 +1,4 @@
+sudo docker stop melody
+git pull
+sudo docker build -t melody ../../.
+sudo docker run --env-file ../../../.melody.env --name melody -d --rm --network="host" -it melody
