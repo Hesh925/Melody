@@ -11,7 +11,7 @@ const opusEncoder = new OpusEncoder(48000, 2);
 if (args[0] === "-dev") {
 	var TOKEN = process.env.DISCORD_TOKEN_MELODY_DEV;
 } else{ 
-	var TOKEN = process.env.DISCORD_TOKEN_MELODY || (args[3]).slice(1);
+	var TOKEN = process.env.DISCORD_TOKEN_MELODY || (args[2]).slice(1);
 }
 const queueArray = new Map;
 client.commands = new Discord.Collection();
