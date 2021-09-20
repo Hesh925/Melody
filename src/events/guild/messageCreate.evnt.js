@@ -2,13 +2,15 @@ const config = require("../../config/CONFIG.json");
 const timeout = config["messageDeleteTimeout"];
 const ezcolor = require("djs-easy-color");
 const utils = require("djs-utils");
-
+const env = process.argv.slice(2)[0] === "-dev" ? "dev" : "prod";
 
 module.exports = {
 	name: "messageCreate",
 	async execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueMap, message) {
-		if (!message.content.startsWith(config["PREFIX"]) || message.author.bot) return;
-		const args = message.content.slice(config["PREFIX"].length).split(/ +/);
+		utils.messageLog(message);
+		if (!message.content.startsWith(config.envSettings[env].PREFIX) || message.author.bot) return;
+
+		const args = message.content.slice(config.envSettings[env].PREFIX.length).split(/ +/);
 		const cmd = args.shift().toLowerCase();
 		if (cmd.length === 0) return;
 		const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd));
@@ -45,8 +47,9 @@ module.exports = {
 		}
 
 		function checkUserPerms() { // Checks if the command is disabled
-			if (message.member.hasPermission(command.userPerms, true)) return true; // User has perms
-			else return false; // User does not have perms
+			return true;
+			//if (message.member.hasPermission(command.userPerms, true)) return true; // User has perms
+			//else return false; // User does not have perms
 		}
 
 		function checkAll() { // Checks that the command can be executed

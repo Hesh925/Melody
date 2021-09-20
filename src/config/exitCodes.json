@@ -1,0 +1,50 @@
+{
+    "1": {
+        "description": "Uncaught Fatal Exception",
+        "killBot": true
+    },
+    "3": {
+        "description": "Internal JavaScript Parse Error",
+        "killBot": false
+    },
+    "4": {
+        "description": "Internal JavaScript Evaluation Failure",
+        "killBot": false
+    },
+    "5": {
+        "description": "Fatal Error",
+        "killBot": false
+    },
+    "6": {
+        "description": "Non-function Internal Exception Handler",
+        "killBot": false
+    },
+    "9": {
+        "description": "Invalid Argument",
+        "killBot": false
+    },
+    "10": {
+        "description": "Internal JavaScript Run-Time Failure",
+        "killBot": false
+    },
+    "13": {
+        "description": "Unfinished Top-Level Await",
+        "killBot": false
+    },
+    "200": {
+        "description": "MongoDB Error",
+        "killBot": true
+    },
+    "998": {
+        "description": "Manually restarted",
+        "killBot": false
+    },
+    "999": {
+        "description": "Manually killed",
+        "killBot": true
+    },
+    "3221225786": {
+        "description": "Nodemon",
+        "killBot": true
+    }
+}

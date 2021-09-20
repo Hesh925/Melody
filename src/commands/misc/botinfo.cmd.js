@@ -24,7 +24,7 @@ module.exports = {
 				.setThumbnail(client.user.displayAvatarURL())
 				.setColor(ezcolor.getColor("HEX", "blue"))
 				.addField("General", `
-					**❯ Client:** ${ client.user.tag } )
+					**❯ Client:** ${ client.user.tag }
 					**❯ Uptime:** ${ prettyMilliseconds(client.uptime, {compact: true}) }
 					**❯ Version:** v${ packagefile["version"] }
 					**❯ Node.js:** ${ process.version }
@@ -49,7 +49,7 @@ module.exports = {
 				.setTimestamp();
 			message.channel.send( {embeds: [ embed ] } );
 		} else {
-			if (args[0].toLowerCase() === "d") {
+			if (args[0].toLowerCase() === "-d") {
 				var embed = new MessageEmbed()
 					.setTitle("Bot Dependencies")
 					.setThumbnail(client.user.displayAvatarURL())

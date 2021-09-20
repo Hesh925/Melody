@@ -1,4 +1,5 @@
 const Package = require("../../../package.json");
+const config = require("../../config/CONFIG.json");
 const utils = require("djs-utils");
 
 module.exports = {
@@ -13,11 +14,14 @@ module.exports = {
 			`Bot Name:        "${ Package["name"] }"\n`,
 			`Bot Version:     "${ Package["version"] }"\n`,
 			`Bot Description: "${ Package["description"] }"\n`,
-			`Bot Author:      "${ Package["author"] }"\n\n`,
+			`Bot Author:      "${ Package["author"] }"\n`,
+			`Bot environment: "${ process.argv.slice(2)[0] === "-dev" ? "DEV" : "PROD" }"\n\n`,
 			`Bot online! Current time: ${ (date).toLocaleTimeString() }\n\n`,
 			`Loaded ${ command } commands!\n`,
 			`Loaded ${ event } events!\n`);
 		utils.log("Bot started");
+		
+		utils.setRichPresence(client, config);
 
 		if (process.argv[2] === "--git") {
 			console.log("Process started successfully: Now exiting with code \"0\" ");

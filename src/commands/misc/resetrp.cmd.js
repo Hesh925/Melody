@@ -1,18 +1,20 @@
 module.exports = {
-	name: "nowplaying",
-	description: "",
-	usage: "<> is strict & [] is optional",
+	name: "resetrp",
+	description: "Resets rich presence",
+	usage: "",
 	args: {},
-	category: "music",
+	category: "misc",
 	aliases: [], // type: Array
 	userPerms: [], // type: Array
-	ownerOnly: false, // type: Boolean
+	ownerOnly: true, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
 	// eslint-disable-next-line no-unused-vars
 	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice) {
-		message.channel.send("NowPlaying command").then(message => { message.delete({ timeout: 5000 }); });
+		
+		utils.setRichPresence(client, config);
+		message.channel.send("Reset Rich Presence");
 	}
 };

@@ -1,10 +1,27 @@
 {
-    "PREFIX": "~",
     "BotOwnerID": "575844183546265609",
     "inviteLink": "https://discord.com/oauth2/authorize?client_id=882121214213111879&scope=bot&permissions=8",
     "messageDeleteTimeout": 5000,
     "TESTING_GUILD": {
         "Name": "Bot Testing",
         "ID": "762827810581774387"
+    },
+    
+    "envSettings": {
+        "prod": {
+            "PREFIX": "~",
+            "status": {
+                "type": 2,
+                "status": "To music"
+            }
+        },
+
+        "dev": {
+            "PREFIX": "`",
+            "status": {
+                "type": 0,
+                "status":"123"
+            }
+        }
     }
 }

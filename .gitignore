@@ -2,5 +2,6 @@ node_modules
 .env
 .vscode/settings.json
 /log
-.log
+**.log
 .DS_Store
+output.log

@@ -1,5 +1,4 @@
 /* eslint-disable prefer-named-capture-group */
-const ytSearch = require("../../utils/ytSearch");
 function numberWithCommas(x) {
 	var parts = x.toString().split(".");
 	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -22,7 +21,7 @@ module.exports = {
 	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap) {
 		message.suppressEmbeds(true);
 		if (args !== []) {
-			const videoData = await ytSearch(args);
+			const videoData = await utils.ytSearch(args);
 			if (videoData !== null) {
 				const embed = new Discord.MessageEmbed()
 					.setTitle(String(videoData.title))
