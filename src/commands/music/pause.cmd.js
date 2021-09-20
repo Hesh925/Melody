@@ -3,7 +3,7 @@ module.exports = {
 	description: "",
 	usage: "<> is strict & [] is optional",
 	args: {},
-	category: "owner",
+	category: "music",
 	aliases: [], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean

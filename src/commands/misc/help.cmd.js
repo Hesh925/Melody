@@ -5,7 +5,7 @@ module.exports = {
 	description: "Displays the help screen for a command",
 	usage: "[command]",
 	args: {},
-	category: "misc",
+	category: "utilities",
 	aliases: [ "h" ], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean

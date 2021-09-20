@@ -13,6 +13,6 @@ module.exports = {
 	disabledReason: "",
 	// eslint-disable-next-line no-unused-vars
 	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice) {
-		message.channel.send("NowPlaying command").then(message => { message.delete({ timeout: 5000 }); });
+		message.channel.send(this.name + "command not setup yet").then(message => { message.delete({ timeout: 5000 }); });
 	}
 };

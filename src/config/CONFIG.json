@@ -12,7 +12,9 @@
             "PREFIX": "~",
             "status": {
                 "type": 2,
-                "status": "To music"
+                "status": "music",
+                "statusType": "0"
+            
             }
         },
 
@@ -20,7 +22,8 @@
             "PREFIX": "`",
             "status": {
                 "type": 0,
-                "status":"123"
+                "status":"status",
+                "statusType": "2"
             }
         }
     }

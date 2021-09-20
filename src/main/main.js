@@ -20,5 +20,4 @@ client.events = new Discord.Collection();
 [ "command_handler", "event_handler", "process_handler" ].forEach(handler => {
 	require(`../handlers/${ handler }`)(client, Discord, opusEncoder, voicePlayer, DJSVoice, queueArray);
 });
-
 client.login(TOKEN);

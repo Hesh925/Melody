@@ -1,10 +1,11 @@
+const util = require("djs-utils");
 module.exports = {
 	name: "resetrp",
 	description: "Resets rich presence",
 	usage: "",
 	args: {},
 	category: "misc",
-	aliases: [], // type: Array
+	aliases: [ "rp" ], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: true, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
@@ -13,8 +14,11 @@ module.exports = {
 	disabledReason: "",
 	// eslint-disable-next-line no-unused-vars
 	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice) {
+		const types = [ "PLAYING", "STREAMING", "LISTENING", "WATCHING", "COMPETING" ];
+		const statusTypes = [ "online", "idle", "dnd", "invisible" ];
+		const env = process.argv.slice(2)[0] === "-dev" ? "dev" : "prod";
+		client.user.setPresence({ activities: [ { name: config.envSettings[env].status.status, type: types[config.envSettings[env].status.type] } ], status: statusTypes[config.envSettings[env].status.statusType] });
 		
-		utils.setRichPresence(client, config);
-		message.channel.send("Reset Rich Presence");
+		console.log(config.envSettings[env].status.status);
 	}
-};
+}
