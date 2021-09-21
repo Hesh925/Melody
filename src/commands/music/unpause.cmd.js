@@ -1,10 +1,10 @@
 module.exports = {
-	name: "pause",
-	description: "Pauses the music player",
+	name: "unpause",
+	description: "Unpauses the music player",
 	usage: "<> is strict & [] is optional",
 	args: {},
 	category: "music",
-	aliases: [], // type: Array
+	aliases: [ "up" ], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
@@ -16,13 +16,12 @@ module.exports = {
 		if (message.member.voice.channel !== null) {
 			if (voicePlayer.subscribers.length !== 0) {
 				console.log(voicePlayer.state.status === "paused");
-				voicePlayer.pause();
-				message.channel.send("Paused playback");
+				voicePlayer.unpause();
+				message.channel.send("Unpaused playback");
 			} else {
 				message.channel.send("Nothing is playing");
 			}
-
 			console.log(voicePlayer);
-		} 
+		}
 	}
 };

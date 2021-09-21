@@ -15,7 +15,7 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap) {
+	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying) {
 
 		if (message.member.voice.channel !== null) {
 			client.commands.get("join").execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice); // Call join command 
@@ -30,11 +30,13 @@ module.exports = {
 				
 				if(resp !== null) {
 					const videoData = resp["items"][0];
+					nowPlaying["0"] = videoData;
+
 					const resource = DJSVoice.createAudioResource(ytdl(videoData.url, { filter: "audioonly" }));
 					voicePlayer.play(resource);
 					try {
 						await DJSVoice.entersState(voicePlayer, DJSVoice.AudioPlayerStatus.Playing);
-						client.commands.get("nowplaying").execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice); // Call nowPlaying command
+						client.commands.get("nowplaying").execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying); // Call nowPlaying command
 						console.log("Playback has started!");
 					} catch (error) {
 						message.channel.send("An error has occurred");

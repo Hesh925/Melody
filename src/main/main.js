@@ -14,10 +14,11 @@ if (args[0] === "-dev") {
 	var TOKEN = process.env.DISCORD_TOKEN_MELODY || (args[2]).slice(1);
 }
 const queueArray = new Map;
+const nowPlaying = {};
 client.commands = new Discord.Collection();
 client.events = new Discord.Collection();
 
-[ "command_handler", "event_handler", "process_handler" ].forEach(handler => {
-	require(`../handlers/${ handler }`)(client, Discord, opusEncoder, voicePlayer, DJSVoice, queueArray);
+[ "command_handler", "event_handler", "process_handler", "player_event_handler" ].forEach(handler => {
+	require(`../handlers/${ handler }`)(client, Discord, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying);
 });
 client.login(TOKEN);

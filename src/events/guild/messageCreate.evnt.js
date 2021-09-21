@@ -6,7 +6,7 @@ const env = process.argv.slice(2)[0] === "-dev" ? "dev" : "prod";
 
 module.exports = {
 	name: "messageCreate",
-	async execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueMap, message) {
+	async execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying, message) {
 		utils.messageLog(message);
 		if (!message.content.startsWith(config.envSettings[env].PREFIX) || message.author.bot) return;
 
@@ -17,7 +17,7 @@ module.exports = {
 
 
 		function executeCommand() {
-			command.execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap);
+			command.execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying);
 		}
 
 		function checkBotOwnerOnly() { // Checks if the user is bot owner if command is bot owner only
