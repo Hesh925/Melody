@@ -25,7 +25,7 @@ module.exports = {
 
 		function checkBotOwnerOnly() { // Checks if the user is bot owner if command is bot owner only
 			if (command.botOwnerOnly) { // Check if command is bot owner only
-				if (utils.isBotOwner(message)) return true; // Is bot owner
+				if (message.author.id === config.BotOwnerID) return true; // Is bot owner
 				else return false; // Is not bot owner
 			} else return true; // Not a bot owner only command
 		}
@@ -88,16 +88,15 @@ module.exports = {
 				});
 			});
 		}
-		if (utils.isBotOwner(message)) {
+		if (message.author.id === config.BotOwnerID) {
 			if (command) executeCommand();
 			else {
-				var commandArray = new Array(client.commands);
-				message.reply(`The command "${ cmd }" is not a valid command, Did you mean: ${ utils.fuzzySearch(cmd, commandArray, "name", client) }`); // .then(message => { message.delete({ timeout: timeout }) });
+				message.reply(`The command "${ cmd }" is not a valid command.`); // .then(message => { message.delete({ timeout: timeout }) });
 			}
 		} else {
 			if (command) checkAll();
 			else {
-				message.reply(`The command "${ cmd }" is not a valid command, Did you mean: ${ utils.fuzzySearch(cmd, commandArray, "name") }`); // .then(message => { message.delete({ timeout: timeout }) });
+				message.reply(`The command "${ cmd }" is not a valid command.`); // .then(message => { message.delete({ timeout: timeout }) });
 			}
 		}
 	}

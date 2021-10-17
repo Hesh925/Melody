@@ -1,6 +1,6 @@
 module.exports = {
-	name: "pause",
-	description: "Pauses the music player",
+	name: "stop",
+	description: "Stops the music player",
 	usage: "<> is strict & [] is optional",
 	args: {},
 	category: "music",
@@ -12,12 +12,12 @@ module.exports = {
 	disabled: false, // type: Boolean
 	disabledReason: "",
 	// eslint-disable-next-line no-unused-vars
-	async execute(_client, message, _args, _Discord, _config, _ezcolor, _utils, _opusEncoder, voicePlayer, _DJSVoice, _queueMap) {
+	async execute(_client, message, _args, _Discord, _config, _ezcolor, _utils, _opusEncoder, voicePlayer, DJSVoice, _queueMap) {
 		if (message.member.voice.channel !== null) {
 			if (voicePlayer.subscribers.length !== 0) {
-				voicePlayer.pause();
+				voicePlayer.stop();
 				console.log(voicePlayer.state.status === "paused");
-				message.channel.send("Paused playback");
+				message.channel.send("Playback stopped");
 			} else {
 				message.channel.send("Nothing is playing");
 			}

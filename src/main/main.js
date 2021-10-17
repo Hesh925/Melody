@@ -8,9 +8,8 @@ const utils = require("djs-utils");
 const voicePlayer = DJSVoice.createAudioPlayer();
 const opusEncoder = new OpusEncoder(48000, 2);
 
-
 if (utils.searchArgv("env", true) === "dev") {
-	var TOKEN = process.env.DISCORD_TOKEN_MELODY_DEV;
+	var TOKEN = process.env.DISCORD_TOKEN_MELODY_DEV || utils.searchArgv("token", true);
 } else { 
 	var TOKEN = process.env.DISCORD_TOKEN_MELODY || utils.searchArgv("token", true);
 }
@@ -24,4 +23,10 @@ client.playerEvents = new Discord.Collection();
 [ "command_handler", "event_handler", "process_handler", "player_event_handler" ].forEach(handler => {
 	require(`../handlers/${ handler }`)(client, Discord, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying);
 });
-client.login(TOKEN);
+
+if (utils.notNull(TOKEN)) {
+	client.login(TOKEN);
+} else {
+	console.log("ERROR: No token provided");
+	process.exit(1);
+}

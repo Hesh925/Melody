@@ -1,10 +1,18 @@
-const fs = require("fs");
+const buffering = require("./playerStates/buffering.state.js");
+const idle = require("./playerStates/idle.state.js");
+const playing = require("./playerStates/playing.state.js");
 module.exports = {
 	name: "stateChange",
-	execute(_Discord, _client, _opusEncoder, _voicePlayer, _DJSVoice, _queueArray, nowPlaying, oldState, newState) {
-		const stateFiles = fs.readdirSync("./src/events/player/playerStates").filter(file => file.endsWith(".state.js"));
-		console.log(`oldState: ${ oldState.status }`);
-		console.log(`newState: ${ newState.status }`);
-
+	execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, oldState, newState) {
+		
+		if(newState.status === "buffering") {
+			buffering.execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, oldState, newState);
+		}
+		if(newState.status === "idle") {
+			idle.execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, oldState, newState);
+		}
+		if(newState.status === "playing") {
+			playing.execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, oldState, newState);
+		}
 	}
 };

@@ -17,6 +17,7 @@ module.exports = {
 		// if(message.author.id === message.guild.ownerId) console.log("owner");
 		// if(message.member.voice.channel !== null) console.log("in channel");
 		// else console.log("not in channel");
-		voicePlayer.state.resource.playStream.setVolume(0.1);
-	 }
+		//voicePlayer.state.resource.playStream.setVolume(0.1);
+		console.log(message.member.voice.channel.bitrate); 
+	}
 };

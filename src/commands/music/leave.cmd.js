@@ -17,6 +17,7 @@ module.exports = {
 			if (message.member.voice.channel) {
 				if(message.member.voice.channel.id === connection.joinConfig.channelId) {
 					connection.destroy();
+					voicePlayer.stop();
 				} else {
 					message.channel.send("You must be in the same channel as the bot to use this command");
 				}

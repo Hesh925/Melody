@@ -14,14 +14,12 @@ module.exports = {
 	// eslint-disable-next-line no-unused-vars
 	async execute(_client, message, _args, _Discord, _config, _ezcolor, _utils, _opusEncoder, voicePlayer, _DJSVoice, _queueMap) {
 		if (message.member.voice.channel !== null) {
-			if (voicePlayer.subscribers.length !== 0) {
-				console.log(voicePlayer.state.status === "paused");
+			if(voicePlayer.state.status === "paused") {
 				voicePlayer.unpause();
 				message.channel.send("Unpaused playback");
 			} else {
 				message.channel.send("Nothing is playing");
 			}
-			console.log(voicePlayer);
 		}
 	}
 };
