@@ -4,7 +4,8 @@ module.exports = (client, Discord, opusEncoder, voicePlayer, DJSVoice, queueArra
 
 	for (const file of eventFiles) {
 		const event = require(`../events/player/${ file }`);
-		client.events.set(event);
+		client.playerEvents.set(event);
+
 		if (event.once) {
 			voicePlayer.once(event.name, (...args) => event.execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, ...args));
 		} else {

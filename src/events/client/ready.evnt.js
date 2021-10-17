@@ -15,7 +15,7 @@ module.exports = {
 			`Bot Version:     "${ Package["version"] }"\n`,
 			`Bot Description: "${ Package["description"] }"\n`,
 			`Bot Author:      "${ Package["author"] }"\n`,
-			`Bot environment: "${ process.argv.slice(2)[0] === "-dev" ? "DEV" : "PROD" }"\n\n`,
+			`Bot environment: "${ utils.searchArgv("env", true) === "dev" ? "DEV" : "PROD" }"\n\n`,
 			`Bot online! Current time: ${ (date).toLocaleTimeString() }\n\n`,
 			`Loaded ${ command } commands!\n`,
 			`Loaded ${ event } events!\n`);
@@ -23,7 +23,7 @@ module.exports = {
 		
 		utils.setRichPresence(client, config);
 
-		if (process.argv[2] === "--git") {
+		if (utils.searchArgv("git")) {
 			console.log("Process started successfully: Now exiting with code \"0\" ");
 			process.exit(0);
 		}

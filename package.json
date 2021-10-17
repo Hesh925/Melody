@@ -9,9 +9,9 @@
     "nodemon": "nodemon . -e .js",
     "shard": "node ./src/main/shard.js",
     "build": "python3 ./docker/build/docker_build.py",
-    "run-DEV": "node . -dev",
-    "nodemon-DEV": "nodemon . -e .js -dev",
-    "shard-DEV": "node ./src/main/shard.js -dev"
+    "run-DEV": "node . -env dev",
+    "nodemon-DEV": "nodemon . -e .js -env dev",
+    "shard-DEV": "node ./src/main/shard.js -env dev"
   },
   "repository": {
     "type": "git",

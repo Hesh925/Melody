@@ -15,8 +15,8 @@ module.exports = {
 	async execute(_client, message, _args, _Discord, _config, _ezcolor, _utils, _opusEncoder, voicePlayer, _DJSVoice, _queueMap) {
 		if (message.member.voice.channel !== null) {
 			if (voicePlayer.subscribers.length !== 0) {
-				console.log(voicePlayer.state.status === "paused");
 				voicePlayer.pause();
+				console.log(voicePlayer.state.status === "paused");
 				message.channel.send("Paused playback");
 			} else {
 				message.channel.send("Nothing is playing");

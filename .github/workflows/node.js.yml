@@ -22,4 +22,4 @@ jobs:
       with: 
         node-version: ${{ matrix.node-version }}
     - run: npm i
-    - run: node ./src/main/main.js --git -${{ secrets.DISCORD_TOKEN }}
+    - run: node ./src/main/main.js -git -token ${{ secrets.DISCORD_TOKEN }}

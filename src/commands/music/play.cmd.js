@@ -1,7 +1,13 @@
+/* eslint-disable prefer-named-capture-group */
 const path = require("path");
 const fs = require("fs");
 const ytdl = require("ytdl-core");
 const ytsr = require("ytsr");
+function numberWithCommas(x) {
+	var parts = x.toString().split(".");
+	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	return parts.join(".");
+}
 module.exports = {
 	name: "play",
 	description: "play a track in the current voice",
@@ -16,7 +22,7 @@ module.exports = {
 	disabled: false, // type: Boolean
 	disabledReason: "",
 	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying) {
-
+		message.suppressEmbeds(true);
 		if (message.member.voice.channel !== null) {
 			client.commands.get("join").execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice); // Call join command 
 			const connection = await DJSVoice.getVoiceConnection(message.guild.id); // Get connection
@@ -36,8 +42,22 @@ module.exports = {
 					voicePlayer.play(resource);
 					try {
 						await DJSVoice.entersState(voicePlayer, DJSVoice.AudioPlayerStatus.Playing);
-						client.commands.get("nowplaying").execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying); // Call nowPlaying command
-						console.log("Playback has started!");
+						
+						const embed = new Discord.MessageEmbed()
+							.setTitle(String(videoData.title))
+							.setURL(videoData.url)
+							.setAuthor("Now Playing:")
+							.setDescription(`**Title:** ${ videoData.title }
+										**Length:** ${ videoData.duration === null ? "Probably a livestream" : videoData.duration }
+										**Views:** ${ numberWithCommas(videoData.views) }
+										**Uploaded:** ${ videoData.uploadedAt }`)
+							.setImage(videoData.bestThumbnail.url)
+							.setColor("1049ed")
+							.setFooter(`Requested by: ${ message.author.username }`,  message.author.displayAvatarURL({ dynamic: true }))
+							.setTimestamp();
+						message.channel.send({ embeds: [ embed ] });
+						
+						// Console.log("Playback has started!");
 					} catch (error) {
 						message.channel.send("An error has occurred");
 						console.error(error);

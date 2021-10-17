@@ -2,6 +2,7 @@
     "BotOwnerID": "575844183546265609",
     "inviteLink": "https://discord.com/oauth2/authorize?client_id=882121214213111879&scope=bot&permissions=8",
     "messageDeleteTimeout": 5000,
+    "channelTimeout": 5,
     "TESTING_GUILD": {
         "Name": "Bot Testing",
         "ID": "762827810581774387"
@@ -12,19 +13,20 @@
             "PREFIX": "~",
             "status": {
                 "type": 2,
-                "status": "music",
+                "status": "super cool music",
                 "statusType": "0"
-            
-            }
+            },
+            "ignoredChannels": ["882457622031237201"]
         },
 
         "dev": {
             "PREFIX": "`",
             "status": {
                 "type": 0,
-                "status":"status",
+                "status":"Dev boi",
                 "statusType": "2"
-            }
+            },
+            "ignoredChannels": [""]
         }
     }
 }
