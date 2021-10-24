@@ -17,8 +17,8 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	// eslint-disable-next-line no-unused-vars
-	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying) {
+	async execute(_client, message, _args, Discord, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, _DJSVoice, _queueMap, nowPlaying, lastMessage) {
+		lastMessage[0] = message;
 		const videoData = nowPlaying["0"];
 		if (videoData !== null) {
 			const embed = new Discord.MessageEmbed()

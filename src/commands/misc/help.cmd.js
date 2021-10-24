@@ -13,7 +13,7 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(client, message, args, _Discord, config, _ezcolor, utils) {
+	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying, lastMessage) {
 
 		const embed = new MessageEmbed()
 			.setColor("BLUE")
@@ -38,10 +38,10 @@ module.exports = {
 					**❯ Usage:** ${ config.PREFIX }${ cmd.name } ${ cmd.usage }
 					**❯ Required Permissions:** ${ cmd.userPerms.length ? `[${ cmd.userPerms }]` : "No Permissions" }
 					**❯ OwnerOnly:** ${ utils.capitalize(cmd.ownerOnly) }
-					**❯ NSFW:** ${ utils.capitalize(cmd.nsfw) }
-					**❯ Is Disabled:** ${ utils.capitalize(cmd.disabled) }`
+					**❯ NSFW:** ${ utils.capitalize(cmd.nsfw) }`
+					// **❯ Is Disabled:** ${ utils.capitalize(cmd.disabled) }`
 				);
-				console.log(Object.keys(cmd.args).length);
+				// console.log(Object.keys(cmd.args).length);
 				// eslint-disable-next-line no-undefined
 				if(Object.keys(cmd.args).length !== 0) {
 					embed.addField("**Arguments**", "\u200b");

@@ -25,7 +25,7 @@
     "asyncio": "0.0.2",
     "date-and-time": "^1.0.0",
     "discord-rpc": "^4.0.1",
-    "discord.js": "^13.1.0",
+    "discord.js": "^13.2.0",
     "djs-easy-color": "^1.2.0",
     "djs-utils": "git+https://github.com/Havoc925/DJS-Utils.git",
     "libsodium-wrappers": "^0.7.9",

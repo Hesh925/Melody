@@ -7,11 +7,14 @@ const env = utils.searchArgv("env", true) === "dev" ? "dev" : "prod";
 
 module.exports = {
 	name: "messageCreate",
-	async execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying, message) {
+	async execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying, lastMessage, message) {
 		utils.messageLog(message);
 		//if ((config.envSettings[env].ignoredChannels).indexOf(message.channelID)) return; // Check to see if channel is ignored
+		if (message.content.startsWith("ghost ping")) message.delete();
 
 		if (!message.content.startsWith(config.envSettings[env].PREFIX) || message.author.bot) return; // Make sure message starts with prefix and author is not a bot
+
+		message.suppressEmbeds(true);
 
 		const args = message.content.slice(config.envSettings[env].PREFIX.length).split(/ +/);
 		const cmd = args.shift().toLowerCase();
@@ -20,7 +23,7 @@ module.exports = {
 
 
 		function executeCommand() {
-			command.execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying);
+			command.execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying, lastMessage);
 		}
 
 		function checkBotOwnerOnly() { // Checks if the user is bot owner if command is bot owner only

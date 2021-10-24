@@ -1,10 +1,9 @@
-const util = require("djs-utils");
 module.exports = {
 	name: "resetrp",
 	description: "Resets rich presence",
 	usage: "",
 	args: {},
-	category: "misc",
+	category: "owner",
 	aliases: [ "rp" ], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: true, // type: Boolean
@@ -16,9 +15,9 @@ module.exports = {
 	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice) {
 		const types = [ "PLAYING", "STREAMING", "LISTENING", "WATCHING", "COMPETING" ];
 		const statusTypes = [ "online", "idle", "dnd", "invisible" ];
-		const env = process.argv.slice(2)[0] === "-dev" ? "dev" : "prod";
+		const env = utils.searchArgv("env", true) === "dev" ? "dev" : "prod";
 		client.user.setPresence({ activities: [ { name: config.envSettings[env].status.status, type: types[config.envSettings[env].status.type] } ], status: statusTypes[config.envSettings[env].status.statusType] });
 		
 		console.log(config.envSettings[env].status.status);
 	}
-}
+};

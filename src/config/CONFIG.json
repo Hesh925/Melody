@@ -10,7 +10,7 @@
     
     "envSettings": {
         "prod": {
-            "PREFIX": "~",
+            "PREFIX": "@",
             "status": {
                 "type": 2,
                 "status": "super cool music",

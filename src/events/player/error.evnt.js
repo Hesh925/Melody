@@ -1,6 +1,6 @@
 module.exports = {
 	name: "error",
-	execute(_Discord, _client, _opusEncoder, _voicePlayer, _DJSVoice, _queueArray, error) {
+	execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, lastMessage, error) {
 		console.log(error);
 		console.log("caught this error");
 	}
