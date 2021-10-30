@@ -13,7 +13,7 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying, lastMessage) {
+	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying) {
 
 		const embed = new MessageEmbed()
 			.setColor("BLUE")

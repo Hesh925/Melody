@@ -29,6 +29,7 @@
     "djs-easy-color": "^1.2.0",
     "djs-utils": "git+https://github.com/Havoc925/DJS-Utils.git",
     "libsodium-wrappers": "^0.7.9",
+    "mongoose": "^6.0.12",
     "ms": "^2.1.3",
     "opusscript": "0.0.8",
     "os": "^0.1.1",

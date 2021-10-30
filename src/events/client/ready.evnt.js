@@ -1,5 +1,6 @@
 const Package = require("../../../package.json");
 const config = require("../../config/CONFIG.json");
+const queueModel = require("../../models/queue.schema.js");
 const utils = require("djs-utils");
 
 module.exports = {
@@ -20,12 +21,19 @@ module.exports = {
 			`Loaded ${ command } commands!\n`,
 			`Loaded ${ event } events!\n`);
 		utils.log("Bot started");
-		
 		utils.setRichPresence(client, config);
-
+		
+		
 		if (utils.searchArgv("git")) {
 			console.log("Process started successfully: Now exiting with code \"0\" ");
 			process.exit(0);
-		}
+		} //else {
+		//	try {
+		//		queueModel.collection.drop().then(console.log(" Dropped queue collection\n"));
+		//	} catch(err) {
+		//		console.log("Could not drop queue collection");
+		//		console.log(err);
+		//	}
+		//}
 	}
 };

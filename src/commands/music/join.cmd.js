@@ -11,8 +11,7 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(_client, message, _args, _Discord, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, DJSVoice, _queueMap, _nowPlaying, lastMessage) {
-		//lastMessage[0] = message;
+	async execute(_client, message, _args, _Discord, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, DJSVoice, _queueMap, _nowPlaying) {
 		if (message.member.voice.channel !== null) {
 			DJSVoice.joinVoiceChannel({
 				channelId: message.member.voice.channel.id,

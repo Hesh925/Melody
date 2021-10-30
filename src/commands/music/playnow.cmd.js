@@ -11,8 +11,7 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying, lastMessage) {
-		lastMessage[0] = message;
+	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying) {
 		const connection = DJSVoice.getVoiceConnection(message.guild.id);
 		if (message.member.voice.channel.id === connection.joinConfig.channelId) {
 			if (voicePlayer.state.status === "playing") {

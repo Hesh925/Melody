@@ -18,8 +18,7 @@ module.exports = {
 	disabled: false, // type: Boolean
 	disabledReason: "",
 	// eslint-disable-next-line no-unused-vars
-	async execute(_client, message, args, Discord, _config, _ezcolor, utils, _opusEncoder, _voicePlayer, _DJSVoice, _queueMap, _nowPlaying, lastMessage) {
-		lastMessage[0] = message;
+	async execute(_client, message, args, Discord, _config, _ezcolor, utils, _opusEncoder, _voicePlayer, _DJSVoice, _queueMap, _nowPlaying) {
 		message.suppressEmbeds(true);
 		if (args !== []) {
 			const videoData = await utils.ytSearch(args);
