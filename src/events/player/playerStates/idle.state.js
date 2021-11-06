@@ -1,32 +1,20 @@
 const utils = require("djs-utils");
-const ytdl = require("ytdl-core");
-const ytsr = require("ytsr");
+const ezcolor = require("djs-easy-color");
+const config = require("../../../config/CONFIG.json");
+
+const guildModel = require("../../../models/guild.schema.js");
+const queueModel = require("../../../models/queue.schema.js");
 module.exports = {
 	name: "idle",
-	async execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying, lastMessage, oldState, newState) {
-		if(oldState.status === "playing") {
-			if(queueMap.length !== 0) {
-				const connection = await DJSVoice.getVoiceConnection(lastMessage.guildId); // Get connection
-				connection.subscribe(voicePlayer); // Create subscription
-				const searchTerm = String(queueMap[0]).replace(/,/g, " ");
-				queueMap.shift();
-				if(searchTerm !== "" ) {
-					const filter = await ytsr.getFilters(searchTerm);
-					const filter1 = filter.get("Type").get("Video");
-					const resp = await ytsr(filter1.url, {limit: 1, pages : 1});
-			
-					if(resp !== null) {
-						const videoData = resp["items"][0];
-						nowPlaying["0"] = videoData;
-			
-						const resource = DJSVoice.createAudioResource(ytdl(videoData.url, { filter: "audioonly", quality: "highestaudio" }));
-						voicePlayer.play(resource);
-						utils.musicLog(videoData.title);
-					}
-				}
-			}
+	async execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState, newState) {
+		const res = await queueModel.find({ guildID: oldState.resource.metadata.guildId }).sort({queuePos: 1}).limit(1).then(( [ res ] ) => { if(res) { return res; } else return null; });
+		if (res !== null) {
+			client.commands.get("play").execute(client, null, null, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, res, nowPlaying);
 		} else {
-			console.log("finished playing");
+			if(oldState.status === "playing") {
+				try { await guildModel.findOneAndUpdate({ guildID: oldState.resource.metadata.guildId }, { playing: false }); } catch (err) { utils.log(err); }
+				console.log("finished playing");
+			}
 		}
 	}
 };

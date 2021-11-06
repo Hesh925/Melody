@@ -4,10 +4,12 @@ module.exports = (client, Discord) => {
 
 	for (const file of eventFiles) {
 		const event = require(`../events/process/${ file }`);
-		const eventName = file.split(".")[0];
-		if (event !== null) {
-			client.events.set(event);
-			process.on(eventName, event.bind(null, Discord, client));
+		client.events.set(event);
+
+		if (event.once) {
+			process.once(event.name, (...args) => event.execute(client, Discord, ...args));
+		} else {
+			process.on(event.name, (...args) => event.execute(client, Discord, ...args));
 		}
 	}
 };

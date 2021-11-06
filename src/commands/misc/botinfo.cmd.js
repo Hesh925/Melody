@@ -17,10 +17,13 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying, lastMessage) {
+	allowSlash: true, 
+	options: [],
+	run: async (client, message, args, _Discord, _colors, _config, ezcolor, utils) => {
+		
 		const core = os.cpus()[0];
 		if (!args[0]) {
-			var embed = new MessageEmbed()
+			const embed = new MessageEmbed()
 				.setThumbnail(client.user.displayAvatarURL())
 				.setColor(ezcolor.getColor("HEX", "blue"))
 				.addField("General", `
@@ -30,10 +33,6 @@ module.exports = {
 					**❯ Node.js:** ${ process.version }
 					**❯ Discord.js:** v${ djsversion }
 					**❯ Dependencies:** ${ Object.keys(packagefile.dependencies).length }\u200b`)
-
-				.addField("Music", `
-				**❯ Songs in queue:** ${ queueMap.length ? queueMap.length : "No queue" }
-				**❯ Player State:** ${ voicePlayer.state.status } `)
 
 				.addField("System", `
 					**❯ Platform:** ${ process.platform }
@@ -47,10 +46,10 @@ module.exports = {
 					\u3000 Total: ${ utils.formatBytes(process.memoryUsage().heapTotal) }
 					\u3000 Used: ${ utils.formatBytes(process.memoryUsage().heapUsed) } `)
 				.setTimestamp();
-			message.channel.send( {embeds: [ embed ] } );
+			message.channel.send({ embed: embed });
 		} else {
 			if (args[0].toLowerCase() === "-d") {
-				var embed = new MessageEmbed()
+				const embed = new MessageEmbed()
 					.setTitle("Bot Dependencies")
 					.setThumbnail(client.user.displayAvatarURL())
 					.setColor(ezcolor.getColor("HEX", "blue"))
@@ -66,8 +65,36 @@ module.exports = {
 						embed.addField(`**❯ ${ element }:**`, version);
 					}
 				});
-				message.channel.send( {embeds: [ embed ] } );
+				message.channel.send({ embed: embed });
 			}
 		}
+	},
+
+	slash: async (client, interaction, _args, _Discord, _colors, _config, ezcolor, utils) => {
+		const core = os.cpus()[0];
+		const embed = new MessageEmbed()
+			.setThumbnail(client.user.displayAvatarURL())
+			.setColor(ezcolor.getColor("HEX", "blue"))
+			.addField("General", `
+				**❯ Client:** ${ client.user.tag }
+				**❯ Uptime:** ${ prettyMilliseconds(client.uptime, {compact: true}) }
+				**❯ Version:** v${ packagefile["version"] }
+				**❯ Node.js:** ${ process.version }
+				**❯ Discord.js:** v${ djsversion }
+				**❯ Dependencies:** ${ Object.keys(packagefile.dependencies).length }\u200b`)
+
+			.addField("System", `
+				**❯ Platform:** ${ process.platform }
+				**❯ Uptime:** ${ ms(os.uptime() * 1000, { long: true }) }
+				**❯ Process ID**: ${ process.pid }
+				**❯ CPU:**
+				\u3000 Cores: ${ os.cpus().length }
+				\u3000 Model: ${ core.model }
+				\u3000 Speed: ${ core.speed }MHz
+				**❯ Memory:**
+				\u3000 Total: ${ utils.formatBytes(process.memoryUsage().heapTotal) }
+				\u3000 Used: ${ utils.formatBytes(process.memoryUsage().heapUsed) } `)
+			.setTimestamp();
+		interaction.reply({ embeds: [ embed ] });
 	}
 };

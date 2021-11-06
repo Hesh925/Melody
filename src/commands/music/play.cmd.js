@@ -1,6 +1,4 @@
 /* eslint-disable prefer-named-capture-group */
-const path = require("path");
-const fs = require("fs");
 const ytdl = require("ytdl-core");
 const ytsr = require("ytsr");
 function numberWithCommas(x) {
@@ -22,66 +20,127 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying) {
-		async function play(searchTerm) {
+	allowSlash: true, 
+	options: [ {"String": { name: "song", description: "title or URL for the song you want to play", required: true }} ],
+	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying, nextInQueue) => {
+		const guildID = message ? message.guildId : nextInQueue.guildID;
+		const textCID = message ? message.channel.id : nextInQueue.textCID;
+		const searchFor = args ? args : nextInQueue.songURL;
+
+		function sendEmbed(videoData) {
+			const embed = new Discord.MessageEmbed()
+				.setTitle(String(videoData.title))
+				.setURL(videoData.url)
+				.setAuthor("Now Playing:")
+				.setDescription(`**Title:** ${ videoData.title }
+				**Length:** ${ videoData.duration === null ? "Probably a livestream" : videoData.duration }
+				**Views:** ${ numberWithCommas(videoData.views) }
+				**Uploaded:** ${ videoData.uploadedAt }`)
+				.setImage(videoData.bestThumbnail.url)
+				.setColor("1049ed")
+				.setTimestamp();
+			client.guilds.cache.find(guild => guild.id === guildID).channels.cache.find(channel => channel.id === textCID).send({ embeds: embed });
+		}
+
+
+		async function play() {
+			const connection = await DJSVoice.getVoiceConnection(guildID); // Get connection
+			connection.subscribe(voicePlayer); // Create subscription
+			
+			const searchTerm = String(searchFor).replace(/,/g, " ");
 			if(searchTerm !== "" ) {
 				const filter = await ytsr.getFilters(searchTerm);
 				const filter1 = filter.get("Type").get("Video");
 				const resp = await ytsr(filter1.url, {limit: 1, pages : 1});
-		
+				
 				if(resp !== null) {
 					const videoData = resp["items"][0];
 					nowPlaying["0"] = videoData;
-		
-					const resource = DJSVoice.createAudioResource(ytdl(videoData.url, { filter: "audioonly", quality: "highestaudio" }));
+					
+					const resource = DJSVoice.createAudioResource(ytdl(videoData.url, { filter: "audioonly", quality: "highestaudio" }), {
+						metadata: {
+							title:   videoData.title,
+							guildId: guildID,
+							textCId: textCID
+						}
+					});
 					voicePlayer.play(resource);
-					try {
-						await DJSVoice.entersState(voicePlayer, DJSVoice.AudioPlayerStatus.Playing);
-				
-						const embed = new Discord.MessageEmbed()
-							.setTitle(String(videoData.title))
-							.setURL(videoData.url)
-							.setAuthor("Now Playing:")
-							.setDescription(`**Title:** ${ videoData.title }
-								**Length:** ${ videoData.duration === null ? "Probably a livestream" : videoData.duration }
-								**Views:** ${ numberWithCommas(videoData.views) }
-								**Uploaded:** ${ videoData.uploadedAt }`)
-							.setImage(videoData.bestThumbnail.url)
-							.setColor("1049ed")
-							.setFooter(`Requested by: ${ message.author.username }`,  message.author.displayAvatarURL({ dynamic: true }))
-							.setTimestamp();
-						message.channel.send({ embeds: [ embed ] });
-				
-						// Console.log("Playback has started!");
-					} catch (error) {
-						message.channel.send("An error has occurred");
-						console.error(error);
-					}
+					sendEmbed(videoData);
 				}
 			} else {
-				message.channel.send("You must provide a search term");
+				client.guilds.cache.find(guild => guild.id === guildID).channels.cache.find(channel => channel.id === textCID).send("You must provide a search term");
 			}
 		}
-
-		message.suppressEmbeds(true);
-		if (utils.notNull(message)) {
+		
+		if (message !== null) {
+			message.suppressEmbeds(true);
 			if (message.member.voice.channel !== null) {
 				if(voicePlayer.state.status !== "playing") {
-					client.commands.get("join").execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice); // Call join command 
-					const connection = await DJSVoice.getVoiceConnection(message.guild.id); // Get connection
-					connection.subscribe(voicePlayer); // Create subscription
-
-					const searchTerm = String(args).replace(/,/g, " ");
-					play(searchTerm);
+					client.commands.get("join").execute(client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying); // Call join command 
+					play();
 				} else {
-					message.channel.send("A song is already playing use the \"playnow\" command");
-					// Add to queue
+					client.guilds.cache.find(guild => guild.id === guildID).channels.cache.find(channel => channel.id === textCID).send("A song is already playing use the \"playnow\" or \"queue\" command");
 				}
 			} else {
-				message.channel.send("You must be in a voice channel to use this command");
+				client.guilds.cache.find(guild => guild.id === guildID).channels.cache.find(channel => channel.id === textCID).send("You must be in a voice channel to use this command");
+			}
+		} else play();
+	},
+
+	slash: async (client, interaction, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
+		const guildID = interaction.guildId;
+		const textCID = interaction.channelId;
+		const searchFor = interaction.options.getString("song");
+		function sendEmbed(videoData) {
+			const embed = new Discord.MessageEmbed()
+				.setTitle(String(videoData.title))
+				.setURL(videoData.url)
+				.setAuthor("Now Playing:")
+				.setDescription(`**Title:** ${ videoData.title }
+				**Length:** ${ videoData.duration === null ? "Probably a livestream" : videoData.duration }
+				**Views:** ${ numberWithCommas(videoData.views) }
+				**Uploaded:** ${ videoData.uploadedAt }`)
+				.setImage(videoData.bestThumbnail.url)
+				.setColor("1049ed")
+				.setTimestamp();
+			interaction.editReply({ embeds: [ embed ] });
+		}
+		async function play() {
+			const connection = await DJSVoice.getVoiceConnection(guildID); // Get connection
+			connection.subscribe(voicePlayer); // Create subscription
+			
+			const searchTerm = String(searchFor).replace(/,/g, " ");
+			const filter = await ytsr.getFilters(searchTerm);
+			const filter1 = filter.get("Type").get("Video");
+			const resp = await ytsr(filter1.url, {limit: 1, pages : 1});
+			
+			if(resp !== null) {
+				const videoData = resp["items"][0];
+				nowPlaying["0"] = videoData;
+				
+				const resource = DJSVoice.createAudioResource(ytdl(videoData.url, { filter: "audioonly", quality: "highestaudio" }), {
+					metadata: {
+						title:   videoData.title,
+						guildId: guildID,
+						textCId: textCID
+					}
+				});
+				voicePlayer.play(resource);
+				sendEmbed(videoData);
+			}
+		}
+
+		if (interaction.member.voice.channel !== null) {
+			if(voicePlayer.state.status !== "playing") {
+				client.commands.get("join").slash(client, interaction, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying, false); // Call join command
+				await interaction.deferReply();
+				play();
+			} else {
+				interaction.reply({ content: "A song is already playing use the \"playnow\" or \"queue\" command", ephemeral: true });
 			}
 		} else {
-			// Play next in queue
+			interaction.reply({ content: "You must be in a voice channel to use this command", ephemeral: true });
 		}
+			
 	}
 };

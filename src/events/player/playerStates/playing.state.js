@@ -1,6 +1,8 @@
+/* eslint-disable no-unused-vars */
+
 module.exports = {
 	name: "playing",
-	execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, lastMessage, oldState, newState) {
+	async execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState, newState) {
 		console.log(this.name);
 	}
 };

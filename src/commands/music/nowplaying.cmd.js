@@ -6,7 +6,7 @@ function numberWithCommas(x) {
 }
 module.exports = {
 	name: "nowplaying",
-	description: "",
+	description: "Displays the song that is currently playing",
 	usage: "",
 	args: {},
 	category: "music",
@@ -17,8 +17,9 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(_client, message, _args, Discord, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, _DJSVoice, _queueMap, nowPlaying, lastMessage) {
-		lastMessage[0] = message;
+	allowSlash: true, 
+	options: [],
+	run: async (_client, message, _args, Discord, _colors, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, _DJSVoice, nowPlaying) => {
 		const videoData = nowPlaying["0"];
 		if (videoData !== null) {
 			const embed = new Discord.MessageEmbed()
@@ -34,6 +35,25 @@ module.exports = {
 				.setFooter(`Requested by: ${ message.author.username }`,  message.author.displayAvatarURL({ dynamic: true }))
 				.setTimestamp();
 			message.channel.send({ embeds: [ embed ] });
+		}
+	},
+
+	slash: async (_client, interaction, _args, Discord, _colors, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, _DJSVoice, nowPlaying) => {
+		const videoData = nowPlaying["0"];
+		if (videoData !== null) {
+			const embed = new Discord.MessageEmbed()
+				.setTitle(String(videoData.title))
+				.setURL(videoData.url)
+				.setAuthor("Now Playing:")
+				.setDescription(`**Title:** ${ videoData.title }
+						**Length:** ${ videoData.duration === null ? "Probably a livestream" : videoData.duration }
+						**Views:** ${ numberWithCommas(videoData.views) }
+						**Uploaded:** ${ videoData.uploadedAt }`)
+				.setImage(videoData.bestThumbnail.url)
+				.setColor("1049ed")
+				.setFooter(`Requested by: ${ interaction.user.username }`,  interaction.user.displayAvatarURL({ dynamic: true }))
+				.setTimestamp();
+			interaction.reply({ embeds: [ embed ] });
 		}
 	}
 };

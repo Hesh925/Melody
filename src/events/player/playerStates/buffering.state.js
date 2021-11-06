@@ -1,6 +1,6 @@
 module.exports = {
 	name: "buffering",
-	execute(_Discord, _client, _opusEncoder, _voicePlayer, _DJSVoice, _queueArray, oldState, newState) {
+	execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState, newState) {
 		console.log(this.name);
 	}
 };

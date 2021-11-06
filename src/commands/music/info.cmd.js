@@ -17,9 +17,9 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	// eslint-disable-next-line no-unused-vars
-	async execute(_client, message, args, Discord, _config, _ezcolor, utils, _opusEncoder, _voicePlayer, _DJSVoice, _queueMap, _nowPlaying, lastMessage) {
-		lastMessage[0] = message;
+	allowSlash: true, 
+	options: [ {"String": { name: "url", description: "URL to the video you want info on", required: true }} ],
+	run: async (_client, message, args, Discord, _colors, _config, _ezcolor, utils) => {
 		message.suppressEmbeds(true);
 		if (args !== []) {
 			const videoData = await utils.ytSearch(args);
@@ -50,6 +50,38 @@ module.exports = {
 					.setTimestamp();
 				message.channel.send({ embeds: [ embed ] });
 			}
+		}
+	},
+
+	slash: async (_client, interaction, _args, Discord, _colors, _config, _ezcolor, utils) => {
+		const videoURL = interaction.options.getString("url");
+		const videoData = await utils.ytSearch(videoURL);
+		if (videoData !== null) {
+			const embed = new Discord.MessageEmbed()
+				.setTitle(String(videoData.title))
+				.setURL(videoData.url)
+				.setAuthor("info")
+				.addFields([
+					{
+						"name": "Video Info",
+						"value":
+								`**Title:** ${ videoData.title }
+								 **Length:** ${ videoData.duration === null ? "Probably a livestream" : videoData.duration }
+								 **Views:** ${ numberWithCommas(videoData.views) }
+								 **Uploaded:** ${ videoData.uploadedAt }`
+					},
+					{
+						"name": "Video Author",
+						"value":
+								`**Name:** ${ videoData.author.name }
+								 **Channel URL:** ${ videoData.author.url }`
+					}
+				])
+				.setImage(videoData.bestThumbnail.url)
+				.setColor("1049ed")
+				.setFooter(`Requested by: ${ interaction.user.username }`,  interaction.user.displayAvatarURL({ dynamic: true }))
+				.setTimestamp();
+			interaction.reply({ embeds: [ embed ] });
 		}
 	}
 };

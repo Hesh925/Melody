@@ -1,19 +1,21 @@
-/* eslint-disable capitalized-comments, spaced-comment */
+/* eslint-disable capitalized-comments, spaced-comment, no-undefined */
 const config = require("../../config/CONFIG.json");
 const timeout = config["messageDeleteTimeout"];
 const ezcolor = require("djs-easy-color");
 const utils = require("djs-utils");
+const commandModel = require("../../models/command.schema.js");
+const guildModel = require("../../models/guild.schema.js");
+const userModel = require("../../models/user.schema.js");
 const env = utils.searchArgv("env", true) === "dev" ? "dev" : "prod";
 
 module.exports = {
 	name: "messageCreate",
-	async execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying, lastMessage, message) {
+	async execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, message) {
+		if (message === undefined) return;
 		utils.messageLog(message);
-		//if ((config.envSettings[env].ignoredChannels).indexOf(message.channelID)) return; // Check to see if channel is ignored
-		if (message.content.startsWith("ghost ping")) message.delete();
 
 		if (!message.content.startsWith(config.envSettings[env].PREFIX) || message.author.bot) return; // Make sure message starts with prefix and author is not a bot
-
+		
 		message.suppressEmbeds(true);
 
 		const args = message.content.slice(config.envSettings[env].PREFIX.length).split(/ +/);
@@ -21,9 +23,57 @@ module.exports = {
 		if (cmd.length === 0) return; // Make sure there is a command to search for
 		const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd)); // Get command from collection
 
+		async function incDBData() {
+			let CommandData;
+			try {
+				CommandData = await commandModel.findOne({ command: command.name });
+				if (!CommandData) {
+					utils.log(`No command data found for: ${ command.name } `);
+					const commandSchema = await commandModel.create({
+						command: command.name,
+						category: command.category
+					});
+					commandSchema.save().then(utils.log(`Command data saved for: ${ command.name }`));
+				} 
+			} catch (err) { utils.log(err); }
+			await commandModel.findOneAndUpdate({ command: command.name }, { $inc: { timesused: 1 }});
+		}
+
+		async function updateGuild() {
+			let GuildData;
+			try {
+				GuildData = await guildModel.findOne({ guildID: message.guildId });
+				if (!GuildData) {
+					utils.log(`No guild data found for: ${ message.guildId } `);
+					const guildSchema = await guildModel.create({
+						guildID: message.guildId
+					});
+					guildSchema.save().then(utils.log(`Guild data saved for: ${ message.guildId }`));
+				} 
+			} catch (err) { utils.log(err); }
+		}
+
+		async function updateUsers() {
+			let userData;
+			try {
+				userData = await userModel.findOne({ userID: message.author.id });
+				if (!userData) {
+					utils.log(`No user data found for: ${ message.author.id } `);
+					const userSchema = await userModel.create({
+						userID: message.author.id
+					});
+					userSchema.save().then(utils.log(`User data saved for: ${ message.author.id }`));
+				} 
+			} catch (err) { utils.log(err); }
+			await userModel.findOneAndUpdate({ userID: message.author.id }, { $inc: { commandsUsed: 1 }});
+		}
+		
 
 		function executeCommand() {
-			command.execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying, lastMessage);
+			updateGuild();
+			updateUsers();
+			incDBData();
+			command.run(client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 		}
 
 		function checkBotOwnerOnly() { // Checks if the user is bot owner if command is bot owner only
@@ -94,12 +144,12 @@ module.exports = {
 		if (message.author.id === config.BotOwnerID) {
 			if (command) executeCommand();
 			else {
-				message.reply(`The command "${ cmd }" is not a valid command.`); // .then(message => { message.delete({ timeout: timeout }) });
+				message.reply(`"${ cmd }" is not a valid command.`); // .then(message => { message.delete({ timeout: timeout }) });
 			}
 		} else {
 			if (command) checkAll();
 			else {
-				message.reply(`The command "${ cmd }" is not a valid command.`); // .then(message => { message.delete({ timeout: timeout }) });
+				message.reply(`"${ cmd }" is not a valid command.`); // .then(message => { message.delete({ timeout: timeout }) });
 			}
 		}
 	}

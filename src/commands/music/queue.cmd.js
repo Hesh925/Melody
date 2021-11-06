@@ -1,4 +1,5 @@
 const ytsr = require("ytsr");
+const queueModel = require("../../models/queue.schema.js");
 module.exports = {
 	name: "queue",
 	description: "Add song to queue",
@@ -12,14 +13,59 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(_client, message, args, _Discord, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, _DJSVoice, queueMap, _nowPlaying, lastMessage) {
-		lastMessage[0] = message.channel.id;
+	allowSlash: true, 
+	options: [],
+	run: async (_client, message, args, _Discord, _colors, _config, _ezcolor, utils) => {
+		const queueRes = await queueModel.find({ guildID: message.guildId }).sort({queuePos: -1}).limit(1).then(( [ res ] ) => { if(res) { return res; } else return null; });
+		const pos = queueRes !== null ? queueRes.queuePos + 1 : 1;
+		async function saveQueue(videoData) {
+			try {
+				const guildSchema = await queueModel.create({
+					userID:   message.userId,
+					guildID:  message.guildId,
+					textCID:  message.channel.id,
+					songURL:  videoData.url,
+					songName: videoData.Title,
+					queuePos: pos
+				});
+				guildSchema.save().then(message.channel.send("added song to queue"));
+			} catch (err) {
+				utils.log(err);
+				message.channel.send("An error has occurred while trying to queue your song please try again");
+			}
+		}
 		const searchTerm = String(args).replace(/,/g, " ");
 		const filter = await ytsr.getFilters(searchTerm);
 		const filter1 = filter.get("Type").get("Video");
 		const resp = await ytsr(filter1.url, {limit: 1, pages : 1});
 		const videoData = resp["items"][0];
-		queueMap.push(videoData.url);
-		message.channel.send("added song to queue");
+		saveQueue(videoData);
+	},
+
+	slash: async (_client, interaction, args, _Discord, _colors, _config, _ezcolor, utils) => {
+		const queueRes = await queueModel.find({ guildID: interaction.guildId }).sort({queuePos: -1}).limit(1).then(( [ res ] ) => { if(res) { return res; } else return null; });
+		const pos = queueRes !== null ? queueRes.queuePos + 1 : 1;
+		async function saveQueue(videoData) {
+			try {
+				const guildSchema = await queueModel.create({
+					userID:   interaction.user.id,
+					guildID:  interaction.guildId,
+					textCID:  interaction.channelId,
+					songURL:  videoData.url,
+					songName: videoData.Title,
+					queuePos: pos
+				});
+				guildSchema.save().then(interaction.reply({ content: `Added '${ videoData.title }' to queue`, ephemeral: true }));
+			} catch (err) {
+				utils.log(err);
+				interaction.reply("An error has occurred while trying to queue your song please try again");
+			}
+		}
+		const searchTerm = String(args).replace(/,/g, " ");
+		const filter = await ytsr.getFilters(searchTerm);
+		const filter1 = filter.get("Type").get("Video");
+		const resp = await ytsr(filter1.url, {limit: 1, pages : 1});
+		const videoData = resp["items"][0];
+		saveQueue(videoData);
 	}
 };
