@@ -10,7 +10,7 @@ const env = utils.searchArgv("env", true) === "dev" ? "dev" : "prod";
 
 module.exports = {
 	name: "messageCreate",
-	async execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying, message) {
+	async execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, message) {
 		if (message === undefined) return;
 		utils.messageLog(message);
 
@@ -73,7 +73,7 @@ module.exports = {
 			updateGuild();
 			updateUsers();
 			incDBData();
-			command.execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying);
+			command.run(client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 		}
 
 		function checkBotOwnerOnly() { // Checks if the user is bot owner if command is bot owner only

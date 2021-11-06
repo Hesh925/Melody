@@ -1,0 +1,50 @@
+<ref *1> VoiceConnection {
+  _events: [Object: null prototype] {},
+  _eventsCount: 0,
+  _maxListeners: undefined,
+  debug: null,
+  rejoinAttempts: 0,
+  receiver: VoiceReceiver {
+    voiceConnection: [Circular *1],
+    ssrcMap: SSRCMap {
+      _events: [Object: null prototype] {},
+      _eventsCount: 0,
+      _maxListeners: undefined,
+      map: Map(0) {},
+      [Symbol(kCapture)]: false
+    },
+    speaking: SpeakingMap {
+      _events: [Object: null prototype] {},
+      _eventsCount: 0,
+      _maxListeners: undefined,
+      users: Map(0) {},
+      speakingTimeouts: Map(0) {},
+      [Symbol(kCapture)]: false
+    },
+    subscriptions: Map(0) {},
+    connectionData: {},
+    onWsPacket: [Function: bound onWsPacket],
+    onUdpMessage: [Function: bound onUdpMessage]
+  },
+  onNetworkingClose: [Function: bound onNetworkingClose],
+  onNetworkingStateChange: [Function: bound onNetworkingStateChange],
+  onNetworkingError: [Function: bound onNetworkingError],
+  onNetworkingDebug: [Function: bound onNetworkingDebug],
+  _state: {
+    status: 'signalling',
+    adapter: {
+      sendPayload: [Function: sendPayload],
+      destroy: [Function: destroy]
+    }
+  },
+  packets: { server: undefined, state: undefined },
+  joinConfig: {
+    selfDeaf: true,
+    selfMute: false,
+    group: 'default',
+    channelId: '762827811038691371',
+    guildId: '762827810581774387',
+    adapterCreator: [Function (anonymous)]
+  },
+  [Symbol(kCapture)]: false
+}

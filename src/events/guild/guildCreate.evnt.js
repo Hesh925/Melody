@@ -3,7 +3,7 @@ const utils = require("djs-utils");
 
 module.exports = {
 	name: "guildCreate",
-	async execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, guild) {
+	async execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, guild) {
 		console.log(guild);
 		let GuildData;
 		try {

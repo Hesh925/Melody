@@ -1,8 +1,7 @@
 /* eslint-disable */
 module.exports = {
 	name: "voiceStateUpdate",
-	async execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, oldState, newState) {
-		let userTag = newState.member.user.tag;
+	async execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState, newState) {
 		if (
 			(!oldState.streaming && newState.streaming)   ||
 			(oldState.streaming && !newState.streaming)   ||
@@ -16,15 +15,29 @@ module.exports = {
 			(oldState.selfMute && !newState.selfMute)     ||
 			(!oldState.selfVideo && newState.selfVideo)   ||
 			(oldState.selfVideo && !newState.selfVideo) 
-		 ) return;
-		//if (oldState.channelID !== newState.channelID) {
-		// 	console.log(`${userTag} left: ${oldState.channel.name}`);
-		//}
-		//if (oldState.channelID !== newState.channelID) {
-		//	console.log(`${userTag} joined: ${newState.channel.name}`);
-		//}
-		//if (oldState.channelID && newState.channelID) {
-		//	console.log(`${userTag} switched from: ${oldState.channel.name} to: ${newState.channel.name}`);
-		//}
+		 )
+		if (!oldState.channelId && newState.channelId) {
+			if(newState.channel.type == "GUILD_STAGE_VOICE" && newState.guild.me.voice.suppress){
+			  try{
+				await newState.guild.me.voice.setSuppressed(false);
+			  }catch (e){
+				console.log(String(e).grey)
+			  }
+			}
+			return
+		}
+		if (oldState.channelId && !newState.channelId) {
+			return
+		}
+		if (oldState.channelId && newState.channelId) {
+			if(newState.channel.type == "GUILD_STAGE_VOICE" && newState.guild.me.voice.suppress){
+			  try{
+				await newState.guild.me.voice.setSuppressed(false);
+			  }catch (e){
+				console.log(String(e).grey)
+			  }
+			}
+			return;
+		}
 	}
 };

@@ -6,6 +6,7 @@ const QueueSchema = new mongoose.Schema({
 	textCID:  { type: String, require: true },
 	songURL:  { type: String, require: true },
 	songName: { type: String, require: true },
+	reqBy:    { type: String, require: true },
 	queuePos: { type: Number, require: true }
 });
 const model = mongoose.model("Queue", QueueSchema);

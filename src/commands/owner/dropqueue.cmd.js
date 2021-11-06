@@ -1,7 +1,7 @@
 const queueModel = require("../../models/queue.schema.js");
 module.exports = {
 	name: "dropqueue",
-	description: "",
+	description: "drops the queue collection",
 	usage: "<> is strict & [] is optional",
 	args: {},
 	category: "owner",
@@ -12,8 +12,10 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
+	allowSlash: false, 
+	options: [],
 	// eslint-disable-next-line no-unused-vars
-	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying) {
+	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
 		try {
 			queueModel.collection.drop().then(message.channel.send("Dropped queue collection"));
 		} catch (err) {

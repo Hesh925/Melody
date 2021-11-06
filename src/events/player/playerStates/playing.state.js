@@ -1,10 +1,8 @@
-const guildModel = require("../../../models/guild.schema.js");
-const utils = require("djs-utils");
+/* eslint-disable no-unused-vars */
 
 module.exports = {
 	name: "playing",
-	async execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, oldState, newState) {
+	async execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState, newState) {
 		console.log(this.name);
-		try { await guildModel.findOneAndUpdate({ guildID: newState.resource.metadata.guildId }, { playing: true }); } catch (err) { utils.log(err); }
 	}
 };

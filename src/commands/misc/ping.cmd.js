@@ -11,7 +11,9 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(_client, message, _args, Discord) {
+	allowSlash: true, 
+	options: [ {"StringChoices": { name: "what_ping", description: "What Ping do you want to get?", required: true, choices: [ [ "Bot", "botping" ], [ "Discord Api", "api" ] ] }} ],
+	run: async (_client, message, _args, Discord) => {
 		const pping = new Discord.MessageEmbed().setAuthor("Pinging...").setColor("0x00FFFF");
 		message.channel.send( {embeds: [ pping ] } ).then(msg => {
 			const pingtime = msg.createdTimestamp - message.createdTimestamp;
@@ -32,5 +34,15 @@ module.exports = {
 			msg.delete();
 			message.channel.send({ embeds: [ ping ] });
 		});
+	},
+
+	slash: async (client, interaction) => {
+		const StringOption = interaction.options.getString("what_ping");
+		if(StringOption === "botping") { 
+			await interaction.reply({content: "Getting the Bot Ping...", ephemeral: true});
+			interaction.editReply({content: `Bot Ping: \`${ Math.floor(interaction.createdTimestamp - Date.now()) } ms\``, ephemeral: true});
+		} else {
+		    interaction.reply({content: `Api Ping: \`${ Math.floor(client.ws.ping) } ms\``, ephemeral: true});
+		}
 	}
 };

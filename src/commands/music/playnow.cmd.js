@@ -11,13 +11,25 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	async execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying) {
+	allowSlash: true, 
+	options: [],
+	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
 		const connection = DJSVoice.getVoiceConnection(message.guild.id);
 		if (message.member.voice.channel.id === connection.joinConfig.channelId) {
 			if (voicePlayer.state.status === "playing") {
 				voicePlayer.stop();
-				client.commands.get("play").execute(client, message, args, Discord, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, queueMap, nowPlaying, "pn");
+				client.commands.get("play").execute(client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 			} else message.channel.send("Nothing is playing");
 		} else message.channel.send("Must be in the same channel as the bot to use this command");
+	},
+
+	slash: async (client, interaction, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
+		const connection = DJSVoice.getVoiceConnection(interaction.guildId);
+		if (interaction.member.voice.channel.id === connection.joinConfig.channelId) {
+			if (voicePlayer.state.status === "playing") {
+				voicePlayer.stop();
+				client.commands.get("play").slash(client, interaction, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
+			} else  interaction.reply({ content: "Nothing is playing", ephemeral: true });
+		} else interaction.reply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true });
 	}
 };

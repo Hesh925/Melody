@@ -3,6 +3,14 @@
     "inviteLink": "https://discord.com/oauth2/authorize?client_id=882121214213111879&scope=bot&permissions=8",
     "messageDeleteTimeout": 5000,
     "channelTimeout": 5,
+    "pushSlashToGlobal": false,
+
+
+    "errorReporting": {
+        "guildId": "762827810581774387",
+        "textCId": "904631281776726056"
+    },
+    
     "TESTING_GUILD": {
         "Name": "Bot Testing",
         "ID": "762827810581774387"

@@ -1,5 +1,5 @@
 const fs = require("fs");
-module.exports = (client, Discord, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying) => {
+module.exports = (client, Discord, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
 	const eventFiles = fs.readdirSync("./src/events/player").filter(file => file.endsWith(".evnt.js"));
 
 	for (const file of eventFiles) {
@@ -7,9 +7,9 @@ module.exports = (client, Discord, opusEncoder, voicePlayer, DJSVoice, queueArra
 		client.playerEvents.set(event);
 
 		if (event.once) {
-			voicePlayer.once(event.name, (...args) => event.execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, ...args));
+			voicePlayer.once(event.name, (...args) => event.execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, ...args));
 		} else {
-			voicePlayer.on(event.name, (...args) => event.execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, ...args));
+			voicePlayer.on(event.name, (...args) => event.execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, ...args));
 		}
 	}
 };
