@@ -1,8 +1,6 @@
-/* eslint-disable prefer-named-capture-group */
+/* eslint-disable prefer-named-capture-group, no-bitwise */
 const ytdl = require("ytdl-core");
 const ytsr = require("ytsr");
-const guildModel = require("../../models/guild.schema.js");
-const queueModel = require("../../models/queue.schema.js");
 function numberWithCommas(x) {
 	var parts = x.toString().split(".");
 	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -24,7 +22,7 @@ module.exports = {
 	disabledReason: "",
 	allowSlash: true, 
 	options: [ {"String": { name: "song", description: "title or URL for the song you want to play", required: true }} ],
-	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying, nextInQueue, interaction, type) => {
+	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying, nextInQueue, interaction) => {
 		const guildID = message ? message.guildId : nextInQueue.guildID;
 		const textCID = message ? message.channel.id : nextInQueue.textCID;
 		const searchFor = args ? args : nextInQueue.songURL;
@@ -40,7 +38,7 @@ module.exports = {
 				.setImage(videoData.bestThumbnail.url)
 				.setColor("1049ed")
 				.setTimestamp();
-			if(interaction === null) client.guilds.cache.find(guild => guild.id === guildID).channels.cache.find(channel => channel.id === textCID).send({ embeds: embed });
+			if(interaction === null) client.guilds.cache.find(guild => guild.id === guildID).channels.cache.find(channel => channel.id === textCID).send({ embeds: [ embed ] });
 			else if(interaction) interaction.editReply({ embeds: [ embed ]});
 		}
 

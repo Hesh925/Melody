@@ -6,7 +6,7 @@ const Opus = require("@discordjs/opus");
 const utils = require("djs-utils");
 const mongoose = require("mongoose");
 
-// console.clear();
+console.clear();
 console.log("TODO: remake all commands with slash capability");
 console.log("TODO: make slash handler");
 

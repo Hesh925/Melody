@@ -1,4 +1,3 @@
-const queueModel = require("../../models/queue.schema.js");
 const guildModel = require("../../models/guild.schema.js");
 module.exports = {
 	name: "loop",
