@@ -21,14 +21,16 @@ module.exports = {
 		const queueRes = await queueModel.find({ guildID: message.guildId }).sort({queuePos: -1}).limit(1).then(( [ res ] ) => { if(res) { return res; } else return null; });
 		const pos = queueRes !== null ? queueRes.queuePos + 1 : 1;
 		async function saveQueue(videoData) {
+			console.log(videoData);
 			try {
 				const guildSchema = await queueModel.create({
-					userID:   message.userId,
-					guildID:  message.guildId,
-					textCID:  message.channel.id,
-					songURL:  videoData.url,
-					songName: videoData.Title,
-					queuePos: pos
+					userID:     message.userId,
+					guildID:    message.guildId,
+					textCID:    message.channel.id,
+					songURL:    videoData.url,
+					songName:   videoData.title,
+					songLength: videoData.duration,
+					queuePos:   pos
 				});
 				guildSchema.save().then(message.channel.send("added song to queue"));
 				await guildModel.findOneAndUpdate({ guildID: message.guildId }, { $inc: { songsInQueue: 1 }});
@@ -53,12 +55,13 @@ module.exports = {
 		async function saveQueue(videoData) {
 			try {
 				const guildSchema = await queueModel.create({
-					userID:   interaction.user.id,
-					guildID:  interaction.guildId,
-					textCID:  interaction.channelId,
-					songURL:  videoData.url,
-					songName: videoData.Title,
-					queuePos: pos
+					userID:     interaction.user.id,
+					guildID:    interaction.guildId,
+					textCID:    interaction.channelId,
+					songURL:    videoData.url,
+					songName:   videoData.title,
+					songLength: videoData.duration,
+					queuePos:   pos
 				});
 				guildSchema.save().then(interaction.editReply({ content: `Added '${ videoData.title }' to queue` }));
 				await guildModel.findOneAndUpdate({ guildID: interaction.guildId }, { $inc: { songsInQueue: 1 }});
