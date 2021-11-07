@@ -53,7 +53,7 @@ module.exports = {
 				.setColor("1049ed")
 				.setFooter(`Requested by: ${ interaction.user.username }`,  interaction.user.displayAvatarURL({ dynamic: true }))
 				.setTimestamp();
-			interaction.reply({ embeds: [ embed ] });
+			interaction.editReply({ embeds: [ embed ] });
 		}
 	}
 };

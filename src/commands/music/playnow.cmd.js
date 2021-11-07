@@ -18,7 +18,7 @@ module.exports = {
 		if (message.member.voice.channel.id === connection.joinConfig.channelId) {
 			if (voicePlayer.state.status === "playing") {
 				voicePlayer.stop();
-				client.commands.get("play").execute(client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
+				client.commands.get("play").run(client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 			} else message.channel.send("Nothing is playing");
 		} else message.channel.send("Must be in the same channel as the bot to use this command");
 	},
@@ -29,7 +29,7 @@ module.exports = {
 			if (voicePlayer.state.status === "playing") {
 				voicePlayer.stop();
 				client.commands.get("play").slash(client, interaction, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
-			} else  interaction.reply({ content: "Nothing is playing", ephemeral: true });
-		} else interaction.reply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true });
+			} else  interaction.editReply({ content: "Nothing is playing", ephemeral: true });
+		} else interaction.editReply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true });
 	}
 };

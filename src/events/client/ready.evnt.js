@@ -2,12 +2,13 @@
 const Package = require("../../../package.json");
 const config = require("../../config/CONFIG.json");
 const queueModel = require("../../models/queue.schema.js");
+const guildModel = require("../../models/guild.schema.js");
 const utils = require("djs-utils");
 
 module.exports = {
 	name: "ready",
 	once: true,
-	execute(_Discord, client, colors) {
+	async execute(_Discord, client, colors) {
 		var date = new Date;
 		var command = (Array.from(client.commands)).length;
 		var event = (Array.from(client.events)).length;
@@ -36,5 +37,31 @@ module.exports = {
 		//		console.log(err);
 		//	}
 		// }
+		const guilds = client.guilds.cache.map(guild => guild.id);
+		for( const guild of guilds) {
+			let GuildData;
+			try {
+				GuildData = await guildModel.findOne({ guildID: guild });
+				if (!GuildData) {
+					utils.log(`No guild data found for: ${ guild  }`);
+					const guildSchema = await guildModel.create({
+						guildID: guild,
+						playing: false,
+						loop: false,
+						songsInQueue: 0,
+						volume: 1
+					});
+					guildSchema.save().then(utils.log(`Guild data saved for: ${ guild }`));
+				}
+				try{
+					await guildModel.findOneAndUpdate({ guildID: guild },
+						{
+							playing: false,
+							loop: false 
+						});
+				} catch (err) { utils.log(err); }
+			} catch (err) { utils.log(err); }
+		}
+
 	}
 };

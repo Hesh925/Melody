@@ -1,6 +1,8 @@
 /* eslint-disable prefer-named-capture-group */
 const ytdl = require("ytdl-core");
 const ytsr = require("ytsr");
+const guildModel = require("../../models/guild.schema.js");
+const queueModel = require("../../models/queue.schema.js");
 function numberWithCommas(x) {
 	var parts = x.toString().split(".");
 	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -22,11 +24,10 @@ module.exports = {
 	disabledReason: "",
 	allowSlash: true, 
 	options: [ {"String": { name: "song", description: "title or URL for the song you want to play", required: true }} ],
-	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying, nextInQueue) => {
+	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying, nextInQueue, interaction, type) => {
 		const guildID = message ? message.guildId : nextInQueue.guildID;
 		const textCID = message ? message.channel.id : nextInQueue.textCID;
 		const searchFor = args ? args : nextInQueue.songURL;
-
 		function sendEmbed(videoData) {
 			const embed = new Discord.MessageEmbed()
 				.setTitle(String(videoData.title))
@@ -39,7 +40,8 @@ module.exports = {
 				.setImage(videoData.bestThumbnail.url)
 				.setColor("1049ed")
 				.setTimestamp();
-			client.guilds.cache.find(guild => guild.id === guildID).channels.cache.find(channel => channel.id === textCID).send({ embeds: embed });
+			if(interaction === null) client.guilds.cache.find(guild => guild.id === guildID).channels.cache.find(channel => channel.id === textCID).send({ embeds: embed });
+			else if(interaction) interaction.editReply({ embeds: [ embed ]});
 		}
 
 
@@ -57,7 +59,7 @@ module.exports = {
 					const videoData = resp["items"][0];
 					nowPlaying["0"] = videoData;
 					
-					const resource = DJSVoice.createAudioResource(ytdl(videoData.url, { filter: "audioonly", quality: "highestaudio" }), {
+					const resource = DJSVoice.createAudioResource(ytdl(videoData.url, { filter: "audioonly", quality: "highestaudio", highWaterMark: 1 << 25, }), {
 						metadata: {
 							title:   videoData.title,
 							guildId: guildID,
@@ -76,7 +78,7 @@ module.exports = {
 			message.suppressEmbeds(true);
 			if (message.member.voice.channel !== null) {
 				if(voicePlayer.state.status !== "playing") {
-					client.commands.get("join").execute(client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying); // Call join command 
+					client.commands.get("join").run(client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying); // Call join command 
 					play();
 				} else {
 					client.guilds.cache.find(guild => guild.id === guildID).channels.cache.find(channel => channel.id === textCID).send("A song is already playing use the \"playnow\" or \"queue\" command");
@@ -133,13 +135,12 @@ module.exports = {
 		if (interaction.member.voice.channel !== null) {
 			if(voicePlayer.state.status !== "playing") {
 				client.commands.get("join").slash(client, interaction, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying, false); // Call join command
-				await interaction.deferReply();
 				play();
 			} else {
-				interaction.reply({ content: "A song is already playing use the \"playnow\" or \"queue\" command", ephemeral: true });
+				interaction.editReply({ content: "A song is already playing use the \"playnow\" or \"queue\" command", ephemeral: true });
 			}
 		} else {
-			interaction.reply({ content: "You must be in a voice channel to use this command", ephemeral: true });
+			interaction.editReply({ content: "You must be in a voice channel to use this command", ephemeral: true });
 		}
 			
 	}

@@ -88,7 +88,7 @@ module.exports = {
             
 			const cmd = client.commands.get(commandName) || client.commands.find(a => a.aliases && a.aliases.includes(commandName));
 			if (!cmd) {
-				interaction.reply(`Invalid Command: \`${ commandName }\``);
+				interaction.editReply(`Invalid Command: \`${ commandName }\``);
 			} else {
 				embed.setAuthor(`${ utils.capitalize(cmd.name) } Command Help`, client.user.displayAvatarURL());
 				embed.addField("About", `
@@ -112,7 +112,7 @@ module.exports = {
 						embed.addField(`**❯ ${ utils.capitalize(element) }:**`, `\u200b ${ version }`);
 					});
 				}
-				interaction.reply( {embeds: [ embed ] } );
+				interaction.editReply( {embeds: [ embed ] } );
 			}
 		} else {
 			embed.setDescription(
@@ -131,7 +131,7 @@ module.exports = {
 				embed.addField(`**${ utils.capitalize(category) }**`, client.commands.filter(cmd =>
 					cmd.category === category).map(cmd => `\`${ cmd.name }\``).join(" "));
 			}
-			interaction.reply( {embeds: [ embed ] } );
+			interaction.editReply( {embeds: [ embed ] } );
 		}
 	}
 };

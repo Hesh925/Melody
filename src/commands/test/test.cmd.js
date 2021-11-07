@@ -18,9 +18,10 @@ module.exports = {
 	// eslint-disable-next-line no-unused-vars
 	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
 		message.channel.send("test")
+		const idle = require("../../events/player/playerStates/idle.state")
 	},
 
 	slash: async (client, interaction, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
-		interaction.reply("weeners");
+		interaction.editReply("weeners");
 	}
 };

@@ -21,6 +21,6 @@ module.exports = {
 	},
 
 	slash: async (client, interaction, args, Discord, _colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
-		interaction.reply("test")
+		interaction.editReply("test")
 	}
 };

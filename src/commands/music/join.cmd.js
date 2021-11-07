@@ -35,11 +35,11 @@ module.exports = {
 				adapterCreator: guild.voiceAdapterCreator,
 			});
 			if (bool) {
-				interaction.reply({ content: `Joined ${ voiceChannel.name }`, ephemeral: true });
+				interaction.editReply({ content: `Joined ${ voiceChannel.name }`, ephemeral: true });
 			}
 		} else {
 			if (bool) {
-				interaction.reply({ content: "You must be in a voice channel to use this command", ephemeral: true });
+				interaction.editReply({ content: "You must be in a voice channel to use this command", ephemeral: true });
 			}
 		}
 	}

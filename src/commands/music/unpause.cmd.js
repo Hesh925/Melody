@@ -31,9 +31,9 @@ module.exports = {
 			if(voicePlayer.state.status !== "playing") {
 				if(voicePlayer.state.status === "paused") {
 					voicePlayer.unpause();
-					await interaction.reply({ content: "Paused playback", ephemeral: true });
-				} else await interaction.reply({ content: "Nothing is playing", ephemeral: true });
-			} else await interaction.reply({ content: "Can't unpause something that isn't paused", ephemeral: true });
-		} else await interaction.reply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true });
+					await interaction.editReply({ content: "Paused playback", ephemeral: true });
+				} else await interaction.editReply({ content: "Nothing is playing", ephemeral: true });
+			} else await interaction.editReply({ content: "Can't unpause something that isn't paused", ephemeral: true });
+		} else await interaction.editReply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true });
 	}
 };

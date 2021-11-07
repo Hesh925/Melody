@@ -30,8 +30,8 @@ module.exports = {
 			if (voicePlayer.state.status === "playing") {
 				voicePlayer.pause();
 				voicePlayer.stop();
-				await interaction.reply({ content: "Stopped playback", ephemeral: true });
-			} else await interaction.reply({ content: "Nothing is playing", ephemeral: true });
-		} else await interaction.reply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true });
+				await interaction.editReply({ content: "Stopped playback", ephemeral: true });
+			} else await interaction.editReply({ content: "Nothing is playing", ephemeral: true });
+		} else await interaction.editReply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true });
 	}
 };

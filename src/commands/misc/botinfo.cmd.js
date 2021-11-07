@@ -1,6 +1,7 @@
 /* eslint-disable no-redeclare */
 const { MessageEmbed, version: djsversion } = require("discord.js");
 const prettyMilliseconds = require("pretty-ms");
+const guildModel = require("../../models/guild.schema.js");
 const packagefile = require("../../../package.json");
 const os = require("os");
 const ms = require("ms");
@@ -20,7 +21,7 @@ module.exports = {
 	allowSlash: true, 
 	options: [],
 	run: async (client, message, args, _Discord, _colors, _config, ezcolor, utils) => {
-		
+		const guildRes = await guildModel.findOne({ guildID: message.guildId }).then(( [ res ] ) => { if(res) { return res; } else return null; });
 		const core = os.cpus()[0];
 		if (!args[0]) {
 			const embed = new MessageEmbed()
@@ -45,6 +46,13 @@ module.exports = {
 					**❯ Memory:**
 					\u3000 Total: ${ utils.formatBytes(process.memoryUsage().heapTotal) }
 					\u3000 Used: ${ utils.formatBytes(process.memoryUsage().heapUsed) } `)
+
+				.addField("Music player", `
+				**❯ Songs in queue:** ${ guildRes.songsInQueue }
+				**❯ Volume:** ${ guildRes.volume }
+				**❯ Loop:** ${ guildRes.loop ? "Yes" : "No" }
+				**❯ Playing:** ${ guildRes.playing ? "Yes" : "No" }`)
+
 				.setTimestamp();
 			message.channel.send({ embed: embed });
 		} else {
@@ -71,6 +79,8 @@ module.exports = {
 	},
 
 	slash: async (client, interaction, _args, _Discord, _colors, _config, ezcolor, utils) => {
+		const guildRes = await guildModel.findOne({ guildID: interaction.guildId }).then(( res ) => { if(res) { return res; } else return null; });
+		
 		const core = os.cpus()[0];
 		const embed = new MessageEmbed()
 			.setThumbnail(client.user.displayAvatarURL())
@@ -94,7 +104,14 @@ module.exports = {
 				**❯ Memory:**
 				\u3000 Total: ${ utils.formatBytes(process.memoryUsage().heapTotal) }
 				\u3000 Used: ${ utils.formatBytes(process.memoryUsage().heapUsed) } `)
+
+			.addField("Music player", `
+				**❯ Songs in queue:** ${ guildRes.songsInQueue }
+				**❯ Volume:** ${ guildRes.volume }
+				**❯ Loop:** ${ guildRes.loop ? "Yes" : "No" }
+				**❯ Playing:** ${ guildRes.playing ? "Yes" : "No" }`)
+				
 			.setTimestamp();
-		interaction.reply({ embeds: [ embed ] });
+		interaction.editReply({ embeds: [ embed ] });
 	}
 };

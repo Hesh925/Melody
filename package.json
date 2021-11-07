@@ -6,7 +6,7 @@
   "scripts": {
     "install": "",
     "test": "eslint .",
-    "nodemon": "nodemon . -e .js",
+    "nodemon": "nodemon . -e .js -env prod",
     "shard": "node ./src/main/shard.js",
     "build": "python3 ./docker/build/docker_build.py",
     "run-DEV": "node . -env dev",

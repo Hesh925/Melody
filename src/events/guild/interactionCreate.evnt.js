@@ -20,7 +20,8 @@ module.exports = {
 			} catch (err) { utils.log(err); }
 			await commandModel.findOneAndUpdate({ command: command.name }, { $inc: { slashused: 1 }});
 		}
-		function executeCommand(command) {
+		async function executeCommand(command) {
+			await interaction.deferReply();
 			incDBData(command);
 			command.slash(client, interaction, null, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 		}

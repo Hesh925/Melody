@@ -39,15 +39,15 @@ module.exports = {
 				if(voiceChannel.id === connection.joinConfig.channelId) {
 					connection.destroy();
 					voicePlayer.stop();
-					interaction.reply({ content: "Left voice channel", ephemeral: true });
+					interaction.editReply({ content: "Left voice channel", ephemeral: true });
 				} else {
-					interaction.reply({ content: "You must be in the same channel as the bot to use this command", ephemeral: true });
+					interaction.editReply({ content: "You must be in the same channel as the bot to use this command", ephemeral: true });
 				}
 			} else {
-				interaction.reply({ content: "You must be in a voice channel to use this command", ephemeral: true });
+				interaction.editReply({ content: "You must be in a voice channel to use this command", ephemeral: true });
 			}
 		} else {
-			interaction.reply({ content: "Bot is not connected to a voice channel", ephemeral: true });
+			interaction.editReply({ content: "Bot is not connected to a voice channel", ephemeral: true });
 		}
 	}
 };
