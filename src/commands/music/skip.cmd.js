@@ -11,8 +11,8 @@ module.exports = {
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
 	nsfw: false, // type: Boolean
-	disabled: false, // type: Boolean
-	disabledReason: "",
+	disabled: true, // type: Boolean
+	disabledReason: "Broken",
 	allowSlash: true, 
 	options: [],
 	run: async (client, message, _args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {

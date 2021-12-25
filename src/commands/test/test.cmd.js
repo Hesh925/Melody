@@ -17,11 +17,15 @@ module.exports = {
 	options: [],
 	// eslint-disable-next-line no-unused-vars
 	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
-		message.channel.send("test")
-		const idle = require("../../events/player/playerStates/idle.state")
+		const user = client.users.cache.get(message.author.id);
+
+		if (!user) return message.channel.send("User not found");
+		
+		await user.send("message").catch(() => {
+			message.channel.send("User has DMs closed or has no mutual servers with the bot:(");
+		});
 	},
 
 	slash: async (client, interaction, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
-		interaction.editReply("weeners");
 	}
 };

@@ -1,7 +1,7 @@
 module.exports = {
 	name: "uncaughtException",
-	execute(_client, _Discord, error) {
-		console.log("oops");
-		console.log(error);
+	execute(_client, _Discord, err, origin) {
+		console.log("[PROCESS] :: Uncaught Exception/Catch".red);
+		console.log(err, origin);
 	}
 };

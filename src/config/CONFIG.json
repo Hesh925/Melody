@@ -20,9 +20,56 @@
         "prod": {
             "PREFIX": "@",
             "status": {
-                "type": 2,
-                "status": "super cool music",
-                "statusType": "0"
+                "0": {
+                    "type": 2,
+                    "status": "super cool music",
+                    "statusType": "0"
+                },
+                "1": {
+                    "type": 2,
+                    "status": "super cool music",
+                    "statusType": "0"
+                },
+                "2": {
+                    "type": 2,
+                    "status": "super cool music",
+                    "statusType": "0"
+                },
+                "3": {
+                    "type": 2,
+                    "status": "super cool music",
+                    "statusType": "0"
+                },
+                "4": {
+                    "type": 2,
+                    "status": "super cool music",
+                    "statusType": "0"
+                },
+                "5": {
+                    "type": 2,
+                    "status": "super cool music",
+                    "statusType": "0"
+                },
+                "6": {
+                    "type": 2,
+                    "status": "super cool music",
+                    "statusType": "0"
+                },
+                "7": {
+                    "type": 2,
+                    "status": "super cool music",
+                    "statusType": "0"
+                },
+                "8": {
+                    "type": 2,
+                    "status": "super cool music",
+                    "statusType": "0"
+                },
+                "9": {
+                    "type": 2,
+                    "status": "super cool music",
+                    "statusType": "0"
+                }
             },
             "ignoredChannels": ["882457622031237201"]
         },
@@ -30,9 +77,11 @@
         "dev": {
             "PREFIX": "`",
             "status": {
-                "type": 0,
-                "status":"Dev boi",
-                "statusType": "2"
+                "0": {
+                    "type": 0,
+                    "status": "Dev Boi",
+                    "statusType": "2"
+                }
             },
             "ignoredChannels": [""]
         }

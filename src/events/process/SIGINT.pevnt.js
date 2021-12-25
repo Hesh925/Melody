@@ -1,7 +1,7 @@
 module.exports = {
 	name: "SIGINT",
 	execute() {
-		console.log("Shutting bot down");
+		console.log("[PROCESS] :: Shutting bot down".red);
 		process.exit(0);
 	}
 };

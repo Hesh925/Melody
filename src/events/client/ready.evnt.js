@@ -29,35 +29,37 @@ module.exports = {
 		if (utils.searchArgv("git")) {
 			console.log("Process started successfully: Now exiting with code \"0\" ".bgGreen);
 			process.exit(0);
-		} // else {
-		//	try {
-		//		QueueModel.collection.drop().then(console.log(" Dropped queue collection\n"));
-		//	} catch(err) {
-		//		console.log("Could not drop queue collection");
-		//		console.log(err);
-		//	}
-		// }
-		const guilds = client.guilds.cache.map(guild => guild.id);
+		}//else {
+			//try {
+			//	QueueModel.collection.drop().then(console.log(" Dropped queue collection\n"));
+			//} catch(err) {
+			//	console.log("Could not drop queue collection");
+			//	console.log(err);
+			//}
+		 //
+		const guilds = client.guilds.cache.map(guild => guild);
 		for( const guild of guilds) {
 			let GuildData;
 			try {
-				GuildData = await guildModel.findOne({ guildID: guild });
+				GuildData = await guildModel.findOne({ guildID: guild.id });
 				if (!GuildData) {
-					utils.log(`No guild data found for: ${ guild  }`);
+					utils.log(`No guild data found for: ${ guild.name }`);
 					const guildSchema = await guildModel.create({
-						guildID: guild,
+						guildID: guild.id,
+						guildName: guild.name, 
 						playing: false,
 						loop: false,
 						songsInQueue: 0,
 						volume: 1
 					});
-					guildSchema.save().then(utils.log(`Guild data saved for: ${ guild }`));
+					guildSchema.save().then(utils.log(`Guild data saved for: ${ guild.name }`));
 				}
 				try{
-					await guildModel.findOneAndUpdate({ guildID: guild },
+					await guildModel.findOneAndUpdate({ guildID: guild.id },
 						{
 							playing: false,
-							loop: false 
+							loop: false,
+							songsInQueue: 0
 						});
 				} catch (err) { utils.log(err); }
 			} catch (err) { utils.log(err); }

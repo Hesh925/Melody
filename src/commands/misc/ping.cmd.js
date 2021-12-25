@@ -17,16 +17,18 @@ module.exports = {
 		const pping = new Discord.MessageEmbed().setAuthor("Pinging...").setColor("0x00FFFF");
 		message.channel.send( {embeds: [ pping ] } ).then(msg => {
 			const pingtime = msg.createdTimestamp - message.createdTimestamp;
+			let color;
+
 			if (pingtime < 200) {
-				var color = "#33FF57";
+				color = "#33FF57";
 			}
 			if (pingtime > 200) {
 				// eslint-disable-next-line no-redeclare
-				var color = "#DBFF33";
+				color = "#DBFF33";
 			}
 			if (pingtime > 300) {
 				// eslint-disable-next-line no-redeclare
-				var color = "#FF5733";
+				color = "#FF5733";
 			}
 
 			const receivedEmbed = message.embeds[0];

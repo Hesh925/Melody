@@ -6,6 +6,6 @@ const Schema = new mongoose.Schema({
 	expires: { type: Date }
 });
 
-const model = mongoose.model("Bans", Schema);
+const model = mongoose.model("", Schema);
 
 module.exports = model;

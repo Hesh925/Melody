@@ -11,19 +11,12 @@ const env = utils.searchArgv("env", true) === "dev" ? "dev" : "prod";
 module.exports = {
 	name: "messageCreate",
 	async execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, message) {
-		if (message === undefined) return;
-		utils.messageLog(message);
+		async function directMessage() {
+			message.channel.send("123");
+		}
 
-		if (!message.content.startsWith(config.envSettings[env].PREFIX) || message.author.bot) return; // Make sure message starts with prefix and author is not a bot
-		
-		message.suppressEmbeds(true);
 
-		const args = message.content.slice(config.envSettings[env].PREFIX.length).split(/ +/);
-		const cmd = args.shift().toLowerCase();
-		if (cmd.length === 0) return; // Make sure there is a command to search for
-		const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd)); // Get command from collection
-
-		async function incDBData() {
+		async function incDBData(command) {
 			let CommandData;
 			try {
 				CommandData = await commandModel.findOne({ command: command.name });
@@ -69,34 +62,34 @@ module.exports = {
 		}
 		
 
-		function executeCommand() {
+		function executeCommand(command, args) {
 			updateGuild();
 			updateUsers();
-			incDBData();
+			incDBData(command);
 			command.run(client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 		}
 
-		function checkBotOwnerOnly() { // Checks if the user is bot owner if command is bot owner only
+		function checkBotOwnerOnly(command) { // Checks if the user is bot owner if command is bot owner only
 			if (command.botOwnerOnly) { // Check if command is bot owner only
 				if (message.author.id === config.BotOwnerID) return true; // Is bot owner
 				else return false; // Is not bot owner
 			} else return true; // Not a bot owner only command
 		}
 
-		function checkOwnerOnly() { // Checks if the user is owner if command is owner only
+		function checkOwnerOnly(command) { // Checks if the user is owner if command is owner only
 			if (command.ownerOnly) { // Check if command is owner only
 				if (message.author.id === message.guild.ownerID) return true; // User is Owner
 				else return false; // User is not owner
 			} else return true; // Command is not owner only
 		}
 
-		function checkNSFW() { // Checks if the channel is nsfw
+		function checkNSFW(command) { // Checks if the channel is nsfw
 			if (command.nsfw) { // Check if command is NSFW
 				if (message.channel.nsfw) return true; // Channel is NSFW
 			} else return true; // Command is not NSFW
 		}
 
-		function checkDisabled() { // Checks if the command is disabled
+		function checkDisabled(command) { // Checks if the command is disabled
 			if (command.disabled) { // Checks if command is disabled
 				return false; // Disabled
 			} else return true; // Enabled
@@ -108,13 +101,13 @@ module.exports = {
 			//else return false; // User does not have perms
 		}
 
-		function checkAll() { // Checks that the command can be executed
-			if (checkDisabled()) { // Continues if not disabled
-				if (checkBotOwnerOnly()) {
-					if (checkOwnerOnly()) { // Continues if is owner or is not required to be owner
-						if (checkNSFW()) { // Continues if used in NSFW channel or not NSFW command
+		function checkAll(command, args) { // Checks that the command can be executed
+			if (checkDisabled(command)) { // Continues if not disabled
+				if (checkBotOwnerOnly(command)) {
+					if (checkOwnerOnly(command)) { // Continues if is owner or is not required to be owner
+						if (checkNSFW(command)) { // Continues if used in NSFW channel or not NSFW command
 							if (checkUserPerms()) { // Continues if user has perms or if no perms are needed
-								executeCommand();
+								executeCommand(command, args);
 							} else message.reply(`You do not have the proper permissions to run "${ command.name }"`).then(message => {
 								message.delete({
 									timeout: timeout
@@ -141,13 +134,29 @@ module.exports = {
 				});
 			});
 		}
+		
+
+		if (message === undefined) return;
+		if (message.guild === null && !message.author.bot) directMessage();
+		utils.messageLog(message);
+
+		if (!message.content.startsWith(config.envSettings[env].PREFIX) || message.author.bot) return; // Make sure message starts with prefix and author is not a bot
+		
+		message.suppressEmbeds(true);
+
+		const args = message.content.slice(config.envSettings[env].PREFIX.length).split(/ +/);
+		const cmd = args.shift().toLowerCase();
+		if (cmd.length === 0) return; // Make sure there is a command to search for
+		const command = client.commands.get(cmd) || client.commands.find(a => a.aliases && a.aliases.includes(cmd)); // Get command from collection
+		
+		
 		if (message.author.id === config.BotOwnerID) {
-			if (command) executeCommand();
+			if (command) executeCommand(command, args);
 			else {
 				message.reply(`"${ cmd }" is not a valid command.`); // .then(message => { message.delete({ timeout: timeout }) });
 			}
 		} else {
-			if (command) checkAll();
+			if (command) checkAll(command, args);
 			else {
 				message.reply(`"${ cmd }" is not a valid command.`); // .then(message => { message.delete({ timeout: timeout }) });
 			}

@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
 
-const GuildSchema = new mongoose.Schema({
+const Schema = new mongoose.Schema({
 	guildID:      { type: String,  require: true,  unique: true},
+	guildName:    { type: String,  require: true },
 	playing:      { type: Boolean, require: true,  default: false},
 	loop:         { type: Boolean, require: true,  default: false},
 	volume:       { type: Number,  require: true,  default: 1 },
@@ -9,6 +10,6 @@ const GuildSchema = new mongoose.Schema({
 	songsInQueue: { type: Number,  require: true,  default: 0 }
 });
 
-const model = mongoose.model("Guilds", GuildSchema);
+const model = mongoose.model("Guilds", Schema);
 
 module.exports = model;

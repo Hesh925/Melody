@@ -31,6 +31,10 @@
         "description": "Unfinished Top-Level Await",
         "killBot": false
     },
+    "137": {
+        "description": "Docker stop",
+        "killBot": true
+    },
     "200": {
         "description": "MongoDB Error",
         "killBot": true

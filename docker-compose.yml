@@ -1,0 +1,7 @@
+version: '3.3'
+services:
+    run:
+        container_name: melody
+        network_mode: bridge
+        image: run
+        env_file: ../.melody.env
