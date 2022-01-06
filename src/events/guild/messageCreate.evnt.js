@@ -139,6 +139,7 @@ module.exports = {
 		if (message === undefined) return;
 		if (message.guild === null && !message.author.bot) directMessage();
 		utils.messageLog(message);
+		utils.pm2.incMessages();
 
 		if (!message.content.startsWith(config.envSettings[env].PREFIX) || message.author.bot) return; // Make sure message starts with prefix and author is not a bot
 		

@@ -101,7 +101,7 @@ module.exports = (client) => {
 				try{
 					guild.commands.set(allCommands)
 						.then(slashCommandsData => {
-							console.log(`${ slashCommandsData.size } Slash Commands ${ `(With ${ slashCommandsData.map(d => d.options).flat().length } Subcommands)`.green } Loaded for: ${ `${ guild.name }`.underline }`.brightGreen); 
+							//console.log(`${ slashCommandsData.size } Slash Commands ${ `(With ${ slashCommandsData.map(d => d.options).flat().length } Subcommands)`.green } Loaded for: ${ `${ guild.name }`.underline }`.brightGreen); 
 						}).catch((error) => console.log(error));
 				} catch(error){
 					console.log(String(error).grey);

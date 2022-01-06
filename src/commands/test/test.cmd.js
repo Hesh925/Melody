@@ -17,13 +17,8 @@ module.exports = {
 	options: [],
 	// eslint-disable-next-line no-unused-vars
 	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
-		const user = client.users.cache.get(message.author.id);
-
-		if (!user) return message.channel.send("User not found");
-		
-		await user.send("message").catch(() => {
-			message.channel.send("User has DMs closed or has no mutual servers with the bot:(");
-		});
+		utils.pm2.setUsers(client);
+		utils.pm2.init();
 	},
 
 	slash: async (client, interaction, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
