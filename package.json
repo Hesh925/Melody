@@ -24,6 +24,7 @@
     "@discordjs/voice": "^0.7.5",
     "@pm2/io": "^5.0.0",
     "chron": "^0.1.1",
+    "colors": "^1.4.0",
     "date-and-time": "^1.0.0",
     "discord-rpc": "^4.0.1",
     "discord.js": "^13.3.1",

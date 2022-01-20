@@ -131,7 +131,7 @@ module.exports = {
 				embed.addField(`**${ utils.capitalize(category) }**`, client.commands.filter(cmd =>
 					cmd.category === category).map(cmd => `\`${ cmd.name }\``).join(" "));
 			}
-			interaction.editReply( {embeds: [ embed ] } );
+			interaction.editReply( {embeds: [ embed ] } ).then( utils.pm2.compInt() );
 		}
 	}
 };

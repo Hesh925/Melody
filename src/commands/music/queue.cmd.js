@@ -67,7 +67,7 @@ module.exports = {
 				await guildModel.findOneAndUpdate({ guildID: interaction.guildId }, { $inc: { songsInQueue: 1 }});
 			} catch (err) {
 				utils.log(err);
-				interaction.editReply("An error has occurred while trying to queue your song please try again");
+				interaction.editReply("An error has occurred while trying to queue your song please try again").then( utils.pm2.compInt() );
 			}
 		}
 		const searchTerm = String(searchFor).replace(/,/g, " ");

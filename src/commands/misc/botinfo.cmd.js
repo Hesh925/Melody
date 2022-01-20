@@ -112,6 +112,6 @@ module.exports = {
 				**❯ Playing:** ${ guildRes.playing ? "Yes" : "No" }`)
 				
 			.setTimestamp();
-		interaction.editReply({ embeds: [ embed ] });
+		interaction.editReply({ embeds: [ embed ] }).then( utils.pm2.compInt() );
 	}
 };

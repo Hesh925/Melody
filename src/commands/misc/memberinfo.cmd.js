@@ -97,7 +97,7 @@ module.exports = {
 				{
 					"name": "Members",
 					"value": 
-						`**Members total:**   ${ membersTotalSorted.length + 1 }
+					   `**Members total:**   ${ membersTotalSorted.length + 1 }
 						**Members online:**  ${ membersOnlineSorted.length }
 						**Members offline:** ${ membersOfflineSorted.length }
 						**Members idle:**    ${ membersIdleSorted.length }
@@ -106,6 +106,6 @@ module.exports = {
 			])
 			.setColor("1049ed")
 			.setTimestamp();
-		interaction.editReply({ embeds: [ embed ] });
+		interaction.editReply({ embeds: [ embed ] }).then( utils.pm2.compInt() );
 	}
 };

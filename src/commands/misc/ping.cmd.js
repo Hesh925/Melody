@@ -1,3 +1,4 @@
+const utils = require("djs-utils");
 module.exports = {
 	name: "ping",
 	description: "This is a ping command",
@@ -42,9 +43,11 @@ module.exports = {
 		const StringOption = interaction.options.getString("what_ping");
 		if(StringOption === "botping") { 
 			await interaction.editReply({content: "Getting the Bot Ping...", ephemeral: true});
-			interaction.editReply({content: `Bot Ping: \`${ Math.floor( Date.now() - interaction.createdTimestamp) } ms\``, ephemeral: true});
+			utils.pm2.compInt();
+			interaction.editReply({content: `Bot Ping: \`${ Math.floor( Date.now() - interaction.createdTimestamp) } ms\``, ephemeral: true}).then( utils.pm2.compInt() );
 		} else {
-		    interaction.editReply({content: `Api Ping: \`${ Math.floor(client.ws.ping) } ms\``, ephemeral: true});
+			utils.pm2.compInt();
+		    interaction.editReply({content: `Api Ping: \`${ Math.floor(client.ws.ping) } ms\``, ephemeral: true}).then( utils.pm2.compInt() );
 		}
 	}
 };

@@ -1,3 +1,4 @@
+const utils = require("djs-utils");
 module.exports = {
 	name: "join",
 	description: "Make bot join voice channel",
@@ -35,11 +36,13 @@ module.exports = {
 				adapterCreator: guild.voiceAdapterCreator,
 			});
 			if (bool) {
-				interaction.editReply({ content: `Joined ${ voiceChannel.name }`, ephemeral: true });
+				utils.pm2.compInt();
+				interaction.editReply({ content: `Joined ${ voiceChannel.name }`, ephemeral: true }).then( utils.pm2.compInt() );
 			}
 		} else {
 			if (bool) {
-				interaction.editReply({ content: "You must be in a voice channel to use this command", ephemeral: true });
+				utils.pm2.compInt();
+				interaction.editReply({ content: "You must be in a voice channel to use this command", ephemeral: true }).then( utils.pm2.compInt() );
 			}
 		}
 	}

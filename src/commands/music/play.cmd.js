@@ -163,10 +163,10 @@ module.exports = {
 				client.commands.get("join").slash(client, interaction, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying, false); // Call join command
 				play();
 			} else {
-				interaction.editReply({ content: "A song is already playing use the \"playnow\" or \"queue\" command", ephemeral: true });
+				interaction.editReply({ content: "A song is already playing use the \"playnow\" or \"queue\" command", ephemeral: true }).then( utils.pm2.compInt() );
 			}
 		} else {
-			interaction.editReply({ content: "You must be in a voice channel to use this command", ephemeral: true });
+			interaction.editReply({ content: "You must be in a voice channel to use this command", ephemeral: true }).then( utils.pm2.compInt() );
 		}
 			
 	}

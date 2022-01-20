@@ -40,12 +40,12 @@ module.exports = {
 
 				if (guildRes.loop) {
 					try { await guildModel.findOneAndUpdate({ guildID: interaction.guildId }, { loop: false }); } catch (err) { utils.log(err); }
-					await interaction.editReply("Loop set false");
+					await interaction.editReply("Loop set false").then( utils.pm2.compInt() );
 				} else {
 					try { await guildModel.findOneAndUpdate({ guildID: interaction.guildId }, { loop: true }); } catch (err) { utils.log(err); }
-					await interaction.editReply("Loop set true");
+					await interaction.editReply("Loop set true").then( utils.pm2.compInt() );
 				}
-			} else await interaction.editReply({ content: "Nothing is playing to loop", ephemeral: true});
-		} else await interaction.editReply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true});
+			} else await interaction.editReply({ content: "Nothing is playing to loop", ephemeral: true}).then( utils.pm2.compInt() );
+		} else await interaction.editReply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true}).then( utils.pm2.compInt() );
 	}
 };
