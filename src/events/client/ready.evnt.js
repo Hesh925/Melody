@@ -1,14 +1,16 @@
-/* eslint-disable */
+/* eslint-disable no-await-in-loop */
+
 const Package = require("../../../package.json");
 const config = require("../../config/CONFIG.json");
 const queueModel = require("../../models/queue.schema.js");
 const guildModel = require("../../models/guild.schema.js");
+const userModel = require("../../models/user.schema.js");
 const utils = require("djs-utils");
 
 module.exports = {
 	name: "ready",
 	once: true,
-	async execute(_Discord, client, colors) {
+	async execute(_Discord, client) {
 		var date = new Date;
 		var command = (Array.from(client.commands)).length;
 		var event = (Array.from(client.events)).length;
@@ -30,14 +32,32 @@ module.exports = {
 		if (utils.searchArgv("git")) {
 			console.log("Process started successfully: Now exiting with code \"0\" ".bgGreen);
 			process.exit(0);
-		}//else {
-			//try {
-			//	QueueModel.collection.drop().then(console.log(" Dropped queue collection\n"));
-			//} catch(err) {
-			//	console.log("Could not drop queue collection");
-			//	console.log(err);
-			//}
-		 //
+		}
+		 
+		 const users = [];
+		 client.guilds.cache.forEach(guild => {
+			 guild.members.cache.forEach(member => {
+				 users.push(member.user);
+			});
+		});
+		for( const user of users ){
+			let userData;
+			try {
+			   userData = await userModel.findOne({ userID: user.id });
+			   if (!userData) {
+				   utils.log(`No user data found for: ${ user.username }`);
+				   const userSchema = await userModel.create({
+					   userID: user.id,
+					   userName: user.username,
+					   isBot: user.bot,
+					   isSystem: user.system
+				   });
+				   userSchema.save().then(utils.log(`User data saved for: ${ user.username }`));
+			   } 
+			} catch (err) { utils.log(err); }
+		}
+
+
 		const guilds = client.guilds.cache.map(guild => guild);
 		for( const guild of guilds) {
 			let GuildData;

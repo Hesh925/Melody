@@ -18,7 +18,7 @@ module.exports = {
 	options: [],
 	// eslint-disable-next-line no-unused-vars
 	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
-		console.log(message.author)
+		console.log(client.user.id)
 	},
 
 	slash: async (client, interaction, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {

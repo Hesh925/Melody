@@ -24,7 +24,7 @@ module.exports = {
 					commandSchema.save().then(utils.log(`Command data saved for: ${ command.name }`));
 				} 
 			} catch (err) { utils.log(err); }
-			await commandModel.findOneAndUpdate({ command: command.name }, { $inc: { timesused: 1 }});
+			await commandModel.findOneAndUpdate({ command: command.name }, { $inc: { timesused: 1 } });
 		}
 
 		async function updateGuild() {

@@ -1,5 +1,8 @@
 const { Permissions } = require("discord.js");
 const warnModel = require("../../models/warning.schema");
+const userModel = require("../../models/user.schema");
+const date = require("date-and-time");
+
 module.exports = {
 	name: "warn",
 	description: "Warn a user",
@@ -19,15 +22,11 @@ module.exports = {
 		{"String": { name: "reason", description: "Reason for warn", required: true }}
 	],
 	run: async (client, message, args, Discord, _colors, _config, ezcolor, utils) => {
+
 		const user = args[0]; // <@!882121214213111879> 2/21 ~warn <@!882121214213111879> testing testing testing
 		const userID = user.endsWith(">") ? user.slice(3, 21) : user;
 		const reason = args.slice(1).join().replace(/,/g, " ");
-
-		const warnRes = await warnModel.find({ userID: userID, guildID: message.guildId }).sort({warnNumber: -1}).limit(1).then(( [ res ] ) => { if(res) { return res; } else return null; });
-		const warnNumber = warnRes !== null ? warnRes.warnNumber + 1 : 1;
-
-		const globalWarnRes = await warnModel.find({ userID: userID }).sort({globalWarnNumber: -1}).limit(1).then(( [ res ] ) => { if(res) { return res; } else return null; });
-		const globalWarnNumber = globalWarnRes !== null ? globalWarnRes.globalWarnNumber + 1 : 1;
+		const dateNow = new Date();
 
 		function sendWarnEmbed(){
 			const embed = new Discord.MessageEmbed()
@@ -36,37 +35,37 @@ module.exports = {
 				.setDescription(`**Warned ${ client.users.cache.get(userID).tag }**
 						**Reason:** ${ reason }
 						**Warned By:** ${ message.author.username }
-						**Guild Warn Number** ${ warnNumber }
-						**Global Warn Number** ${ globalWarnNumber }`)
+						**Date:** ${ date.format(dateNow, ( "MM/DD/YYYY hh:MM:ss A")) }`)
 				.setTimestamp();
 			message.channel.send({ embeds: [ embed ] });
 		}
-		try {
-			const warnSchema = await warnModel.create({
-				guildID: message.guildId,
-				userID: userID,
-				warnedBy: message.author.id,
-				reason: reason,
-				warnNumber: warnNumber,
-				globalWarnNumber: globalWarnNumber
-			});
-			warnSchema.save().then(sendWarnEmbed());
-		} catch (err) {
-			utils.log(err);
-			message.channel.send("An error has occurred while trying to warn user please try again");
+		if(userID !== client.user.id){
+			try {
+				const warnSchema = await warnModel.create({
+					guildID: message.guildId,
+					userID: userID,
+					warnedBy: message.author.id,
+					reason: reason,
+					date: dateNow
+				});
+				warnSchema.save().then(sendWarnEmbed());
+				await userModel.findOneAndUpdate({ userID: userID }, { $inc: { warns: 1 } });
+			} catch (err) {
+				utils.log(err);
+				message.channel.send("An error has occurred while trying to warn user please try again");
+			}
+		}else {
+			const embed = new Discord.MessageEmbed()
+				.setDescription("ERROR: You can not warn me")
+				.setColor(ezcolor.getColor("HEX", "red"));
+			message.channel.send({ embeds: [ embed ] });
 		}
 	},
 	slash: async (client, interaction, _args, Discord, _colors, _config, ezcolor, utils) => {
 
-		const user = interaction.options.getUser("user");
+		const user =   interaction.options.getUser("user");
 		const reason = interaction.options.getString("reason");
-
-		const warnRes = await warnModel.find({ userID: user.id, guildID: interaction.guildId }).sort({warnNumber: -1}).limit(1).then(( [ res ] ) => { if(res) { return res; } else return null; });
-		const warnNumber = warnRes !== null ? warnRes.warnNumber + 1 : 1;
-		console.log(warnRes);
-		const globalWarnRes = await warnModel.find({ userID: user.id }).sort({globalWarnNumber: -1}).limit(1).then(( [ res ] ) => { if(res) { return res; } else return null; });
-		const globalWarnNumber = globalWarnRes !== null ? globalWarnRes.globalWarnNumber + 1 : 1;
-		console.log(globalWarnRes);
+		const dateNow = new Date();
 
 		function sendWarnEmbed(){
 			const embed = new Discord.MessageEmbed()
@@ -75,24 +74,34 @@ module.exports = {
 				.setDescription(`**Warned ${ user.tag }**
 						**Reason:** ${ reason }
 						**Warned By:** ${ interaction.user.username }
-						**Guild Warn Number** ${ warnNumber }
-						**Global Warn Number** ${ globalWarnNumber }`)
+						**Date:** ${ date.format( dateNow, ( "MM/DD/YYYY hh:MM:ss A")) }`)
 				.setTimestamp();
 			interaction.editReply({ embeds: [ embed ] }).then( utils.pm2.compInt() );
 		}
-		try {
-			const warnSchema = await warnModel.create({
-				guildID: interaction.guildId,
-				userID: user.id,
-				warnedBy: interaction.user.id,
-				reason: reason,
-				warnNumber: warnNumber,
-				globalWarnNumber: globalWarnNumber
-			});
-			warnSchema.save().then(sendWarnEmbed());
-		} catch (err) {
-			utils.log(err);
-			interaction.editReply("An error has occurred while trying to warn user please try again").then( utils.pm2.compInt() );
+		
+		if (user.id !== client.user.id){
+
+	
+			try {
+				const warnSchema = await warnModel.create({
+					guildID: interaction.guildId,
+					userID: user.id,
+					warnedBy: interaction.user.id,
+					reason: reason,
+					date: dateNow
+				});
+				warnSchema.save().then(sendWarnEmbed());
+				await userModel.findOneAndUpdate({ userID: user.id }, { $inc: { warns: 1 } });
+			} catch (err) {
+				console.log(err);
+				utils.log(err);
+				interaction.editReply("An error has occurred while trying to warn user please try again").then( utils.pm2.compInt() );
+			}
+		} else {
+			const embed = new Discord.MessageEmbed()
+				.setDescription("ERROR: You can not warn me")
+				.setColor(ezcolor.getColor("HEX", "red"));
+			interaction.editReply({ embeds: [ embed ] }).then( utils.pm2.compInt() );
 		}
 	}
 };
