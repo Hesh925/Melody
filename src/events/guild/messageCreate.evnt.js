@@ -1,6 +1,5 @@
 /* eslint-disable capitalized-comments, spaced-comment, no-undefined */
 const config = require("../../config/CONFIG.json");
-const timeout = config["messageDeleteTimeout"];
 const ezcolor = require("djs-easy-color");
 const utils = require("djs-utils");
 const commandModel = require("../../models/command.schema.js");
@@ -11,10 +10,6 @@ const env = utils.searchArgv("env", true) === "dev" ? "dev" : "prod";
 module.exports = {
 	name: "messageCreate",
 	async execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, message) {
-		async function directMessage() {
-			message.channel.send("123");
-		}
-
 
 		async function incDBData(command) {
 			let CommandData;
@@ -29,7 +24,7 @@ module.exports = {
 					commandSchema.save().then(utils.log(`Command data saved for: ${ command.name }`));
 				} 
 			} catch (err) { utils.log(err); }
-			await commandModel.findOneAndUpdate({ command: command.name }, { $inc: { timesused: 1 }});
+			await commandModel.findOneAndUpdate({ command: command.name }, { $inc: { timesused: 1 } });
 		}
 
 		async function updateGuild() {
@@ -95,10 +90,11 @@ module.exports = {
 			} else return true; // Enabled
 		}
 
-		function checkUserPerms() { // Checks if the command is disabled
-			return true;
-			//if (message.member.hasPermission(command.userPerms, true)) return true; // User has perms
-			//else return false; // User does not have perms
+		function checkUserPerms(command) { // Checks if the command is disabled
+			if (command.userPerms !== [] ) {
+				if (message.member.permissions.has(command.userPerms)) return true; // User has perms
+				else return false; // User does not have perms
+			} else return true; // Returns true if no perms are listed
 		}
 
 		function checkAll(command, args) { // Checks that the command can be executed
@@ -106,39 +102,39 @@ module.exports = {
 				if (checkBotOwnerOnly(command)) {
 					if (checkOwnerOnly(command)) { // Continues if is owner or is not required to be owner
 						if (checkNSFW(command)) { // Continues if used in NSFW channel or not NSFW command
-							if (checkUserPerms()) { // Continues if user has perms or if no perms are needed
+							if (checkUserPerms(command)) { // Continues if user has perms or if no perms are needed
 								executeCommand(command, args);
 							} else message.reply(`You do not have the proper permissions to run "${ command.name }"`).then(message => {
 								message.delete({
-									timeout: timeout
+									timeout: config.channelTimeout
 								});
 							});
 						} else message.reply(`The "${ command.name }" command needs to be used in a NSFW channel`).then(message => {
 							message.delete({
-								timeout: timeout
+								timeout: config.channelTimeout
 							});
 						});
 					} else message.reply(`"${ command.name }" is an owner only command`).then(message => {
 						message.delete({
-							timeout: timeout
+							timeout: config.channelTimeout
 						});
 					});
 				} else message.reply(`"${ command.name }" is an bot owner only command`).then(message => {
 					message.delete({
-						timeout: timeout
+						timeout: config.channelTimeout
 					});
 				});
 			} else message.reply(`"${ command.name }" is currently disabled because "${ command.disabledReason }"`).then(message => {
 				message.delete({
-					timeout: timeout
+					timeout: config.channelTimeout
 				});
 			});
 		}
 		
 
 		if (message === undefined) return;
-		if (message.guild === null && !message.author.bot) directMessage();
 		utils.messageLog(message);
+		utils.pm2.incMessages();
 
 		if (!message.content.startsWith(config.envSettings[env].PREFIX) || message.author.bot) return; // Make sure message starts with prefix and author is not a bot
 		
@@ -153,12 +149,12 @@ module.exports = {
 		if (message.author.id === config.BotOwnerID) {
 			if (command) executeCommand(command, args);
 			else {
-				message.reply(`"${ cmd }" is not a valid command.`); // .then(message => { message.delete({ timeout: timeout }) });
+				message.reply(`"${ cmd }" is not a valid command.`);
 			}
 		} else {
 			if (command) checkAll(command, args);
 			else {
-				message.reply(`"${ cmd }" is not a valid command.`); // .then(message => { message.delete({ timeout: timeout }) });
+				message.reply(`"${ cmd }" is not a valid command.`);
 			}
 		}
 	}

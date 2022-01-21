@@ -6,8 +6,6 @@ const colors = require("colors");
 const utils = require("djs-utils");
 const mongoose = require("mongoose");
 
-
-console.clear();
 const client = new Discord.Client({
 	autoReconnect: true,
 	retryLimit: Infinity,
@@ -46,7 +44,7 @@ client.events = new Discord.Collection();
 client.playerEvents = new Discord.Collection();
 
 // Load in all event handlers
-[ "command", "event", "player_event", "process", "slash" ].forEach(handler => {
+[ "command", "event", "player_event", "process", "slash", "const_update" ].forEach(handler => {
 	require(`../handlers/${ handler }.handler.js`)(client, Discord, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 });
 

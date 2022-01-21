@@ -29,7 +29,7 @@ module.exports = {
 			if (voicePlayer.state.status === "playing") {
 				voicePlayer.stop();
 				client.commands.get("play").slash(client, interaction, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
-			} else  interaction.editReply({ content: "Nothing is playing", ephemeral: true });
-		} else interaction.editReply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true });
+			} else  interaction.editReply({ content: "Nothing is playing", ephemeral: true }).then( utils.pm2.compInt() );
+		} else interaction.editReply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true }).then( utils.pm2.compInt() );
 	}
 };

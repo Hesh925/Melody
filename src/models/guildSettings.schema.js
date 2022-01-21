@@ -2,20 +2,20 @@
 const mongoose = require("mongoose");
 
 const Schema = new mongoose.Schema({
-	guildID: { type: String, required: true, unique: true},
+	guildID:        { type: String,  required: true, unique: true },
 	loggingChannel: { type: String },
-	logging: { type: bool, required: true, default: false },
+	logging:        { type: Boolean, required: true, default: false },
 
 	// Moderation
-	DeleteInvites: { type: bool, required: true, default: false },
+	DeleteInvites:  { type: Boolean, required: true, default: false },
 
 	// logging
-	messageUpdate: { type: bool, required: true, default: false },
-	messageDelete: { type: bool, required: true, default: false },
-	invitePosted:  { type: bool, required: true, default: false },
+	messageUpdate:  { type: Boolean, required: true, default: false },
+	messageDelete:  { type: Boolean, required: true, default: false },
+	invitePosted:   { type: Boolean, required: true, default: false },
 	
 });
 
-const model = mongoose.model("", Schema);
+const model = mongoose.model("GuildSettings", Schema);
 
 module.exports = model;

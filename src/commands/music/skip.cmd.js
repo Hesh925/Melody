@@ -44,8 +44,8 @@ module.exports = {
 					client.commands.get("play").run(client, null, null, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying, res, interaction, "slash");
 
 
-				} else await interaction.editReply({ content: "The queue is empty"});
-			} else await interaction.editReply({ content: "Nothing is playing to skip", ephemeral: true});
-		} else await interaction.editReply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true});
+				} else await interaction.editReply({ content: "The queue is empty"}).then( utils.pm2.compInt() );
+			} else await interaction.editReply({ content: "Nothing is playing to skip", ephemeral: true}).then( utils.pm2.compInt() );
+		} else await interaction.editReply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true}).then( utils.pm2.compInt() );
 	}
 };

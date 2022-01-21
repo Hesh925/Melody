@@ -1,3 +1,4 @@
+const utils = require("djs-utils");
 module.exports = {
 	name: "forceleave",
 	description: "Forces the bot to leave a guild",
@@ -22,6 +23,6 @@ module.exports = {
 		} else message.reply("You bust provide a valid guild id");
 	},
 	slash: async (_client, interaction) => {
-		interaction.editReply("How the fuck are you seeing this?");
+		interaction.editReply("How the fuck are you seeing this?").then( utils.pm2.compInt() );
 	}
 };

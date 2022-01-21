@@ -38,7 +38,7 @@ module.exports = {
 		}
 	},
 
-	slash: async (_client, interaction, _args, Discord, _colors, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, _DJSVoice, nowPlaying) => {
+	slash: async (_client, interaction, _args, Discord, _colors, _config, _ezcolor, utils, _opusEncoder, _voicePlayer, _DJSVoice, nowPlaying) => {
 		const videoData = nowPlaying["0"];
 		if (videoData !== null) {
 			const embed = new Discord.MessageEmbed()
@@ -53,7 +53,7 @@ module.exports = {
 				.setColor("1049ed")
 				.setFooter(`Requested by: ${ interaction.user.username }`,  interaction.user.displayAvatarURL({ dynamic: true }))
 				.setTimestamp();
-			interaction.editReply({ embeds: [ embed ] });
+			interaction.editReply({ embeds: [ embed ] }).then( utils.pm2.compInt() );
 		}
 	}
 };

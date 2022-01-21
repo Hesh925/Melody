@@ -22,6 +22,7 @@ module.exports = {
 	run: async (_client, message, args, Discord, _colors, _config, _ezcolor, utils) => {
 		message.suppressEmbeds(true);
 		if (args !== []) {
+			console.log(args);
 			const videoData = await utils.ytSearch(args);
 			if (videoData !== null) {
 				const embed = new Discord.MessageEmbed()
@@ -81,7 +82,8 @@ module.exports = {
 				.setColor("1049ed")
 				.setFooter(`Requested by: ${ interaction.user.username }`,  interaction.user.displayAvatarURL({ dynamic: true }))
 				.setTimestamp();
-			interaction.editReply({ embeds: [ embed ] });
+			utils.pm2.compInt();
+			interaction.editReply({ embeds: [ embed ] }).then( utils.pm2.compInt() );
 		}
 	}
 };

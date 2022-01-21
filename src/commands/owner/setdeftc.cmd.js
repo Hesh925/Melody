@@ -21,6 +21,6 @@ module.exports = {
 		} catch(err) { utils.log(err); }
 	},
 	slash: async (client, interaction, args, Discord, _colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
-		interaction.editReply("Not set up yet");
+		interaction.editReply("Not set up yet").then( utils.pm2.compInt() );
 	}
 };

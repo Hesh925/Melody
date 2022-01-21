@@ -22,6 +22,7 @@ module.exports = {
 		}
 		async function executeCommand(command) {
 			await interaction.deferReply();
+			utils.pm2.pendInt();
 			incDBData(command);
 			command.slash(client, interaction, null, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 		}
@@ -49,29 +50,25 @@ module.exports = {
 			} else return true; // Enabled
 		}
 
+		function checkUserPerms() { // Checks if the command is disabled
+			if (command.userPerms !== [] ) {
+				if (interaction.member.permissions.has(command.userPerms)) return true; // User has perms
+				else return false; // User does not have perms
+			} else return true; // Returns true if no perms are listed
+		}
+
 		function checkAll() { // Checks that the command can be executed
 			if (checkDisabled()) { // Continues if not disabled
 				if (checkBotOwnerOnly()) {
 					if (checkOwnerOnly()) { // Continues if is owner or is not required to be owner
-						executeCommand(command);
-					} else interaction.reply(`"${ command.name }" is an owner only command`).then(interaction => {
-						interaction.delete({
-							timeout: config.channelTimeout
-						});
-					});
-				} else interaction.reply(`"${ command.name }" is an bot owner only command`).then(interaction => {
-					interaction.delete({
-						timeout: config.channelTimeout
-					});
-				});
-			} else interaction.reply(`"${ command.name }" is currently disabled because "${ command.disabledReason }"`).then(interaction => {
-				interaction.delete({
-					timeout: config.channelTimeout
-				});
-			});
+						if (checkUserPerms()) { // Continues if user has perms or if no perms are needed
+							executeCommand(command);
+						} else interaction.reply(`You do not have the proper permissions to run "${ command.name }"`);
+					} else interaction.reply(`"${ command.name }" is an owner only command`);
+				} else interaction.reply(`"${ command.name }" is an bot owner only command`);
+			} else interaction.reply(`"${ command.name }" is currently disabled because "${ command.disabledReason }"`);
 		}
 		if (interaction.user.id === config.BotOwnerID) executeCommand(command);
 		else checkAll();
-		
 	}
 };

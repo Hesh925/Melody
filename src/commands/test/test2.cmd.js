@@ -1,4 +1,5 @@
 /* eslint-disable */
+const io = require("@pm2/io");
 const { SlashCommandBuilder } = require('@discordjs/builders');
 module.exports = {
 	name: "test2",
@@ -17,10 +18,10 @@ module.exports = {
 	options: [],
 	// eslint-disable-next-line no-unused-vars
 	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
-		message.channel.send("test")
+		console.log(message.member.user)
 	},
 
 	slash: async (client, interaction, args, Discord, _colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
-		interaction.editReply("test")
+		interaction.editReply("Not set up yet").then( utils.pm2.compInt() );
 	}
 };
