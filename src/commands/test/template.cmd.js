@@ -2,7 +2,7 @@
 module.exports = {
 	name: "",
 	description: "",
-	usage: "", //<> is strict & [] is optional
+	usage: "", // <> is strict & [] is optional
 	args: {},
 	category: "",
 	aliases: [], // type: Array

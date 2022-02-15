@@ -15,18 +15,15 @@ ShardingManager.spawn().catch(error => {
 ShardingManager.on("shardCreate", shard => {
 	shard.on("ready", () => {
 		utils.log(`[DEBUG/SHARD] Shard ${ shard.id } connected to Discord's Gateway.`);
-		shard.send({type: "shardId", data: {shardId: shard.id}});
 	});
 	shard.on("disconnect", (disconnectEvent, id) => {
 		utils.log(`Shard ${ id } disconnected`);
 		console.log(disconnectEvent);
 	});
-	shard.on("reconnecting", (id) => {
+	shard.on("reconnection", (id) => {
 		utils.log(`Shard ${ id } reconnecting`);
 	});
-	shard.on("resume", (id, replayedEvents) => {
-		utils.log(`Shard ${ id } resumed, Replayed ${ replayedEvents }`);
-	});
+
 	// SHARD DEATH
 	shard.on("death", (deathEvent) => {
 		if(exitCodes[deathEvent["exitCode"]]){

@@ -31,7 +31,8 @@ module.exports = {
 				for (const warn of warnRes) {
 					embed.addField(`Date: ${ date.format(warn.date, ( "MM/DD/YYYY hh:MM:ss A")) }`,
 						`**Warned By:** ${ client.users.cache.get(warn.warnedBy).tag }
-								**Reason:** ${ warn.reason }`);
+						 **Reason:** ${ warn.reason }
+						 **Warn ID:** ${ warn.warnID }`);
 				}
 					
 				message.channel.send({ embeds: [ embed ] });
@@ -46,7 +47,8 @@ module.exports = {
 				for (const warn of warnRes) {
 					embed.addField(`**Date:** ${ date.format(warn.date, ( "MM/DD/YYYY hh:MM:ss A")) }`,
 						`**Warned By:** ${ client.users.cache.get(warn.warnedBy).tag }
-								**Reason:** ${ warn.reason }`);
+						 **Reason:** ${ warn.reason }
+						 **Warn ID:** ${ warn.warnID }`);
 				}
 					
 				message.channel.send({ embeds: [ embed ] });
@@ -72,7 +74,8 @@ module.exports = {
 				for (const warn of warnRes) {
 					embed.addField(`**Date:** ${ date.format(warn.date, ( "MM/DD/YYYY hh:MM:ss A")) }`,
 						`**Warned By:** ${ client.users.cache.get(warn.warnedBy).tag }
-							**Reason:** ${ warn.reason }`);
+						 **Reason:** ${ warn.reason }
+						 **Warn ID:** ${ warn.warnID }`);
 				}
 				interaction.editReply({ embeds: [ embed ] }).then( utils.pm2.compInt() );
 	
@@ -84,7 +87,8 @@ module.exports = {
 				for (const warn of warnRes) {
 					embed.addField(`**Date:** ${ date.format(warn.date, ( "MM/DD/YYYY hh:MM:ss A")) }`,
 						`**Warned By:** ${ client.users.cache.get(warn.warnedBy).tag }
-							**Reason:** ${ warn.reason }`);
+						 **Reason:** ${ warn.reason }
+						 **Warn ID:** ${ warn.warnID }`);
 				}
 				interaction.editReply({ embeds: [ embed ] }).then( utils.pm2.compInt() );
 			}

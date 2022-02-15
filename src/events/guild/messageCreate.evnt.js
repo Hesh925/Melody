@@ -23,8 +23,8 @@ module.exports = {
 					});
 					commandSchema.save().then(utils.log(`Command data saved for: ${ command.name }`));
 				} 
+				await commandModel.findOneAndUpdate({ command: command.name }, { $inc: { timesused: 1 } });
 			} catch (err) { utils.log(err); }
-			await commandModel.findOneAndUpdate({ command: command.name }, { $inc: { timesused: 1 } });
 		}
 
 		async function updateGuild() {
@@ -52,8 +52,8 @@ module.exports = {
 					});
 					userSchema.save().then(utils.log(`User data saved for: ${ message.author.id }`));
 				} 
+				await userModel.findOneAndUpdate({ userID: message.author.id }, { $inc: { commandsUsed: 1 }});
 			} catch (err) { utils.log(err); }
-			await userModel.findOneAndUpdate({ userID: message.author.id }, { $inc: { commandsUsed: 1 }});
 		}
 		
 

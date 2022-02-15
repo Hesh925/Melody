@@ -1,9 +1,11 @@
-/* eslint-disable no-redeclare */
+/* eslint-disable  */
 const Discord = require("discord.js");
 const DJSVoice = require("@discordjs/voice");
 const Opus = require("@discordjs/opus");
 const colors = require("colors");
 const utils = require("djs-utils");
+const TOKEN = utils.searchArgv("env", true) === "dev" ? (process.env.DISCORD_TOKEN_MELODY_DEV || utils.searchArgv("token", true)) : process.env.DISCORD_TOKEN_MELODY || utils.searchArgv("token", true);
+
 const mongoose = require("mongoose");
 
 const client = new Discord.Client({
@@ -12,27 +14,25 @@ const client = new Discord.Client({
 	fetchAllMembers: true,
 	intents: new Discord.Intents(32767)
 });
-
-const voicePlayer = DJSVoice.createAudioPlayer({ 
-	behaviors: { 
+const voicePlayer = DJSVoice.createAudioPlayer({
+	behaviors: {
 		noSubscriber: DJSVoice.NoSubscriberBehavior.Pause,
 		inlineVolume: true
-	} 
+	}
 });
-const opusEncoder = new Opus.OpusEncoder(128000, 2);
 
-if (utils.searchArgv("env", true) === "dev") {
-	var TOKEN = process.env.DISCORD_TOKEN_MELODY_DEV || utils.searchArgv("token", true);
-} else { 
-	var TOKEN = process.env.DISCORD_TOKEN_MELODY || utils.searchArgv("token", true);
-}
+const opusEncoder = new Opus.OpusEncoder(128000, 2);
+//if (utils.searchArgv("env", true) === "dev") {
+//} else {
+//	var TOKEN = process.env.DISCORD_TOKEN_MELODY || utils.searchArgv("token", true);
+//}
 
 // MONGODB LOGIN 
 mongoose.connect(process.env.MONGO_DB_MELODY, {
 	serverSelectionTimeoutMS: 5000
 }).then(() => {
-	utils.log("[DEBUG/MONGODB] Connected to MONGODB");
-}).catch((err) => { 
+	utils.log("[1DEBUG/MONGODB] Connected to MONGODB".green);
+}).catch((err) => {
 	utils.log(`[ERROR/MONGODB] ${ err }`); process.exit(200); 
 });
 
@@ -51,8 +51,10 @@ client.playerEvents = new Discord.Collection();
 
 // DISCORD LOGIN
 if (utils.notNull(TOKEN)) {
-	client.login(TOKEN);
+	client.login(TOKEN).then(r =>
+		console.log("Logged in".green)
+	);
 } else {
 	console.log("ERROR: No token provided".red);
 	process.exit(1);
-}
+};

@@ -2,7 +2,7 @@
 const { MessageEmbed, version: djsversion } = require("discord.js");
 const prettyMilliseconds = require("pretty-ms");
 const guildModel = require("../../models/guild.schema.js");
-const packagefile = require("../../../package.json");
+const packageFile = require("../../../package.json");
 const os = require("os");
 const ms = require("ms");
 module.exports = {
@@ -30,10 +30,10 @@ module.exports = {
 				.addField("General", `
 					**❯ Client:** ${ client.user.tag }
 					**❯ Uptime:** ${ prettyMilliseconds(client.uptime, {compact: true}) }
-					**❯ Version:** v${ packagefile["version"] }
+					**❯ Version:** v${ packageFile["version"] }
 					**❯ Node.js:** ${ process.version }
 					**❯ Discord.js:** v${ djsversion }
-					**❯ Dependencies:** ${ Object.keys(packagefile.dependencies).length }\u200b`)
+					**❯ Dependencies:** ${ Object.keys(packageFile.dependencies).length }\u200b`)
 
 				.addField("System", `
 					**❯ Platform:** ${ process.platform }
@@ -55,26 +55,24 @@ module.exports = {
 
 				.setTimestamp();
 			message.channel.send({ embed: embed });
-		} else {
-			if (args[0].toLowerCase() === "-d") {
-				const embed = new MessageEmbed()
-					.setTitle("Bot Dependencies")
-					.setThumbnail(client.user.displayAvatarURL())
-					.setColor(ezcolor.getColor("HEX", "blue"))
-					.setTimestamp();
-                    
-				Object.keys(packagefile.dependencies).forEach(element => {
-					const version = packagefile.dependencies[element];
-					if (version.startsWith("git+")) {
-						embed.addField(`**❯ ${ element }:**`, version.slice(4));
-					} else if (version.startsWith("^" || "~" || "<" || ">" || "<=" || ">=")) {
-						embed.addField(`**❯ ${ element }:**`, version.slice(1));
-					} else {
-						embed.addField(`**❯ ${ element }:**`, version);
-					}
-				});
-				message.channel.send({ embed: embed });
-			}
+		} else if (args[0].toLowerCase() === "-d") {
+			const embed = new MessageEmbed()
+				.setTitle("Bot Dependencies")
+				.setThumbnail(client.user.displayAvatarURL())
+				.setColor(ezcolor.getColor("HEX", "blue"))
+				.setTimestamp();
+
+			Object.keys(packageFile.dependencies).forEach(element => {
+				const version = packageFile.dependencies[element];
+				if (version.startsWith("git+")) {
+					embed.addField(`**❯ ${ element }:**`, version.slice(4));
+				} else if (version.startsWith("^" || "~" || "<" || ">" || "<=" || ">=")) {
+					embed.addField(`**❯ ${ element }:**`, version.slice(1));
+				} else {
+					embed.addField(`**❯ ${ element }:**`, version);
+				}
+			});
+			message.channel.send({embed: embed});
 		}
 	},
 
@@ -88,10 +86,10 @@ module.exports = {
 			.addField("General", `
 				**❯ Client:** ${ client.user.tag }
 				**❯ Uptime:** ${ prettyMilliseconds(client.uptime, {compact: true}) }
-				**❯ Version:** v${ packagefile["version"] }
+				**❯ Version:** v${ packageFile["version"] }
 				**❯ Node.js:** ${ process.version }
 				**❯ Discord.js:** v${ djsversion }
-				**❯ Dependencies:** ${ Object.keys(packagefile.dependencies).length }\u200b`)
+				**❯ Dependencies:** ${ Object.keys(packageFile.dependencies).length }\u200b`)
 
 			.addField("System", `
 				**❯ Platform:** ${ process.platform }
