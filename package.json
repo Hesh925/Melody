@@ -32,7 +32,7 @@
     "djs-utils": "git+https://github.com/Havoc925/DJS-Utils.git",
     "js-sha256": "^0.9.0",
     "libsodium-wrappers": "^0.7.9",
-    "mongoose": "^6.1.7",
+    "mongoose": "^6.2.9",
     "ms": "^2.1.3",
     "node-abort-controller": "^3.0.1",
     "opusscript": "0.0.8",
