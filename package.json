@@ -48,6 +48,6 @@
     "ytsr": "^3.6.0"
   },
   "devDependencies": {
-    "eslint": "^7.29.0"
+    "eslint": "^8.12.0"
   }
 }
