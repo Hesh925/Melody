@@ -45,7 +45,7 @@
     "ytdl": "^1.4.1",
     "ytdl-core": "^4.11.0",
     "ytpl": "^2.3.0",
-    "ytsr": "^3.7.0"
+    "ytsr": "^3.8.0"
   },
   "devDependencies": {
     "eslint": "^8.16.0"
