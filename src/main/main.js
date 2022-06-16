@@ -31,7 +31,7 @@ const opusEncoder = new Opus.OpusEncoder(128000, 2);
 mongoose.connect(process.env.MONGO_DB_MELODY, {
 	serverSelectionTimeoutMS: 5000
 }).then(() => {
-	utils.log("[1DEBUG/MONGODB] Connected to MONGODB".green);
+	utils.log("[DEBUG/MONGODB] Connected to MONGODB".green);
 }).catch((err) => {
 	utils.log(`[ERROR/MONGODB] ${ err }`); process.exit(200); 
 });
@@ -51,7 +51,7 @@ client.playerEvents = new Discord.Collection();
 
 // DISCORD LOGIN
 if (utils.notNull(TOKEN)) {
-	client.login(TOKEN).then(r =>
+	client.login(TOKEN).then(() =>
 		console.log("Logged in".green)
 	);
 } else {
