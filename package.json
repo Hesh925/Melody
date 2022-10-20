@@ -20,7 +20,7 @@
   "author": "Hesh925#1482",
   "license": "ISC",
   "dependencies": {
-    "@discordjs/opus": "^0.8.0",
+    "@discordjs/opus": "^0.9.0",
     "@discordjs/voice": "^0.13.0",
     "@pm2/io": "^5.0.0",
     "chron": "^0.1.1",
