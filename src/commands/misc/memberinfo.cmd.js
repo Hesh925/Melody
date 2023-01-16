@@ -1,3 +1,4 @@
+const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
 	name: "memberinfo",
 	description: "Get info about all members",

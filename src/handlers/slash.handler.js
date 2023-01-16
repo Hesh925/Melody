@@ -40,12 +40,12 @@ module.exports = (client) => {
 							op.setName(String(option.Role.name).replace(/\s+/g, "_").toLowerCase()).setDescription(option.Role.description).setRequired(option.Role.required)
 						);
 
-					} else if(option.StringChoices && option.StringChoices.name && option.StringChoices.description && option.StringChoices.choices && option.StringChoices.choices.length > 0){
-
-						slashCommand.addStringOption((op) =>
-							op.setName(String(option.StringChoices.name).replace(/\s+/g, "_").toLowerCase()).setDescription(option.StringChoices.description).setRequired(option.StringChoices.required)
-								.addChoices(option.StringChoices.choices.map(c => [ String(c[0]).replace(/\s+/g, "_").toLowerCase(), String(c[1]) ] )),
-						);
+					//} else if(option.StringChoices && option.StringChoices.name && option.StringChoices.description && option.StringChoices.choices && option.StringChoices.choices.length > 0){
+//
+					//	slashCommand.addStringOption((op) =>
+					//		op.setName(String(option.StringChoices.name).replace(/\s+/g, "_").toLowerCase()).setDescription(option.StringChoices.description).setRequired(option.StringChoices.required)
+					//			.addChoices(option.StringChoices.choices.map(c => [ String(c[0]).replace(/\s+/g, "_").toLowerCase(), String(c[1]) ] )),
+					//	);
 
 					} else if(option.IntChoices && option.IntChoices.name && option.IntChoices.description && option.IntChoices.choices && option.IntChoices.choices.length > 0){
 

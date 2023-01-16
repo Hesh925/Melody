@@ -12,7 +12,7 @@ const client = new Discord.Client({
 	autoReconnect: true,
 	retryLimit: Infinity,
 	fetchAllMembers: true,
-	intents: new Discord.Intents(32767)
+	intents: new Discord.IntentsBitField(32767)
 });
 const voicePlayer = DJSVoice.createAudioPlayer({
 	behaviors: {
@@ -29,11 +29,11 @@ const opusEncoder = new Opus.OpusEncoder(128000, 2);
 
 // MONGODB LOGIN 
 mongoose.connect(process.env.MONGO_DB_MELODY, {
-	serverSelectionTimeoutMS: 5000
+	serverSelectionTimeoutMS: 50000
 }).then(() => {
 	utils.log("[DEBUG/MONGODB] Connected to MONGODB".green);
 }).catch((err) => {
-	utils.log(`[ERROR/MONGODB] ${ err }`); process.exit(200); 
+	utils.log(`[ERROR/MONGODB] ${ err }`); //process.exit(200); 
 });
 
 // Setup collections 
@@ -44,7 +44,7 @@ client.events = new Discord.Collection();
 client.playerEvents = new Discord.Collection();
 
 // Load in all event handlers
-[ "command", "event", "player_event", "process", "slash", "const_update" ].forEach(handler => {
+[ "command", "event", "player_event", "process", "slash" ].forEach(handler => {
 	require(`../handlers/${ handler }.handler.js`)(client, Discord, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 });
 

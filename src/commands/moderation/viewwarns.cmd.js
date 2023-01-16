@@ -1,4 +1,4 @@
-const { Permissions } = require("discord.js");
+const { PermissionsBitField, SlashCommandBuilder } = require("discord.js");
 const warnModel = require("../../models/warning.schema");
 const date = require("date-and-time");
 
@@ -9,7 +9,7 @@ module.exports = {
 	args: {},
 	category: "moderation",
 	aliases: [ "vw" ], // type: Array
-	userPerms: [ Permissions.FLAGS.KICK_MEMBERS ], // type: Array
+	userPerms: [ PermissionsBitField.Flags.KickMembers ], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
 	nsfw: false, // type: Boolean

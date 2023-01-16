@@ -1,4 +1,4 @@
-const { Permissions } = require("discord.js");
+const { PermissionsBitField, SlashCommandBuilder} = require("discord.js");
 const warnModel = require("../../models/warning.schema");
 const userModel = require("../../models/user.schema");
 const date = require("date-and-time");
@@ -10,14 +10,14 @@ module.exports = {
 	args: {},
 	category: "moderation",
 	aliases: [ "rmwarn" ], // type: Array
-	userPerms: [ Permissions.FLAGS.KICK_MEMBERS ], // type: Array https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-FLAGS
+	userPerms: [ PermissionsBitField.Flags.KickMembers ], // type: Array https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-FLAGS
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
 	allowSlash: true, 
-	options: [ {"String": { name: "warn_id", description: "Warn ID can be found with viewwarns command", required: true }} ],
+	options: [ {"StringChoices": { name: "warn_id", description: "Warn ID can be found with viewwarns command", required: true }} ],
 	run: async (client, message, args, Discord, _colors, _config, ezcolor, utils) => {
 		const warnID = args[0];
 		function sendEmbed(warn){

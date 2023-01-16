@@ -1,3 +1,4 @@
+const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
 	name: "pause",
 	description: "Pauses the music player",

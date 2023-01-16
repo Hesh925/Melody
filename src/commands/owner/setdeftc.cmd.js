@@ -1,4 +1,5 @@
 /* eslint-disable*/
+const { SlashCommandBuilder } = require("discord.js");
 const guildModel = require("../../models/guild.schema.js");
 module.exports = {
 	name: "setdeftc",
@@ -8,12 +9,12 @@ module.exports = {
 	category: "owner",
 	aliases: [], // type: Array
 	userPerms: [], // type: Array
-	ownerOnly: true, // type: Boolean
+	ownerOnly: false, // type: Boolean
 	botOwnerOnly: true, // type: Boolean
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
-	disabledReason: "",
-	allowSlash: false, 
+	disabledReason: "", // type: String
+	allowSlash: false,  // type: Boolean
 	options: [],
 	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
 		try {

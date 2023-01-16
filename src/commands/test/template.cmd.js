@@ -1,4 +1,5 @@
 /* eslint-disable */
+const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
 	name: "",
 	description: "",
@@ -11,9 +12,11 @@ module.exports = {
 	botOwnerOnly: false, // type: Boolean
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
-	disabledReason: "",
-	allowSlash: true, 
-	options: [],
+	disabledReason: "", // type: String
+	allowSlash: true,  // type: Boolean
+	slashData: new SlashCommandBuilder()
+		.setName(this.name)
+		.setDescription(this.description),
 	// eslint-disable-next-line no-unused-vars
 	run: async (client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
 		console.log(this.name);

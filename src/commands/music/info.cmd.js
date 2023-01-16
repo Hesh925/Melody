@@ -4,6 +4,7 @@ function numberWithCommas(x) {
 	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	return parts.join(".");
 }
+const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
 	name: "info",
 	description: "Get info about a video",

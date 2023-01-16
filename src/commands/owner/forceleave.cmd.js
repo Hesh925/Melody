@@ -1,18 +1,19 @@
+const { SlashCommandBuilder } = require("discord.js");
 const utils = require("djs-utils");
 module.exports = {
-	name: "forceleave",
-	description: "Forces the bot to leave a guild",
-	usage: "<GuildID>",
-	args: {},
-	category: "owner",
+	name: "forceleave", // type: String
+	description: "Forces the bot to leave a guild", // type: String
+	usage: "<GuildID>", // type: String
+	args: {}, // type: Object
+	category: "owner", // type: String
 	aliases: [], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: true, // type: Boolean
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
-	disabledReason: "",
-	allowSlash: false,
+	disabledReason: "", // type: String
+	allowSlash: false, // type: Boolean
 	options: [],
 	run: async (client, message, args, _Discord, _colors, _config, _ezcolor, utils) => {
 		if(args[0].length === 18) {

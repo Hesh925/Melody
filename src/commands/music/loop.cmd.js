@@ -1,4 +1,5 @@
 const guildModel = require("../../models/guild.schema.js");
+const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
 	name: "loop",
 	description: "Turn on loop mode",

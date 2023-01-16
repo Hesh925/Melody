@@ -1,3 +1,4 @@
+const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
 	name: "playnow",
 	description: "Stops the current song and plays the given one",

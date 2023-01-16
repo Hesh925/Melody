@@ -1,4 +1,5 @@
 const utils = require("djs-utils");
+const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
 	name: "join",
 	description: "Make bot join voice channel",

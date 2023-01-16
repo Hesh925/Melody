@@ -1,6 +1,7 @@
 /* eslint-disable prefer-named-capture-group, no-bitwise, no-redeclare */
 const ytdl = require("ytdl-core");
 const ytsr = require("ytsr");
+const { SlashCommandBuilder } = require("discord.js");
 function numberWithCommas(x) {
 	var parts = x.toString().split(".");
 	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");

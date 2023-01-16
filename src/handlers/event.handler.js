@@ -1,4 +1,7 @@
 const fs = require("fs");
+
+// Loads all events from the events folder
+
 module.exports = (client, Discord, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
 	const loadDir = (dirs) => {
 		const eventFiles = fs.readdirSync(`./src/events/${ dirs }`).filter(file => file.endsWith(".evnt.js"));

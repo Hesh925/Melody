@@ -1,3 +1,4 @@
+const { SlashCommandBuilder } = require("discord.js");
 const utils = require("djs-utils");
 module.exports = {
 	name: "ping",

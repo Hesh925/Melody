@@ -2,6 +2,8 @@ const fs = require("fs");
 const commandModel = require("../models/command.schema.js");
 const utils = require("djs-utils");
 
+// Loads all commands from the commands folder
+
 module.exports = (client) => {
 	async function setDBData(command) {
 		let CommandData;

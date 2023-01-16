@@ -1,10 +1,11 @@
 /* eslint-disable capitalized-comments */
-const { MessageEmbed } = require("discord.js");
+const { MessageEmbed, SlashCommandBuilder } = require("discord.js");
+
 module.exports = {
 	name: "help",
 	description: "Displays the help screen for a command",
 	usage: "[command]",
-	args: {},
+	args: {}, 
 	category: "utilities",
 	aliases: [ "h" ], // type: Array
 	userPerms: [], // type: Array
@@ -14,7 +15,10 @@ module.exports = {
 	disabled: false, // type: Boolean
 	disabledReason: "",
 	allowSlash: true, 
-	options: [ {"String": { name: "command", description: "What command do you need help with?", required: false }} ],
+	slashData: new SlashCommandBuilder()
+		.setName(this.name)
+		.setDescription(this.description)
+		.addStringOption(option => option.setName("command").setDescription("What command do you need help with?").setRequired(false)),
 	run: async (client, message, args, _Discord, _colors, config, _ezcolor, utils) => {
 
 		const embed = new MessageEmbed()

@@ -1,5 +1,5 @@
 /* eslint-disable no-redeclare */
-const { MessageEmbed, version: djsversion } = require("discord.js");
+const { MessageEmbed, version: djsversion, SlashCommandBuilder } = require("discord.js");
 const prettyMilliseconds = require("pretty-ms");
 const guildModel = require("../../models/guild.schema.js");
 const packageFile = require("../../../package.json");
@@ -19,7 +19,10 @@ module.exports = {
 	disabled: false, // type: Boolean
 	disabledReason: "",
 	allowSlash: true, 
-	options: [],
+	slashData: new SlashCommandBuilder()
+		.setName(this.name)
+		.setDescription(this.description),
+
 	run: async (client, message, args, _Discord, _colors, _config, ezcolor, utils) => {
 		const guildRes = await guildModel.findOne({ guildID: message.guildId }).then(( [ res ] ) => { if(res) { return res; } else return null; });
 		const core = os.cpus()[0];
