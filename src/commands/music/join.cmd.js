@@ -1,4 +1,3 @@
-const utils = require("djs-utils");
 const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
 	name: "join",
@@ -13,21 +12,12 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	allowSlash: true, 
-	options: [],
-	run: async (_client, message, _args, _Discord, _colors, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, DJSVoice) => {
-		if (message.member.voice.channel !== null) {
-			DJSVoice.joinVoiceChannel({
-				channelId: message.member.voice.channel.id,
-				guildId: message.channel.guild.id,
-				adapterCreator: message.channel.guild.voiceAdapterCreator,
-			});
-		} else {
-			message.channel.send("You must be in a voice channel to use this command");
-		}
-	},
 
-	slash: async (_client, interaction, _args, _Discord, _colors, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, DJSVoice, nowPlaying, bool) => {
+	slashData: new SlashCommandBuilder()
+		.setName("join")
+		.setDescription("Make bot join voice channel"),
+
+	execute: async (_client, interaction, _Discord, _colors, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, DJSVoice, _nowPlaying, bool) => {
 		const voiceChannel = interaction.member.voice.channel;
 		const guild = interaction.member.guild;
 		if (interaction.member.voice.channel !== null) {
@@ -37,13 +27,11 @@ module.exports = {
 				adapterCreator: guild.voiceAdapterCreator,
 			});
 			if (bool) {
-				utils.pm2.compInt();
-				interaction.editReply({ content: `Joined ${ voiceChannel.name }`, ephemeral: true }).then( utils.pm2.compInt() );
+				interaction.editReply({ content: `Joined ${ voiceChannel.name }`, ephemeral: true });
 			}
 		} else {
 			if (bool) {
-				utils.pm2.compInt();
-				interaction.editReply({ content: "You must be in a voice channel to use this command", ephemeral: true }).then( utils.pm2.compInt() );
+				interaction.editReply({ content: "You must be in a voice channel to use this command", ephemeral: true });
 			}
 		}
 	}

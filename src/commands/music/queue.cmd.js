@@ -15,40 +15,13 @@ module.exports = {
 	nsfw: false, // type: Boolean
 	disabled: false, // type: Boolean
 	disabledReason: "",
-	allowSlash: true, 
-	options: [ {"String": { name: "song", description: "Title or URL for the song you want to add to the queue", required: true }} ],
-	run: async (_client, message, args, _Discord, _colors, _config, _ezcolor, utils) => {
 
-		const queueRes = await queueModel.find({ guildID: message.guildId }).sort({queuePos: -1}).limit(1).then(( [ res ] ) => { if(res) { return res; } else return null; });
-		const pos = queueRes !== null ? queueRes.queuePos + 1 : 1;
-		async function saveQueue(videoData) {
-			console.log(videoData);
-			try {
-				const guildSchema = await queueModel.create({
-					userID:     message.userId,
-					guildID:    message.guildId,
-					textCID:    message.channel.id,
-					songURL:    videoData.url,
-					songName:   videoData.title,
-					songLength: videoData.duration,
-					queuePos:   pos
-				});
-				guildSchema.save().then(message.channel.send("added song to queue"));
-				await guildModel.findOneAndUpdate({ guildID: message.guildId }, { $inc: { songsInQueue: 1 }});
-			} catch (err) {
-				utils.log(err);
-				message.channel.send("An error has occurred while trying to queue your song please try again");
-			}
-		}
-		const searchTerm = String(args).replace(/,/g, " ");
-		const filter = await ytsr.getFilters(searchTerm);
-		const filter1 = filter.get("Type").get("Video");
-		const resp = await ytsr(filter1.url, {limit: 1, pages : 1});
-		const videoData = resp["items"][0];
-		saveQueue(videoData);
-	},
+	slashData: new SlashCommandBuilder()
+		.setName("queue")
+		.setDescription("Add song to queue")
+		.addStringOption(option => option.setName("song").setDescription("Title or URL for the song you want to add to the queue").setRequired(true)),
 
-	slash: async (_client, interaction, _args, _Discord, _colors, _config, _ezcolor, utils) => {
+	execute: async (_client, interaction, _Discord, _colors, _config, _ezcolor, utils) => {
 		const searchFor = interaction.options.getString("song");
 
 		const queueRes = await queueModel.find({ guildID: interaction.guildId }).sort({queuePos: -1}).limit(1).then(( [ res ] ) => { if(res) { return res; } else return null; });
@@ -68,7 +41,7 @@ module.exports = {
 				await guildModel.findOneAndUpdate({ guildID: interaction.guildId }, { $inc: { songsInQueue: 1 }});
 			} catch (err) {
 				utils.log(err);
-				interaction.editReply("An error has occurred while trying to queue your song please try again").then( utils.pm2.compInt() );
+				interaction.editReply("An error has occurred while trying to queue your song please try again");
 			}
 		}
 		const searchTerm = String(searchFor).replace(/,/g, " ");

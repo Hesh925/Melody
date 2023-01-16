@@ -61,7 +61,7 @@ module.exports = {
 			updateGuild();
 			updateUsers();
 			incDBData(command);
-			command.run(client, message, args, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
+			command.run(client, message, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 		}
 
 		function checkBotOwnerOnly(command) { // Checks if the user is bot owner if command is bot owner only
@@ -134,7 +134,6 @@ module.exports = {
 
 		if (message === undefined) return;
 		utils.messageLog(message);
-		utils.pm2.incMessages();
 
 		if (!message.content.startsWith(config.envSettings[env].PREFIX) || message.author.bot) return; // Make sure message starts with prefix and author is not a bot
 		

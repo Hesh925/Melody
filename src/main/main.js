@@ -38,13 +38,13 @@ mongoose.connect(process.env.MONGO_DB_MELODY, {
 
 // Setup collections 
 const nowPlaying = {};
+
 client.commands = new Discord.Collection();
-client.slashCommands = new Discord.Collection();
 client.events = new Discord.Collection();
 client.playerEvents = new Discord.Collection();
 
 // Load in all event handlers
-[ "command", "event", "player_event", "process", "slash" ].forEach(handler => {
+["event", "player_event", "process", "slash" ].forEach(handler => {
 	require(`../handlers/${ handler }.handler.js`)(client, Discord, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 });
 

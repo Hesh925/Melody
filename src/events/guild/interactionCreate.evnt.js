@@ -22,12 +22,11 @@ module.exports = {
 		}
 		async function executeCommand(command) {
 			await interaction.deferReply();
-			utils.pm2.pendInt();
-			incDBData(command);
-			command.slash(client, interaction, null, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
+			// IncDBData(command);
+			command.execute(client, interaction, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 		}
 
-		const command = client.slashCommands.get(interaction.commandName);
+		const command = client.commands.get(interaction.commandName);
 		if (!command) interaction.reply("An error has occurred please try again");
 
 		function checkBotOwnerOnly() { // Checks if the user is bot owner if command is bot owner only

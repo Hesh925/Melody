@@ -2,7 +2,6 @@
 
 const Package = require("../../../package.json");
 const config = require("../../config/CONFIG.json");
-const queueModel = require("../../models/queue.schema.js");
 const guildModel = require("../../models/guild.schema.js");
 const userModel = require("../../models/user.schema.js");
 const utils = require("djs-utils");
@@ -26,7 +25,6 @@ module.exports = {
 			`Loaded ${ event } events!\n`.green);
 		utils.log("Bot started");
 		utils.setRichPresence(client, config);
-		utils.pm2.init(client);
 		
 		
 		if (utils.searchArgv("git")) {
