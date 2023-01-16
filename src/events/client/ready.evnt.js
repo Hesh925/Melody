@@ -1,15 +1,13 @@
 /* eslint-disable no-await-in-loop */
 
 const Package = require("../../../package.json");
-const config = require("../../config/CONFIG.json");
 const guildModel = require("../../models/guild.schema.js");
 const userModel = require("../../models/user.schema.js");
-const utils = require("djs-utils");
 
 module.exports = {
 	name: "ready",
 	once: true,
-	async execute(_Discord, client) {
+	async execute(_Discord, client, config, utils) {
 		var date = new Date;
 		var command = (Array.from(client.commands)).length;
 		var event = (Array.from(client.events)).length;
@@ -25,6 +23,7 @@ module.exports = {
 			`Loaded ${ event } events!\n`.green);
 		utils.log("Bot started");
 		utils.setRichPresence(client, config);
+		utils.logToDiscord(client, config.errorReporting.guildId, config.errorReporting.textCId, "Bot started");
 		
 		
 		if (utils.searchArgv("git")) {

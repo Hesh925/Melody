@@ -1,10 +1,9 @@
 const guildModel = require("../../models/guild.schema.js");
 const queueModel = require("../../models/queue.schema.js");
-const utils = require("djs-utils");
 
 module.exports = {
 	name: "guildCreate",
-	async execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, guild) {
+	async execute(_Discord, client, config, utils, _colors, _opusEncoder, _voicePlayer, _DJSVoice, _nowPlaying, guild) {
 		console.log(guild);
 		let GuildData;
 		let QueueData;
@@ -17,6 +16,7 @@ module.exports = {
 			if(QueueData) {
 				await queueModel.deleteMany({ guildID: guild.id });
 			}
+			utils.logToDiscord(client, config.errorReporting.guildId, config.errorReporting.textCId, `left: ${ guild.id } `);
 		} catch (err) { utils.log(err); }
 	}
 };

@@ -4,6 +4,7 @@ const DJSVoice = require("@discordjs/voice");
 const Opus = require("@discordjs/opus");
 const colors = require("colors");
 const utils = require("djs-utils");
+const config = require("../config/CONFIG.json");
 const TOKEN = utils.searchArgv("env", true) === "dev" ? (process.env.DISCORD_TOKEN_MELODY_DEV || utils.searchArgv("token", true)) : process.env.DISCORD_TOKEN_MELODY || utils.searchArgv("token", true);
 
 const mongoose = require("mongoose");
@@ -22,10 +23,6 @@ const voicePlayer = DJSVoice.createAudioPlayer({
 });
 
 const opusEncoder = new Opus.OpusEncoder(128000, 2);
-//if (utils.searchArgv("env", true) === "dev") {
-//} else {
-//	var TOKEN = process.env.DISCORD_TOKEN_MELODY || utils.searchArgv("token", true);
-//}
 
 // MONGODB LOGIN 
 mongoose.connect(process.env.MONGO_DB_MELODY, {
@@ -33,7 +30,8 @@ mongoose.connect(process.env.MONGO_DB_MELODY, {
 }).then(() => {
 	utils.log("[DEBUG/MONGODB] Connected to MONGODB".green);
 }).catch((err) => {
-	utils.log(`[ERROR/MONGODB] ${ err }`); //process.exit(200); 
+	utils.log(`[ERROR/MONGODB] ${ err }`);
+	process.exit(200);
 });
 
 // Setup collections 
@@ -45,7 +43,7 @@ client.playerEvents = new Discord.Collection();
 
 // Load in all event handlers
 ["event", "player_event", "process", "slash" ].forEach(handler => {
-	require(`../handlers/${ handler }.handler.js`)(client, Discord, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
+	require(`../handlers/${ handler }.handler.js`)(client, Discord, config, utils, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 });
 
 

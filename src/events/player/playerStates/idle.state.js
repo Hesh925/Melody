@@ -1,13 +1,11 @@
-const utils = require("djs-utils");
 const ezcolor = require("djs-easy-color");
-const config = require("../../../config/CONFIG.json");
 
 const guildModel = require("../../../models/guild.schema.js");
 const queueModel = require("../../../models/queue.schema.js");
 
 module.exports = {
 	name: "idle",
-	async execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState) {
+	async execute(Discord, client, config, utils, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState) {
 		const guildRes = await guildModel.findOne({ guildID: oldState.resource.metadata.guildId }).then(( res ) => { if(res) { return res; } else return null; });
 		
 		

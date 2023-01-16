@@ -3,7 +3,7 @@ const idle = require("./playerStates/idle.state.js");
 const playing = require("./playerStates/playing.state.js");
 module.exports = {
 	name: "stateChange",
-	execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, oldState, newState) {
+	execute(Discord, client, config, utils, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, oldState, newState) {
 		if(newState.status === "buffering") {
 			buffering.execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, oldState, newState);
 		}

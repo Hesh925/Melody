@@ -1,9 +1,24 @@
 const fs = require("fs");
+const commandModel = require("../models/command.schema.js");
 
 const config = require("../config/CONFIG.json");
 
-module.exports = (client) => {
-	
+module.exports = (client, _Discord, _config, utils) => {
+	async function setDBData(command) {
+		let CommandData;
+		try {
+			CommandData = await commandModel.findOne({ command: command.name });
+			if (!CommandData) {
+				utils.log(`No command data found for: ${ command.name } `);
+				const commandSchema = await commandModel.create({
+					command: command.name,
+					category: command.category
+				});
+				commandSchema.save().then(utils.log(`Command data saved for: ${ command.name }`));
+			} 
+		} catch (err) { utils.log(err); }
+	}
+
 	function getDirectories() {
 		return fs.readdirSync("./src/commands").filter(function subFolder(file) {
 			return fs.statSync(`./src/commands/${  file }`).isDirectory();
@@ -30,6 +45,7 @@ module.exports = (client) => {
 
 					client.commands.set(command.slashData.name, command);
 					commandJSON.push(command.slashData.toJSON());
+					setDBData(command);
 					
 				} else { console.log(`[WARNING] The command ${ command.name } is missing a required "execute" property.`); }
 			} else { console.log(`[WARNING] The command ${ command.name } is missing a required "slashData" property.`); }
@@ -40,8 +56,6 @@ module.exports = (client) => {
 
 		if(config.pushSlashToGlobal){
 
-			console.log("global");
-
 			client.application.commands.set(commandJSON).then(slashCommandData => {
 
 				console.log("Using global upload, could take up to 1 hour until commands are changed/added".yellow);
@@ -50,8 +64,6 @@ module.exports = (client) => {
 			}).catch((error) => console.log(error));
 
 		} else {
-
-			console.log("guilds");
 
 			try{
 				var guild = client.guilds.cache.get(config.TESTING_GUILD.ID);
