@@ -1,14 +1,13 @@
 /* eslint-disable */
-const { PermissionsBitField, SlashCommandBuilder, EmbedBuilder} = require("discord.js");
-const queueModel = require("../../models/queue.schema.js");
+const {PermissionsBitField, SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
-	name: "test",
-	description: "123",
-	usage: "<> is strict & [] is optional",
+	name: "",
+	description: "",
+	usage: "", // <> is strict & [] is optional
 	args: {},
-	category: "owner",
+	category: "",
 	aliases: [], // type: Array
-	userPerms: [ PermissionsBitField.Flags.KickMembers ], // type: Array
+	userPerms: [], // type: Array https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-FLAGS
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
 	nsfw: false, // type: Boolean
@@ -16,11 +15,10 @@ module.exports = {
 	disabledReason: "", // type: String
 
 	slashData: new SlashCommandBuilder()
-		.setName('test')
-		.setDescription('123'),
+		.setName('')
+		.setDescription(''),
 
 	execute: async (client, interaction, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
-		console.log(interaction.user.id)
 		interaction.editReply("Not set up yet");
 	}
 };

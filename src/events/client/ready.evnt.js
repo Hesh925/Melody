@@ -26,7 +26,6 @@ module.exports = {
 			`Loaded ${ event } events!\n`.green);
 		utils.log("Bot started");
 		utils.setRichPresence(client, config);
-		utils.pm2.init(client);
 		
 		
 		if (utils.searchArgv("git")) {
