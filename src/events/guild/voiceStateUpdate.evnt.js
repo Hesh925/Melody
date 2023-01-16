@@ -1,7 +1,7 @@
 /* eslint-disable */
 module.exports = {
 	name: "voiceStateUpdate",
-	async execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState, newState) {
+	async execute(Discord, client, config, utils, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState, newState) {
 		if (
 			(!oldState.streaming && newState.streaming)   ||
 			(oldState.streaming && !newState.streaming)   ||

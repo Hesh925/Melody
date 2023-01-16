@@ -15,7 +15,7 @@ module.exports = {
  
 	slashData: new SlashCommandBuilder()
 		.setName("ping")
-		.setDescription("test")
+		.setDescription("This is a ping command")
 		.addStringOption(option => 
 			option.setName("what_ping")
 				.setDescription("What Ping do you want to get?")
@@ -27,7 +27,7 @@ module.exports = {
 		const StringOption = interaction.options.getString("what_ping");
 		if(StringOption === "botping") { 
 			await interaction.editReply({content: "Getting the Bot Ping...", ephemeral: true});
-			interaction.editReply({content: `Bot Ping: \`${ Math.floor( Date.now() - interaction.createdTimestamp) } ms\``, ephemeral: true});
+			interaction.editReply({content: `Bot Ping: \`${ Math.floor( interaction.createdTimestamp - Date.now() ) } ms\``, ephemeral: true});
 		} else {
 		    interaction.editReply({content: `Api Ping: \`${ Math.floor(client.ws.ping) } ms\``, ephemeral: true});
 		}

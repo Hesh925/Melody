@@ -1,10 +1,8 @@
 const commandModel = require("../../models/command.schema.js");
-const config = require("../../config/CONFIG.json");
 const ezcolor = require("djs-easy-color");
-const utils = require("djs-utils");
 module.exports = {
 	name: "interactionCreate",
-	execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, interaction) {
+	execute(Discord, client, config, utils, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, interaction) {
 		async function incDBData(command) {
 			let CommandData;
 			try {
@@ -18,11 +16,11 @@ module.exports = {
 					commandSchema.save().then(utils.log(`Command data saved for: ${ command.name }`));
 				} 
 			} catch (err) { utils.log(err); }
-			await commandModel.findOneAndUpdate({ command: command.name }, { $inc: { slashused: 1 }});
+			await commandModel.findOneAndUpdate({ command: command.name }, { $inc: { timesUsed: 1 }});
 		}
 		async function executeCommand(command) {
 			await interaction.deferReply();
-			// IncDBData(command);
+			incDBData(command);
 			command.execute(client, interaction, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 		}
 

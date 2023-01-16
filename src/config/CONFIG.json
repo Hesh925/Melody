@@ -3,7 +3,7 @@
     "inviteLink": "https://discord.com/api/oauth2/authorize?client_id=882121214213111879&permissions=8&scope=bot%20applications.commands",
     "messageDeleteTimeout": 50000,
     "channelTimeout": 5,
-    "pushSlashToGlobal": false,
+    "pushSlashToGlobal": true,
 
 
     "errorReporting": {

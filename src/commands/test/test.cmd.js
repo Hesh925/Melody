@@ -21,6 +21,7 @@ module.exports = {
 
 	execute: async (client, interaction, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
 		console.log(interaction.user.id)
+		
 		interaction.editReply("Not set up yet");
 	}
 };

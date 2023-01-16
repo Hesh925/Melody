@@ -1,6 +1,6 @@
 /* eslint-disable */
 module.exports = {
 	name: "playing",
-	async execute(Discord, client, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState, newState) {
+	async execute(Discord, client, config, utils, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState, newState) {
 	}
 };

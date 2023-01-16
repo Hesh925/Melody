@@ -1,5 +1,5 @@
 const fs = require("fs");
-module.exports = (client, Discord) => {
+module.exports = (client, Discord, config, utils) => {
 	const eventFiles = fs.readdirSync("./src/events/process").filter(file => file.endsWith(".pevnt.js"));
 
 	for (const file of eventFiles) {
@@ -7,9 +7,9 @@ module.exports = (client, Discord) => {
 		client.events.set(event);
 
 		if (event.once) {
-			process.once(event.name, (...args) => event.execute(client, Discord, ...args));
+			process.once(event.name, (...args) => event.execute(client, Discord, config, utils, ...args));
 		} else {
-			process.on(event.name, (...args) => event.execute(client, Discord, ...args));
+			process.on(event.name, (...args) => event.execute(client, Discord, config, utils, ...args));
 		}
 	}
 };
