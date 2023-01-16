@@ -15,8 +15,8 @@ module.exports = {
 	disabledReason: "",
 
 	slashData: new SlashCommandBuilder()
-		.setName('leave')
-		.setDescription('Make bot leave channel'),
+		.setName("leave")
+		.setDescription("Make bot leave channel"),
 
 	execute: async (_client, interaction, _Discord, _colors, _config, _ezcolor, _utils, _opusEncoder, voicePlayer, DJSVoice) => {
 		const connection = DJSVoice.getVoiceConnection(interaction.guildId); // Get connection

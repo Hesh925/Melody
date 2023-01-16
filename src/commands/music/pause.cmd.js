@@ -14,8 +14,8 @@ module.exports = {
 	disabledReason: "",
 	allowSlash: true, 
 	slashData: new SlashCommandBuilder()
-		.setName('pause')
-		.setDescription('Pauses the music player'),
+		.setName("pause")
+		.setDescription("Pauses the music player"),
 
 	execute: async (_client, interaction, _Discord, _colors, _config, _ezcolor, utils, _opusEncoder, voicePlayer, DJSVoice) => {
 		const connection = DJSVoice.getVoiceConnection(interaction.guildId); // Get connection

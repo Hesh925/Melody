@@ -14,8 +14,8 @@ module.exports = {
 	disabledReason: "",
 
 	slashData: new SlashCommandBuilder()
-		.setName('memberinfo')
-		.setDescription('test'),
+		.setName("memberinfo")
+		.setDescription("Get info about all members"),
 		
 	// eslint-disable-next-line no-unused-vars
 

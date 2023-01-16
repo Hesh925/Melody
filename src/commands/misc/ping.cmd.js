@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("discord.js");
-const utils = require("djs-utils");
 module.exports = {
 	name: "ping",
 	description: "This is a ping command",
@@ -15,13 +14,13 @@ module.exports = {
 	disabledReason: "",
  
 	slashData: new SlashCommandBuilder()
-		.setName('ping')
-		.setDescription('test')
+		.setName("ping")
+		.setDescription("test")
 		.addStringOption(option => 
-			option.setName('what_ping')
-				.setDescription('What Ping do you want to get?')
+			option.setName("what_ping")
+				.setDescription("What Ping do you want to get?")
 				.setRequired(true)
-				.addChoices({ name: 'Bot', value: 'botping' }, { name: 'Discord Api', value: 'api' })
+				.addChoices({ name: "Bot", value: "botping" }, { name: "Discord Api", value: "api" })
 		),
 
 	execute: async (client, interaction) => {

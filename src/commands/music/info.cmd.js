@@ -22,9 +22,9 @@ module.exports = {
 	disabledReason: "",
 
 	slashData: new SlashCommandBuilder()
-		.setName('info')
-		.setDescription('Get info about a video')
-		.addStringOption( option => option.setName('url').setDescription('URL to the video you want info on').setRequired(true) ),
+		.setName("info")
+		.setDescription("Get info about a video")
+		.addStringOption( option => option.setName("url").setDescription("URL to the video you want info on").setRequired(true) ),
 
 	execute: async (_client, interaction, Discord, _colors, _config, _ezcolor, utils) => {
 		const videoURL = interaction.options.getString("url");

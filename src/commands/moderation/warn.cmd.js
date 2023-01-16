@@ -18,10 +18,10 @@ module.exports = {
 	disabledReason: "",
 
 	slashData: new SlashCommandBuilder()
-		.setName('warn')
-		.setDescription('Warn a user')
-		.addUserOption(option => option.setName('user').setDescription('What user would you like to warn').setRequired(true))
-		.addStringOption(option => option.setName('reason').setDescription('Reason for warn').setRequired(true)),
+		.setName("warn")
+		.setDescription("Warn a user")
+		.addUserOption(option => option.setName("user").setDescription("What user would you like to warn").setRequired(true))
+		.addStringOption(option => option.setName("reason").setDescription("Reason for warn").setRequired(true)),
 
 	execute: async (client, interaction, Discord, _colors, _config, ezcolor, utils) => {
 

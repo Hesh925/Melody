@@ -20,8 +20,8 @@ module.exports = {
 	disabledReason: "",
 	allowSlash: true, 
 	slashData: new SlashCommandBuilder()
-		.setName('nowplaying')
-		.setDescription('Displays the song that is currently playingtest'),
+		.setName("nowplaying")
+		.setDescription("Displays the song that is currently playingtest"),
 
 	execute: async (_client, interaction, Discord, _colors, _config, _ezcolor, utils, _opusEncoder, _voicePlayer, _DJSVoice, nowPlaying) => {
 		const videoData = nowPlaying["0"];

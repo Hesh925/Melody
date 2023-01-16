@@ -22,7 +22,7 @@ module.exports = {
 		}
 		async function executeCommand(command) {
 			await interaction.deferReply();
-			//incDBData(command);
+			// IncDBData(command);
 			command.execute(client, interaction, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying);
 		}
 

@@ -17,11 +17,11 @@ module.exports = {
 	disabledReason: "",
 
 	slashData: new SlashCommandBuilder()
-		.setName('viewwarns')
-		.setDescription('test')
-		.addUserOption(option => option.setName('user').setDescription('What user would you like look up').setRequired(true)), // upate this if no user use interaction.user.id
+		.setName("viewwarns")
+		.setDescription("test")
+		.addUserOption(option => option.setName("user").setDescription("What user would you like look up").setRequired(true)), // Update this if no user use interaction.user.id
 
-	execute: async (client, interaction, Discord, _colors, _config, ezcolor, utils) => {
+	execute: async (client, interaction, Discord, _colors, _config, ezcolor) => {
 
 		const user = interaction.options.getUser("user");
 
@@ -30,10 +30,10 @@ module.exports = {
 		const embed = new EmbedBuilder();
 
 		if (warnRes.length !== 0 ) {
-			
+
 			if (warnRes.length <= 25 ) {
 				
-				embed.setDescription(`${ client.users.cache.get(user.id).tag } has ${ warnRes.length } guild warns`)
+				embed.setDescription(`${ client.users.cache.get(user.id).tag } has ${ warnRes.length } guild warns`);
 				embed.setColor(ezcolor.getColor("HEX", "red"));
 				
 				for (const warn of warnRes) {
@@ -63,7 +63,7 @@ module.exports = {
 				interaction.editReply({ embeds: [ embed ] });
 			}
 		} else {
-			embed.setDescription(`No warns found for ${ client.users.cache.get(user.id).tag }`)
+			embed.setDescription(`No warns found for ${ client.users.cache.get(user.id).tag }`);
 			embed.setColor(ezcolor.getColor("HEX", "red"));
 	
 			interaction.editReply({ embeds: [ embed ] });

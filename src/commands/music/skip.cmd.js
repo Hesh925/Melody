@@ -16,8 +16,8 @@ module.exports = {
 	disabledReason: "Broken",
 
 	slashData: new SlashCommandBuilder()
-		.setName('skip')
-		.setDescription('Skip the song that is playing'),
+		.setName("skip")
+		.setDescription("Skip the song that is playing"),
 
 	execute: async (client, interaction, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
 		const connection = DJSVoice.getVoiceConnection(interaction.guildId); // Get connection

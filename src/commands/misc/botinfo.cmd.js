@@ -22,8 +22,8 @@ module.exports = {
 	disabledReason: "",
 
 	slashData: new SlashCommandBuilder()
-		.setName('botinfo')
-		.setDescription('test'),
+		.setName("botinfo")
+		.setDescription("Get information about the bot"),
 
 	execute: async (client, interaction, _Discord, _colors, _config, ezcolor, utils) => {
 		const guildRes = await guildModel.findOne({ guildID: interaction.guildId }).then(( res ) => { if(res) { return res; } else return null; });

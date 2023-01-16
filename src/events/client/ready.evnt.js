@@ -2,7 +2,6 @@
 
 const Package = require("../../../package.json");
 const config = require("../../config/CONFIG.json");
-const queueModel = require("../../models/queue.schema.js");
 const guildModel = require("../../models/guild.schema.js");
 const userModel = require("../../models/user.schema.js");
 const utils = require("djs-utils");

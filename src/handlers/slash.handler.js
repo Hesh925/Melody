@@ -25,8 +25,8 @@ module.exports = (client) => {
 		if (Array.isArray(file)) command = require(`../commands/${ file[0] }/${ file[1] }`);
 		else command = require(`../commands/${ file }`);
 		if (command.name) {
-			if('slashData' in command) {
-				if('execute' in command) {
+			if("slashData" in command) {
+				if("execute" in command) {
 
 					client.commands.set(command.slashData.name, command);
 					commandJSON.push(command.slashData.toJSON());
@@ -54,7 +54,7 @@ module.exports = (client) => {
 			console.log("guilds");
 
 			try{
-				var guild = client.guilds.cache.get(config.TESTING_GUILD.ID)
+				var guild = client.guilds.cache.get(config.TESTING_GUILD.ID);
 				guild.commands.set(commandJSON)
 					.then(slashCommandsData => {
 						console.log(`${ slashCommandsData.size } Slash Commands ${ `(With ${ slashCommandsData.map(d => d.options).flat().length } Subcommands)`.green } Loaded for: ${ `${ guild.name }`.underline }`.brightGreen); 

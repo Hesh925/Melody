@@ -17,9 +17,9 @@ module.exports = {
 	disabledReason: "",
 
 	slashData: new SlashCommandBuilder()
-		.setName('queue')
-		.setDescription('Add song to queue')
-		.addStringOption(option => option.setName('song').setDescription('Title or URL for the song you want to add to the queue').setRequired(true)),
+		.setName("queue")
+		.setDescription("Add song to queue")
+		.addStringOption(option => option.setName("song").setDescription("Title or URL for the song you want to add to the queue").setRequired(true)),
 
 	execute: async (_client, interaction, _Discord, _colors, _config, _ezcolor, utils) => {
 		const searchFor = interaction.options.getString("song");

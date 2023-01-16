@@ -14,9 +14,9 @@ module.exports = {
 	disabledReason: "",
 
 	slashData: new SlashCommandBuilder()
-		.setName('playnow')
-		.setDescription('Stops the current song and plays the given one')
-		.addStringOption(option => option.setName('song').setDescription('Song to play').setRequired(true)),
+		.setName("playnow")
+		.setDescription("Stops the current song and plays the given one")
+		.addStringOption(option => option.setName("song").setDescription("Song to play").setRequired(true)),
 
 	execute: async (client, interaction, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
 		const connection = DJSVoice.getVoiceConnection(interaction.guildId);

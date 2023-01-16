@@ -16,9 +16,9 @@ module.exports = {
 	disabledReason: "",
 
 	slashData: new SlashCommandBuilder()
-		.setName('help')
-		.setDescription('help')
-		.addStringOption(option => option.setName('command').setDescription('What command do you need help with?').setRequired(false)),
+		.setName("help")
+		.setDescription("Displays the help screen for a command or bot")
+		.addStringOption(option => option.setName("command").setDescription("What command do you need help with?").setRequired(false)),
 
 	execute: async (client, interaction, _Discord, _colors, config, _ezcolor, utils) => {
 		

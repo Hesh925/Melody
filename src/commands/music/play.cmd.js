@@ -25,9 +25,9 @@ module.exports = {
 	disabledReason: "",
 	allowSlash: true,
 	slashData: new SlashCommandBuilder()
-		.setName('play')
-		.setDescription('play a track in the current voice')
-		.addStringOption( option => option.setName('song').setDescription('title or URL for the song you want to play').setRequired(true) ),
+		.setName("play")
+		.setDescription("play a track in the current voice")
+		.addStringOption( option => option.setName("song").setDescription("title or URL for the song you want to play").setRequired(true) ),
 
 	execute: async (client, interaction, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
 		const guildID = interaction.guildId;

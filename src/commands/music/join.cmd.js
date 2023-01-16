@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("discord.js");
-const utils = require("djs-utils");
 module.exports = {
 	name: "join",
 	description: "Make bot join voice channel",
@@ -15,10 +14,10 @@ module.exports = {
 	disabledReason: "",
 
 	slashData: new SlashCommandBuilder()
-		.setName('join')
-		.setDescription('Make bot join voice channel'),
+		.setName("join")
+		.setDescription("Make bot join voice channel"),
 
-	execute: async (_client, interaction, _Discord, _colors, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, DJSVoice, nowPlaying, bool) => {
+	execute: async (_client, interaction, _Discord, _colors, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, DJSVoice, _nowPlaying, bool) => {
 		const voiceChannel = interaction.member.voice.channel;
 		const guild = interaction.member.guild;
 		if (interaction.member.voice.channel !== null) {

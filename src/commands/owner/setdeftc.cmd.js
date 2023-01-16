@@ -15,8 +15,8 @@ module.exports = {
 	disabledReason: "", // type: String
 	allowSlash: false,  // type: Boolean
 	slashData: new SlashCommandBuilder()
-		.setName('setdeftc')
-		.setDescription('Sets the default text channel (Guild owner only)'),
+		.setName("setdeftc")
+		.setDescription("Sets the default text channel (Guild owner only)"),
 
 	execute: async (_client, interaction, _Discord, _colors, _config, _ezcolor, utils) => {
 		try {
