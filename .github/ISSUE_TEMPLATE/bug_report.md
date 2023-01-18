@@ -10,12 +10,11 @@ assignees: Havoc925
 **Describe the bug**
 A clear and concise description of what the bug is.
 
+**What command**
+The command that is not working
+
 **To Reproduce**
-Steps to reproduce the behavior:
-1. Go to '...'
-2. Click on '....'
-3. Scroll down to '....'
-4. See error
+Any information to help reproduce the bug
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
