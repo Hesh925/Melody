@@ -3,7 +3,7 @@
     "inviteLink": "https://discord.com/api/oauth2/authorize?client_id=882121214213111879&permissions=8&scope=bot%20applications.commands",
     "messageDeleteTimeout": 50000,
     "channelTimeout": 5,
-    "pushSlashToGlobal": true,
+    "pushSlashToGlobal": false,
 
 
     "errorReporting": {
@@ -18,7 +18,6 @@
     
     "envSettings": {
         "prod": {
-            "PREFIX": "~",
             "status": {
                 "0": {
                     "type": 2,
@@ -75,7 +74,6 @@
         },
 
         "dev": {
-            "PREFIX": "`",
             "status": {
                 "0": {
                     "type": 0,

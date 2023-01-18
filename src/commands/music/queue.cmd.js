@@ -1,7 +1,9 @@
+/* eslint-disable prefer-named-capture-group */
 const ytsr = require("ytsr");
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const queueModel = require("../../models/queue.schema.js");
 const guildModel = require("../../models/guild.schema.js");
+
 module.exports = {
 	name: "queue",
 	description: "Add song to queue",
@@ -22,6 +24,23 @@ module.exports = {
 		.addStringOption(option => option.setName("song").setDescription("Title or URL for the song you want to add to the queue").setRequired(true)),
 
 	execute: async (_client, interaction, _Discord, _colors, _config, _ezcolor, utils) => {
+
+		function sendEmbed(videoData) {
+			const embed = new EmbedBuilder()
+				.setTitle(String(videoData.title))
+				.setURL(videoData.url)
+				.setAuthor({ name: "Added Song to Queue:"})
+				.setDescription(`**Title:** ${ videoData.title }
+				**Length:** ${ videoData.duration === null ? "Probably a livestream" : videoData.duration }
+				**Views:** ${ utils.numberWithCommas(videoData.views) }
+				**Uploaded:** ${ videoData.uploadedAt }`)
+				.setImage(videoData.bestThumbnail.url)
+				.setColor("1049ed")
+				.setTimestamp()
+				.setFooter({ text: `Requested by: ${ interaction.user.username }`,  iconURL: interaction.user.displayAvatarURL({ dynamic: true })});
+			interaction.editReply({ embeds: [ embed ] });
+		}
+
 		const searchFor = interaction.options.getString("song");
 
 		const queueRes = await queueModel.find({ guildID: interaction.guildId }).sort({queuePos: -1}).limit(1).then(( [ res ] ) => { if(res) { return res; } else return null; });
@@ -37,7 +56,7 @@ module.exports = {
 					songLength: videoData.duration,
 					queuePos:   pos
 				});
-				guildSchema.save().then(interaction.editReply({ content: `Added '${ videoData.title }' to queue` }));
+				guildSchema.save().then(sendEmbed(videoData));
 				await guildModel.findOneAndUpdate({ guildID: interaction.guildId }, { $inc: { songsInQueue: 1 }});
 			} catch (err) {
 				utils.log(err);

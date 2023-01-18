@@ -18,7 +18,7 @@ module.exports = {
 
 	slashData: new SlashCommandBuilder()
 		.setName("viewwarns")
-		.setDescription("test")
+		.setDescription("View warns for a user")
 		.addUserOption(option => option.setName("user").setDescription("What user would you like look up").setRequired(true)), // Update this if no user use interaction.user.id
 
 	execute: async (client, interaction, Discord, _colors, _config, ezcolor) => {

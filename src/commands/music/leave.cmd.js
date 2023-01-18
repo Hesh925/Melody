@@ -24,8 +24,8 @@ module.exports = {
 		if(connection) {
 			if (voiceChannel) {
 				if(voiceChannel.id === connection.joinConfig.channelId) {
-					connection.destroy();
 					voicePlayer.stop();
+					connection.destroy();
 					interaction.editReply({ content: "Left voice channel", ephemeral: true });
 				} else {
 					interaction.editReply({ content: "You must be in the same channel as the bot to use this command", ephemeral: true });

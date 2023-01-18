@@ -36,34 +36,18 @@ module.exports = {
 				interaction.editReply(`Invalid Command: \`${ commandName }\``);
 			} else {
 				embed.setAuthor(`${ utils.capitalize(cmd.name) } Command Help`, client.user.displayAvatarURL());
-				embed.addField("About", `
+				embed.addFields({name: "About", value: `
 					**❯ Name:** ${ cmd.name }
-					**❯ Aliases:** ${ cmd.aliases.length ? cmd.aliases.map(alias => `\`${ alias }\``).join(" ") : "No Aliases" }
 					**❯ Description:** ${ cmd.description }
 					**❯ Category:** ${ utils.capitalize(cmd.category) }
-					**❯ Arguments:** ${ Object.keys(cmd.args).length !== 0 ? Object.keys(cmd.args).length : "No Arguments" }
-					**❯ Usage:** ${ config.envSettings.prod.PREFIX }${ cmd.name } ${ cmd.usage }
 					**❯ Required Permissions:** ${ cmd.userPerms.length ? `[${ cmd.userPerms }]` : "No Permissions" }
 					**❯ OwnerOnly:** ${ utils.capitalize(cmd.ownerOnly) }
-					**❯ NSFW:** ${ utils.capitalize(cmd.nsfw) }`
-					// **❯ Is Disabled:** ${ utils.capitalize(cmd.disabled) }`
-				);
-				// console.log(Object.keys(cmd.args).length);
-				// eslint-disable-next-line no-undefined
-				if(Object.keys(cmd.args).length !== 0) {
-					embed.addField("**Arguments**", "\u200b");
-					Object.keys(cmd.args).forEach(element => {
-						const version = cmd.args[element];
-						embed.addField(`**❯ ${ utils.capitalize(element) }:**`, `\u200b ${ version }`);
-					});
-				}
+					**❯ NSFW:** ${ utils.capitalize(cmd.nsfw) }`});
 				interaction.editReply( {embeds: [ embed ] } );
 			}
 		} else {
 			embed.setDescription(
 				`These are the available commands for ${ interaction.member.guild.name }`,
-				`The bots prefix is: "${ config.envSettings.prod.PREFIX }"`,
-				"Command Parameters: `<>` is strict & `[]` is optional"
 			);
 			let categories;
 			if (interaction.user.id !== interaction.member.guild.ownerId) {

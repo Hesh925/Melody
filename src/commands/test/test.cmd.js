@@ -20,8 +20,11 @@ module.exports = {
 		.setDescription('123'),
 
 	execute: async (client, interaction, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
-		console.log(interaction.user.id)
-		
-		interaction.editReply("Not set up yet");
+		const guildRes = await queueModel.find({ guildID: interaction.guildId }).then(( res ) => { if(res) { return res; } else return null; });
+		console.log(guildRes.length);
+
+		console.log(guildRes[3].songURL)
+
+		interaction.editReply("test");
 	}
 };

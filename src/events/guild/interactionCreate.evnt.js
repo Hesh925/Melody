@@ -3,6 +3,9 @@ const ezcolor = require("djs-easy-color");
 module.exports = {
 	name: "interactionCreate",
 	execute(Discord, client, config, utils, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, interaction) {
+		
+		if (!interaction.isChatInputCommand()) return;
+
 		async function incDBData(command) {
 			let CommandData;
 			try {

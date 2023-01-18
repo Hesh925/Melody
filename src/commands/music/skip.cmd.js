@@ -1,6 +1,8 @@
-const { SlashCommandBuilder } = require("discord.js");
+const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 const queueModel = require("../../models/queue.schema.js");
 const guildModel = require("../../models/guild.schema.js");
+const ytsr = require("ytsr");
+const ytdl = require("ytdl-core");
 module.exports = {
 	name: "skip",
 	description: "Skip the song that is playing",
@@ -17,7 +19,7 @@ module.exports = {
 
 	slashData: new SlashCommandBuilder()
 		.setName("skip")
-		.setDescription("Skip the song that is playing"),
+		.setDescription("Skip the song that is currently playing"),
 
 	execute: async (client, interaction, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
 		const connection = DJSVoice.getVoiceConnection(interaction.guildId); // Get connection
@@ -30,7 +32,7 @@ module.exports = {
 				const res = await queueModel.find({ guildID: interaction.guildId }).sort({queuePos: 1}).limit(1).then(( [ res ] ) => { if(res) { return res; } else return null; });
 				if(res !== null ) {
 					await voicePlayer.pause();
-					client.commands.get("play").run(client, null, null, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying, res, interaction, "slash");
+					utils.play(client, EmbedBuilder, DJSVoice, voicePlayer, interaction.guildId, interaction.channelId, res.songURL, nowPlaying, utils, ytsr, ytdl, null);
 
 				} else await interaction.editReply({ content: "The queue is empty"});
 			} else await interaction.editReply({ content: "Nothing is playing to skip", ephemeral: true});

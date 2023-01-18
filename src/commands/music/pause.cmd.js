@@ -15,7 +15,7 @@ module.exports = {
 	allowSlash: true, 
 	slashData: new SlashCommandBuilder()
 		.setName("pause")
-		.setDescription("Pauses the music player"),
+		.setDescription("Pauses/Unpauses the music player"),
 
 	execute: async (_client, interaction, _Discord, _colors, _config, _ezcolor, utils, _opusEncoder, voicePlayer, DJSVoice) => {
 		const connection = DJSVoice.getVoiceConnection(interaction.guildId); // Get connection
@@ -26,7 +26,10 @@ module.exports = {
 					voicePlayer.pause();
 					await interaction.editReply({ content: "Paused playback", ephemeral: true });
 				} else await interaction.editReply({ content: "Nothing is playing", ephemeral: true });
-			} else await interaction.editReply({ content: "Can't pause something that's already paused", ephemeral: true });
+			} else {
+				voicePlayer.unpause();
+				await interaction.editReply({ content: "Resumed playback", ephemeral: true });
+			}
 		} else await interaction.editReply({ content: "Must be in the same channel as the bot to use this command", ephemeral: true });
 	}
 };

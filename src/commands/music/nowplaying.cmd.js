@@ -1,10 +1,6 @@
 /* eslint-disable prefer-named-capture-group */
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
-function numberWithCommas(x) {
-	var parts = x.toString().split(".");
-	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	return parts.join(".");
-}
+
 module.exports = {
 	name: "nowplaying",
 	description: "Displays the song that is currently playing",
@@ -21,7 +17,7 @@ module.exports = {
 	allowSlash: true, 
 	slashData: new SlashCommandBuilder()
 		.setName("nowplaying")
-		.setDescription("Displays the song that is currently playingtest"),
+		.setDescription("Displays the song that is currently playing"),
 
 	execute: async (_client, interaction, Discord, _colors, _config, _ezcolor, utils, _opusEncoder, _voicePlayer, _DJSVoice, nowPlaying) => {
 		const videoData = nowPlaying["0"];
@@ -32,11 +28,11 @@ module.exports = {
 				.setAuthor("Now Playing:")
 				.setDescription(`**Title:** ${ videoData.title }
 						**Length:** ${ videoData.duration === null ? "Probably a livestream" : videoData.duration }
-						**Views:** ${ numberWithCommas(videoData.views) }
+						**Views:** ${ utils.numberWithCommas(videoData.views) }
 						**Uploaded:** ${ videoData.uploadedAt }`)
 				.setImage(videoData.bestThumbnail.url)
 				.setColor("1049ed")
-				.setFooter(`Requested by: ${ interaction.user.username }`,  interaction.user.displayAvatarURL({ dynamic: true }))
+				.setFooter({ text: `Requested by: ${ interaction.user.username }`,  iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
 				.setTimestamp();
 			interaction.editReply({ embeds: [ embed ] });
 		}

@@ -2,9 +2,9 @@ const guildModel = require("../../models/guild.schema.js");
 const queueModel = require("../../models/queue.schema.js");
 
 module.exports = {
-	name: "guildCreate",
+	name: "guildDelete",
 	async execute(_Discord, client, config, utils, _colors, _opusEncoder, _voicePlayer, _DJSVoice, _nowPlaying, guild) {
-		console.log(guild);
+		//console.log("guildDelete");
 		let GuildData;
 		let QueueData;
 		try {

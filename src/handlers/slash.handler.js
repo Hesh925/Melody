@@ -64,9 +64,10 @@ module.exports = (client, _Discord, _config, utils) => {
 			}).catch((error) => console.log(error));
 
 		} else {
-
 			try{
 				var guild = client.guilds.cache.get(config.TESTING_GUILD.ID);
+				guild.commands.cache.forEach(command => { command.delete(); });
+				
 				guild.commands.set(commandJSON)
 					.then(slashCommandsData => {
 						console.log(`${ slashCommandsData.size } Slash Commands ${ `(With ${ slashCommandsData.map(d => d.options).flat().length } Subcommands)`.green } Loaded for: ${ `${ guild.name }`.underline }`.brightGreen); 

@@ -3,11 +3,13 @@
 const Package = require("../../../package.json");
 const guildModel = require("../../models/guild.schema.js");
 const userModel = require("../../models/user.schema.js");
+const queueModel = require("../../models/queue.schema.js");
+const config = require("../../config/CONFIG.json");
 
 module.exports = {
 	name: "ready",
 	once: true,
-	async execute(_Discord, client, config, utils) {
+	async execute(_Discord, client, _config, utils) {
 		var date = new Date;
 		var command = (Array.from(client.commands)).length;
 		var event = (Array.from(client.events)).length;
@@ -22,7 +24,7 @@ module.exports = {
 			`Loaded ${ command } commands!\n`.green,
 			`Loaded ${ event } events!\n`.green);
 		utils.log("Bot started");
-		utils.setRichPresence(client, config);
+		client.user.setPresence({ activities: [ { name: config.envSettings.prod.status[0].status } ] });
 		utils.logToDiscord(client, config.errorReporting.guildId, config.errorReporting.textCId, "Bot started");
 		
 		
@@ -30,6 +32,8 @@ module.exports = {
 			console.log("Process started successfully: Now exiting with code \"0\" ".bgGreen);
 			process.exit(0);
 		}
+
+		// Await queueModel.collection.drop();
 		 
 		 const users = [];
 		 client.guilds.cache.forEach(guild => {

@@ -14,6 +14,7 @@ const Schema = new mongoose.Schema({
 	messageDelete:  { type: Boolean, required: true, default: false },
 	invitePosted:   { type: Boolean, required: true, default: false },
 	
+	
 });
 
 const model = mongoose.model("GuildSettings", Schema);

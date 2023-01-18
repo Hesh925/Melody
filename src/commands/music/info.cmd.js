@@ -2,11 +2,6 @@
 
 const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 
-function numberWithCommas(x) {
-	var parts = x.toString().split(".");
-	parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	return parts.join(".");
-}
 module.exports = {
 	name: "info",
 	description: "Get info about a video",
@@ -33,14 +28,14 @@ module.exports = {
 			const embed = new EmbedBuilder()
 				.setTitle(String(videoData.title))
 				.setURL(videoData.url)
-				.setAuthor("info")
-				.addFields([
+				.setAuthor({ name: "Video Info", iconURL: "https://cdn.discordapp.com/emojis/885100202202429450.png?v=1"})
+				.addFields(
 					{
 						"name": "Video Info",
 						"value":
 								`**Title:** ${ videoData.title }
 								 **Length:** ${ videoData.duration === null ? "Probably a livestream" : videoData.duration }
-								 **Views:** ${ numberWithCommas(videoData.views) }
+								 **Views:** ${ utils.numberWithCommas(videoData.views) }
 								 **Uploaded:** ${ videoData.uploadedAt }`
 					},
 					{
@@ -49,10 +44,10 @@ module.exports = {
 								`**Name:** ${ videoData.author.name }
 								 **Channel URL:** ${ videoData.author.url }`
 					}
-				])
+				)
 				.setImage(videoData.bestThumbnail.url)
 				.setColor("1049ed")
-				.setFooter(`Requested by: ${ interaction.user.username }`,  interaction.user.displayAvatarURL({ dynamic: true }))
+				.setFooter({ text: `Requested by: ${ interaction.user.username }`,  iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
 				.setTimestamp();
 			interaction.editReply({ embeds: [ embed ] });
 		}

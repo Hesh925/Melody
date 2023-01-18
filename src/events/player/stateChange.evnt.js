@@ -3,15 +3,15 @@ const idle = require("./playerStates/idle.state.js");
 const playing = require("./playerStates/playing.state.js");
 module.exports = {
 	name: "stateChange",
-	execute(Discord, client, config, utils, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, oldState, newState) {
+	execute(Discord, client, config, utils, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState, newState) {
 		if(newState.status === "buffering") {
-			buffering.execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, oldState, newState);
+			buffering.execute(Discord, client, config, utils, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState);
 		}
 		if(newState.status === "idle") {
-			idle.execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, oldState, newState);
+			idle.execute(Discord, client, config, utils, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState);
 		}
 		if(newState.status === "playing") {
-			playing.execute(Discord, client, opusEncoder, voicePlayer, DJSVoice, queueArray, nowPlaying, oldState, newState);
+			playing.execute(Discord, client, config, utils, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, oldState);
 		}
 	}
 };

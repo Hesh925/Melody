@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("discord.js");
+const guildModel = require("../../models/guild.schema.js");
 module.exports = {
 	name: "join",
 	description: "Make bot join voice channel",
@@ -17,7 +18,7 @@ module.exports = {
 		.setName("join")
 		.setDescription("Make bot join voice channel"),
 
-	execute: async (_client, interaction, _Discord, _colors, _config, _ezcolor, _utils, _opusEncoder, _voicePlayer, DJSVoice, _nowPlaying, bool) => {
+	execute: async (_client, interaction, _Discord, _colors, _config, _ezcolor, utils, _opusEncoder, _voicePlayer, DJSVoice) => {
 		const voiceChannel = interaction.member.voice.channel;
 		const guild = interaction.member.guild;
 		if (interaction.member.voice.channel !== null) {
@@ -26,13 +27,10 @@ module.exports = {
 				guildId: guild.id,
 				adapterCreator: guild.voiceAdapterCreator,
 			});
-			if (bool) {
-				interaction.editReply({ content: `Joined ${ voiceChannel.name }`, ephemeral: true });
-			}
+			try { await guildModel.findOneAndUpdate({ guildID: interaction.guildId }, { loop: 0 }); } catch (err) { utils.log(err); }
+			interaction.editReply({ content: `Joined ${ voiceChannel.name }`, ephemeral: true });
 		} else {
-			if (bool) {
-				interaction.editReply({ content: "You must be in a voice channel to use this command", ephemeral: true });
-			}
+			interaction.editReply({ content: "You must be in a voice channel to use this command", ephemeral: true });
 		}
 	}
 };

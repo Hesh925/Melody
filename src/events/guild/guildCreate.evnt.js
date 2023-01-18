@@ -3,7 +3,7 @@ const guildModel = require("../../models/guild.schema.js");
 module.exports = {
 	name: "guildCreate",
 	async execute(Discord, client, config, utils, colors, opusEncoder, voicePlayer, DJSVoice, nowPlaying, guild) {
-		console.log(guild);
+		//console.log("guildCreate");
 		let GuildData;
 		try {
 			GuildData = await guildModel.findOne({ guildID: guild.id });

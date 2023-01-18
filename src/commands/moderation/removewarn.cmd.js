@@ -19,7 +19,7 @@ module.exports = {
 
 	slashData: new SlashCommandBuilder()
 		.setName("removewarn")
-		.setDescription("test")
+		.setDescription("Remove a users warn")
 		.addStringOption(option => option.setName("warn_id").setDescription("Warn ID").setRequired(true)),
 		
 	options: [ {"StringChoices": { name: "warn_id", description: "Warn ID can be found with viewwarns command", required: true }} ],
