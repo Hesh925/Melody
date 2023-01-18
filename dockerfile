@@ -4,7 +4,7 @@ RUN mkdir -p /usr/src/code
 WORKDIR /usr/src/code
 
 COPY package.json /usr/src/code
-
+RUN sudo apt update -y && sudo apt install ffmpeg -y
 RUN npm install
 #RUN npm install pm2 -g
 
