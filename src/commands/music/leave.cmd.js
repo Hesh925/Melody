@@ -3,10 +3,7 @@ const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
 	name: "leave",
 	description: "Make bot leave channel",
-	usage: "",
-	args: {},
 	category: "music",
-	aliases: [], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean

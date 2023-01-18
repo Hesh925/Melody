@@ -2,10 +2,7 @@ const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
 	name: "stop",
 	description: "Stops the music player",
-	usage: "<> is strict & [] is optional",
-	args: {},
 	category: "music",
-	aliases: [], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean

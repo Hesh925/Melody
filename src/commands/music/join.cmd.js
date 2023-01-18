@@ -3,10 +3,7 @@ const guildModel = require("../../models/guild.schema.js");
 module.exports = {
 	name: "join",
 	description: "Make bot join voice channel",
-	usage: "Join",
-	args: {},
 	category: "music",
-	aliases: [ "j" ], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean

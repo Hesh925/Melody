@@ -3,10 +3,7 @@ const guildModel = require("../../models/guild.schema.js");
 module.exports = {
 	name: "setdeftc",
 	description: "sets the default text channel",
-	usage: "<> is strict & [] is optional",
-	args: {},
 	category: "owner",
-	aliases: [], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: true, // type: Boolean

@@ -2,10 +2,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
 	name: "memberinfo",
 	description: "Get info about all members",
-	usage: "<> is strict & [] is optional",
-	args: {},
 	category: "misc",
-	aliases: [], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean

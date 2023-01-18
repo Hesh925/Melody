@@ -4,10 +4,7 @@ const { EmbedBuilder, SlashCommandBuilder } = require("discord.js");
 module.exports = {
 	name: "help",
 	description: "Displays the help screen for a command",
-	usage: "[command]",
-	args: {}, 
 	category: "utilities",
-	aliases: [ "h" ], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
@@ -26,7 +23,7 @@ module.exports = {
 			.setColor("BLUE")
 			.setAuthor(`${ interaction.member.guild.name } Help Menu`, interaction.member.guild.iconURL({ dynamic: true }))
 			.setThumbnail(client.user.displayAvatarURL())
-			.setFooter(`Requested by ${ interaction.user.username }`, interaction.user.displayAvatarURL({ dynamic: true }))
+			.setFooter({ text: `Requested by: ${ interaction.user.username }`,  iconURL: interaction.user.displayAvatarURL({ dynamic: true })})
 			.setTimestamp();
 		const commandName = interaction.options.getString("command");
 		if (commandName) {
@@ -57,8 +54,8 @@ module.exports = {
 			}
             
 			for (const category of categories) {
-				embed.addField(`**${ utils.capitalize(category) }**`, client.commands.filter(cmd =>
-					cmd.category === category).map(cmd => `\`${ cmd.name }\``).join(" "));
+				embed.addFields({ name: `**${ utils.capitalize(category) }**`, value: client.commands.filter(cmd =>
+					cmd.category === category).map(cmd => `\`${ cmd.name }\``).join(" ")});
 			}
 			interaction.editReply( {embeds: [ embed ] } );
 		}

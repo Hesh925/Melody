@@ -2,10 +2,7 @@ const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
 	name: "playnow",
 	description: "Stops the current song and plays the given one",
-	usage: "<> is strict & [] is optional",
-	args: {},
 	category: "music",
-	aliases: [ "pn" ], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean

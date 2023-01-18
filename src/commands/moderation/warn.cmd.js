@@ -6,10 +6,7 @@ const sha = require("js-sha256");
 module.exports = {
 	name: "warn",
 	description: "Warn a user",
-	usage: "<user> <reason>", // <> is strict & [] is optional
-	args: {},
 	category: "moderation",
-	aliases: [], // type: Array
 	userPerms: [ PermissionsBitField.Flags.KickMembers ], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
@@ -38,7 +35,8 @@ module.exports = {
 						**Warned By:** ${ interaction.user.username }
 						**Date:** ${ date.format( dateNow, ( "MM/DD/YYYY hh:MM:ss A")) }
 						**Warning ID:** ${ warnID }`)
-				.setTimestamp();
+				.setTimestamp()
+				.setFooter({ text: `Warned by: ${ interaction.user.username }`,  iconURL: interaction.user.displayAvatarURL({ dynamic: true })});
 			interaction.editReply({ embeds: [ embed ] });
 		}
 		

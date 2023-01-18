@@ -11,9 +11,6 @@ module.exports = {
 	name: "botinfo",
 	description: "get information about the bot",
 	category: "utilities",
-	usage: "",
-	args: {},
-	aliases: [ "bi" ], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean

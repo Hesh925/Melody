@@ -5,10 +5,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
 	name: "info",
 	description: "Get info about a video",
-	usage: "<video name or url>",
-	args: {},
 	category: "music",
-	aliases: [], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean

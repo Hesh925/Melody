@@ -4,10 +4,7 @@ const { SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
 	name: "nowplaying",
 	description: "Displays the song that is currently playing",
-	usage: "",
-	args: {},
 	category: "music",
-	aliases: [ "np" ], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean

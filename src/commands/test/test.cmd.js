@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 const { PermissionsBitField, SlashCommandBuilder, EmbedBuilder} = require("discord.js");
 const queueModel = require("../../models/queue.schema.js");
 module.exports = {

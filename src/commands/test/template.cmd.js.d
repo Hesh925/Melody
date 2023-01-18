@@ -1,4 +1,4 @@
-/* eslint-disable */
+
 const {PermissionsBitField, SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
 	name: "",

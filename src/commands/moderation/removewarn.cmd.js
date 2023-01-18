@@ -6,10 +6,7 @@ const date = require("date-and-time");
 module.exports = {
 	name: "removewarn",
 	description: "Remove a users warn",
-	usage: "<Warn ID>", // <> is strict & [] is optional
-	args: {},
 	category: "moderation",
-	aliases: [ "rmwarn" ], // type: Array
 	userPerms: [ PermissionsBitField.Flags.KickMembers ], // type: Array https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-FLAGS
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
@@ -32,11 +29,12 @@ module.exports = {
 				.setThumbnail(client.user.displayAvatarURL())
 				.setColor(ezcolor.getColor("HEX", "red"))
 				.setDescription(`Removed warn for user ${ client.users.cache.get(warn.userID).tag }`)
-				.addField(`Date: ${ date.format(warn.date, ( "MM/DD/YYYY hh:MM:ss A")) }`,
-					`**Warned By:** ${ client.users.cache.get(warn.warnedBy).tag }
+				.addFields({ name: `Date: ${ date.format(warn.date, ( "MM/DD/YYYY hh:MM:ss A")) }`,
+					value: `**Warned By:** ${ client.users.cache.get(warn.warnedBy).tag }
 					 **Reason:** ${ warn.reason }
-					 **Warn ID:** ${ warn.warnID }`)
-				.setTimestamp();
+					 **Warn ID:** ${ warn.warnID }`})
+				.setTimestamp()
+				.setFooter({ text: `Removed by: ${ interaction.user.username }`,  iconURL: interaction.user.displayAvatarURL({ dynamic: true })});
 			interaction.editReply({ embeds: [ embed ] });
 		}
 		let warnRes;
@@ -47,7 +45,6 @@ module.exports = {
 			} else {
 				interaction.editReply("A warn with that ID does not exist");
 			}
-
 
 		} catch (err) {
 			utils.log(err);

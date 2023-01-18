@@ -6,10 +6,7 @@ const ytsr = require("ytsr");
 module.exports = {
 	name: "play",
 	description: "play a track in the current voice",
-	usage: "<> is strict & [] is optional",
-	args: {},
 	category: "music",
-	aliases: [ "p" ], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean

@@ -2,10 +2,7 @@ const { SlashCommandBuilder } = require("discord.js");
 module.exports = {
 	name: "ping",
 	description: "This is a ping command",
-	usage: "",
-	args: {},
 	category: "misc",
-	aliases: [ "pong" ], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean

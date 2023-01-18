@@ -6,10 +6,7 @@ const ytdl = require("ytdl-core");
 module.exports = {
 	name: "skip",
 	description: "Skip the song that is playing",
-	usage: "",
-	args: {},
 	category: "music",
-	aliases: [], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean

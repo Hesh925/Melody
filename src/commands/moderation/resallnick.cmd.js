@@ -1,13 +1,10 @@
-/* eslint-disable */
+
 const {PermissionsBitField, SlashCommandBuilder, EmbedBuilder } = require("discord.js");
 module.exports = {
 	name: "resallnick",
 	description: "Reset all nicknames in the guild",
-	usage: "", // <> is strict & [] is optional
-	args: {},
-	category: "",
-	aliases: [], // type: Array
-	userPerms: [], // type: Array https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-FLAGS
+	category: "moderation",
+	userPerms: [ PermissionsBitField.Flags.ChangeNickname ], // type: Array https://discord.js.org/#/docs/main/stable/class/Permissions?scrollTo=s-FLAGS
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
 	nsfw: false, // type: Boolean
@@ -18,7 +15,18 @@ module.exports = {
 		.setName("resetallnicknames")
 		.setDescription("Reset all nicknames in the guild"),
 
-	execute: async (client, interaction, Discord, colors, config, ezcolor, utils, opusEncoder, voicePlayer, DJSVoice, nowPlaying) => {
-		interaction.editReply("Not set up yet");
+	execute: async (_client, interaction, _Discord, _colors, config) => {
+		const members = interaction.guild.members.cache;
+		members.forEach(member => {
+			if (member.permissions.has(PermissionsBitField.Flags.Administrator) || member.permissions.has(PermissionsBitField.Flags.ChangeNickname)) return;
+			member.setNickname(null);
+		});
+		const embed = new EmbedBuilder()
+			.setColor(config.colors.green)
+			.setTitle("Success")
+			.setDescription("Reset all nicknames in the guild")
+			.setTimestamp()
+			.setFooter({ text: `Reset by: ${ interaction.user.username }`,  iconURL: interaction.user.displayAvatarURL({ dynamic: true })});
+		return interaction.editReply({ embeds: [ embed ] });
 	}
 };

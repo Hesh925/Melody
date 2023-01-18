@@ -5,10 +5,7 @@ const date = require("date-and-time");
 module.exports = {
 	name: "viewwarns",
 	description: "View warns for a user",
-	usage: "<user>", // <> is strict & [] is optional
-	args: {},
 	category: "moderation",
-	aliases: [ "vw" ], // type: Array
 	userPerms: [ PermissionsBitField.Flags.KickMembers ], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
@@ -38,10 +35,10 @@ module.exports = {
 				
 				for (const warn of warnRes) {
 					
-					embed.addField(`**Date:** ${ date.format(warn.date, ( "MM/DD/YYYY hh:MM:ss A")) }`,
-						`**Warned By:** ${ client.users.cache.get(warn.warnedBy).tag }
+					embed.addFields({ name: `**Date:** ${ date.format(warn.date, ( "MM/DD/YYYY hh:MM:ss A")) }`,
+						value: `**Warned By:** ${ client.users.cache.get(warn.warnedBy).tag }
 						 **Reason:** ${ warn.reason }
-						 **Warn ID:** ${ warn.warnID }`);
+						 **Warn ID:** ${ warn.warnID }`});
 
 				}
 				interaction.editReply({ embeds: [ embed ] });
@@ -55,10 +52,10 @@ module.exports = {
 
 				for (const warn of warnRes) {
 
-					embed.addField(`**Date:** ${ date.format(warn.date, ( "MM/DD/YYYY hh:MM:ss A")) }`,
-						`**Warned By:** ${ client.users.cache.get(warn.warnedBy).tag }
+					embed.addFields({ name: `**Date:** ${ date.format(warn.date, ( "MM/DD/YYYY hh:MM:ss A")) }`,
+						value: `**Warned By:** ${ client.users.cache.get(warn.warnedBy).tag }
 						 **Reason:** ${ warn.reason }
-						 **Warn ID:** ${ warn.warnID }`);
+						 **Warn ID:** ${ warn.warnID }`});
 				}
 				interaction.editReply({ embeds: [ embed ] });
 			}

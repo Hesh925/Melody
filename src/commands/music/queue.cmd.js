@@ -7,10 +7,7 @@ const guildModel = require("../../models/guild.schema.js");
 module.exports = {
 	name: "queue",
 	description: "Add song to queue",
-	usage: "<> is strict & [] is optional",
-	args: {},
 	category: "music",
-	aliases: [], // type: Array
 	userPerms: [], // type: Array
 	ownerOnly: false, // type: Boolean
 	botOwnerOnly: false, // type: Boolean
