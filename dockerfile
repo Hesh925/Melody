@@ -7,7 +7,7 @@ COPY package.json /usr/src/code
 RUN apt update -y && apt install ffmpeg -y
 RUN npm install
 #RUN npm install pm2 -g
-
+VOLUME [ "/log/" ]
 COPY . /usr/src/code
 
 #EXPOSE 80
