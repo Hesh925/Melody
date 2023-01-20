@@ -2,4 +2,4 @@ sudo docker stop melody
 git pull
 
 sudo docker build -t melody ../../.
-sudo docker run --env-file ../../../.melody.env --name melody -d --network="host" -it melody
+sudo docker run --env-file ../../../.melody.env --name melody -d --network="host" -it melody -v melody-logs:/log
